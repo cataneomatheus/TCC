@@ -4,8 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TCC.WebAPI.Data;
-using TCC.WebAPI.Model.Logins;
+using TCC.Repository;
 
 namespace TCC.WebAPI.Controllers
 {
@@ -13,10 +12,10 @@ namespace TCC.WebAPI.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        public DataContext Context { get; }
+        public DataContext _context { get; }
         public ValuesController(DataContext context)
         {
-            this.Context = context;
+            _context = context;
 
         }
 
@@ -26,7 +25,7 @@ namespace TCC.WebAPI.Controllers
         {
             try
             {
-                var result = Context.Logins.ToList();
+                var result = _context.Eventos.ToList();
                 return Ok(result);
             }
             catch (System.Exception)
@@ -43,7 +42,7 @@ namespace TCC.WebAPI.Controllers
         {
             try
             {
-                var result = Context.Logins.FirstOrDefault(x => x.LoginId == id);;
+                var result = _context.Eventos.FirstOrDefault(x => x.Id == id);;
                 return Ok(result);
             }
             catch (System.Exception)
