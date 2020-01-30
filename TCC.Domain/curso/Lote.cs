@@ -15,6 +15,6 @@ namespace TCC.Domain.curso
 
         public int EventoId { get; set; }
 
-        public Evento Evento { get; set; }
+        public Evento Evento { get; }
     }
 }

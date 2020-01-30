@@ -7,6 +7,7 @@ using TCC.Repository;
 namespace TCC.WebAPI.Controllers.curso
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class EventoController : ControllerBase
     {
         private readonly ITCCRepository _rep;

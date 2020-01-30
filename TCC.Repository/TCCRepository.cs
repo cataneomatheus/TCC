@@ -7,7 +7,7 @@ namespace TCC.Repository
 {
     public class TCCRepository : ITCCRepository
     {
-        public DataContext _dataContext { get; }
+        private readonly DataContext _dataContext;
 
         //GERAIS
         public TCCRepository(DataContext dataContext)
@@ -16,7 +16,7 @@ namespace TCC.Repository
         }
         public async Task<bool> SaveChangesAsync()
         {
-            return (await _dataContext.SaveChangesAsync()) > 0;;
+            return (await _dataContext.SaveChangesAsync()) > 0;
         }
 
         public void Update<T>(T entity) where T : class
