@@ -8,10 +8,11 @@ namespace TCC.WebAPI.Controllers.curso
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EventoController : ControllerBase
+    public class PalestranteController : ControllerBase
     {
         private readonly ITCCRepository _rep;
-        public EventoController(ITCCRepository rep)
+
+        public PalestranteController(ITCCRepository rep)
         {
             _rep = rep;
         }
@@ -21,7 +22,7 @@ namespace TCC.WebAPI.Controllers.curso
         {
             try
             {
-                var result = await _rep.GetAllEventoAsync(true);
+                var result = await _rep.GetAllPalestranteAsync(true);
                 
                 return Ok(result);
             }
@@ -33,12 +34,12 @@ namespace TCC.WebAPI.Controllers.curso
             
         }
 
-        [HttpGet("{EventoId}")]
-        public async Task<IActionResult> Get(int EventoId)
+        [HttpGet("{PalestranteId}")]
+        public async Task<IActionResult> Get(int PalestranteId)
         {
             try
             {
-                var result = await _rep.GetEventoAsyncById(EventoId, true);
+                var result = await _rep.GetPalestrantesAsyncById(PalestranteId, true);
                 
                 return Ok(result);
             }
@@ -50,12 +51,12 @@ namespace TCC.WebAPI.Controllers.curso
             
         }
 
-        [HttpGet("getByTema/{tema}")]
-        public async Task<IActionResult> Get(string tema)
+        [HttpGet("getByName/{nome}")]
+        public async Task<IActionResult> Get(string nome)
         {
             try
             {
-                var result = await _rep.GetAllEventoAsyncByTema(tema, true);
+                var result = await _rep.GetAllPalestrantesAsyncByName(nome, true);
                 
                 return Ok(result);
             }
@@ -68,14 +69,14 @@ namespace TCC.WebAPI.Controllers.curso
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Evento model)
+        public async Task<IActionResult> Post(Palestrante model)
         {
             try
             {
                 _rep.Add(model);
 
                 if(await _rep.SaveChangesAsync()){
-                    return Created($"/api/evento/{model.Id}", model);
+                    return Created($"/api/palestrante/{model.Id}", model);
                 }
                 
             }
@@ -89,18 +90,18 @@ namespace TCC.WebAPI.Controllers.curso
             
         }
 
-        [HttpPut("{EventoId}")]
-        public async Task<IActionResult> Put(int EventoId, Evento model)
+        [HttpPut("{PalestranteId}")]
+        public async Task<IActionResult> Put(int PalestranteId, Palestrante model)
         {
             try
             {
-                var evento = await _rep.GetEventoAsyncById(EventoId, false);
-                if(evento == null) return NotFound();
+                var palestrante = await _rep.GetPalestrantesAsyncById(PalestranteId, false);
+                if(palestrante == null) return NotFound();
 
                 _rep.Update(model);
 
                 if(await _rep.SaveChangesAsync()){
-                    return Created($"/api/evento/{model.Id}", model);
+                    return Created($"/api/palestrante/{model.Id}", model);
                 }
                 
             }
@@ -114,15 +115,15 @@ namespace TCC.WebAPI.Controllers.curso
             
         }
 
-        [HttpDelete("{EventoId}")]
-        public async Task<IActionResult> Delete(int EventoId)
+        [HttpPut("{PalestranteId}")]
+        public async Task<IActionResult> Put(int PalestranteId)
         {
             try
             {
-                var evento = await _rep.GetEventoAsyncById(EventoId, false);
-                if(evento == null) return NotFound();
+                var palestrante = await _rep.GetPalestrantesAsyncById(PalestranteId, false);
+                if(palestrante == null) return NotFound();
                 
-                _rep.Delete(evento);
+                _rep.Delete(palestrante);
 
                 if(await _rep.SaveChangesAsync()){
                     return Ok();
@@ -138,5 +139,31 @@ namespace TCC.WebAPI.Controllers.curso
             return BadRequest();
             
         }
+
+        [HttpDelete("{PalestranteId}")]
+        public async Task<IActionResult> Delete(int PalestranteId)
+        {
+            try
+            {
+                var palestrante = await _rep.GetPalestrantesAsyncById(PalestranteId, false);
+                if(palestrante == null) return NotFound();
+                
+                _rep.Delete(palestrante);
+
+                if(await _rep.SaveChangesAsync()){
+                    return Ok();
+                }
+                
+            }
+            catch (System.Exception)
+            {
+                
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Banco de dados falhou");
+            }
+
+            return BadRequest();
+            
+        }
+        
     }
 }

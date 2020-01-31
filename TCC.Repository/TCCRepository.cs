@@ -13,6 +13,7 @@ namespace TCC.Repository
         public TCCRepository(DataContext dataContext)
         {
             _dataContext = dataContext;
+            _dataContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
         public async Task<bool> SaveChangesAsync()
         {
@@ -127,6 +128,23 @@ namespace TCC.Repository
             .Where(p => p.Id == PalestranteId);
 
             return await query.FirstOrDefaultAsync();
+        }
+
+        public async Task<Palestrante[]> GetAllPalestranteAsync(bool includeEventos)
+        {
+            IQueryable<Palestrante> query = _dataContext.Palestrantes
+            .Include(c => c.RedesSociais);
+
+            if(includeEventos)
+            {
+                query = query
+                .Include(pe => pe.PalestranteEventos)
+                .ThenInclude(e => e.Evento);
+            }
+
+            query = query.OrderByDescending(p => p.Nome);
+
+            return await query.ToArrayAsync();
         }
     }
 }

@@ -21,6 +21,10 @@ namespace TCC.Repository
 
          Task<Evento> GetEventoAsyncById(int EventoId, bool includePalestrantes);
 
+         //PALESTRANTE
+
+         Task<Palestrante[]> GetAllPalestranteAsync(bool includeEventos);
+
          Task<Palestrante[]> GetAllPalestrantesAsyncByName(string name, bool includeEventos);
 
          Task<Palestrante> GetPalestrantesAsyncById(int PalestranteId, bool includeEventos);
