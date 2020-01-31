@@ -13,7 +13,7 @@ export class EventoComponent implements OnInit {
   evento: Evento[];
   _filtroLista: string;
   imagemLargura = 50;
-  imagemMargem = 50;
+  imagemMargem = 25;
   mostrarImagem = false;
 
   alternarImagem() {

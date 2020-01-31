@@ -34,7 +34,7 @@
       </td>
       <td>{{evento.id}}</td>
       <td>{{evento.local}}</td>
-      <td>{{evento.dataEvento}}</td>
+      <td>{{evento.dataEvento | DateTimeFormatPipe}}</td>
       <td>{{evento.tema}}</td>
       <td>{{evento.qtdPessoas}}</td>
       <td>{{evento.telefone}}</td>
@@ -47,8 +47,17 @@
         </div>
       </td>
       <td>
-        <button class="btn btn-success"></button>
-        <button class="btn btn-danger"></button>
+        <div>
+          <div class="bt -group">
+            <button class="btn btn-sm btn-success" tooltip="Editar">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button class="btn btn-sm btn-danger" tooltip="Excluir">
+              <i class="fa fa-eraser"></i>
+            </button>
+          </div>
+        </div>
+
       </td>
     </tr>
   </tbody>
