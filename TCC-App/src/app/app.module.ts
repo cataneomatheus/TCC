@@ -9,9 +9,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { ModalModule } from 'ngx-bootstrap/modal';
+import { BsDropdownModule, TooltipModule, ModalModule } from 'ngx-bootstrap';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
    declarations: [
@@ -23,12 +22,13 @@ import { ModalModule } from 'ngx-bootstrap/modal';
    ],
    imports: [
       BrowserModule,
+      BsDropdownModule.forRoot(),
+      TooltipModule.forRoot(),
+      ModalModule.forRoot(),
       AppRoutingModule,
       HttpClientModule,
       FormsModule,
-      BsDropdownModule.forRoot(),
-      TooltipModule.forRoot(),
-      ModalModule.forRoot()
+      BrowserAnimationsModule
    ],
    providers: [],
    bootstrap: [
