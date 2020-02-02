@@ -2,6 +2,9 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { EventoService } from '../services/evento.service';
 import { Evento } from '../models/Evento';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { defineLocale, BsLocaleService, ptBrLocale } from 'ngx-bootstrap';
+defineLocale('pt-br', ptBrLocale);
 
 @Component({
   selector: 'app-Evento',
@@ -12,19 +15,89 @@ export class EventoComponent implements OnInit {
 
   eventosFiltrados: Evento[];
   evento: Evento[];
-  _filtroLista: string;
+  novoEvento: Evento;
+  _filtroLista;
   imagemLargura = 50;
   imagemMargem = 25;
   mostrarImagem = false;
-  modalRef: BsModalRef;
+  registerForm: FormGroup;
+  modoSalvar = '';
+  bodyDeletarEvento = '';
 
   constructor(
     private eventoService: EventoService,
-    private modalService: BsModalService
-  ) { }
+    private modalService: BsModalService,
+    private fb: FormBuilder,
+    private localeService: BsLocaleService
+  ) {
+    this.localeService.use('pt-br')
+   }
 
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
+  openModal(template: any) {
+    this.registerForm.reset();
+    template.show();
+  }
+
+  editarEvento(evento: Evento, template: any){
+    this.modoSalvar = 'put';
+    this.openModal(template);
+    this.novoEvento = evento;
+    this.registerForm.patchValue(evento);
+  }
+
+  excluirEvento(evento: Evento, template: any) {
+    this.openModal(template);
+    this.novoEvento = evento;
+    this.bodyDeletarEvento = `Tem certeza que deseja excluir o Evento: ${evento.tema}, Código: ${evento.tema}`;
+  }
+  
+  confirmeDelete(template: any) {
+    this.eventoService.deleteEvento(this.novoEvento.id).subscribe(
+      () => {
+          template.hide();
+          this.getEventos();
+        }, error => {
+          console.log(error);
+        }
+    );
+  }
+
+  salvarAlteracao(template: any) {
+    if(this.registerForm.valid){
+      if(this.modoSalvar != 'put'){
+        this.novoEvento = Object.assign({}, this.registerForm.value);
+        this.eventoService.postEvento(this.novoEvento).subscribe(
+          (response: Evento) => {
+            template.hide();
+            this.getEventos();
+          }, error => {
+            console.log(error);
+          }
+        );
+      } else {
+        this.novoEvento = Object.assign({id: this.novoEvento.id}, this.registerForm.value);
+        this.eventoService.putEvento(this.novoEvento).subscribe(
+          (response: Evento) => {
+            template.hide();
+            this.getEventos();
+          }, error => {
+            console.log(error);
+          }
+        );
+      }      
+    }
+  }
+
+  validation() {
+    this.registerForm = this.fb.group({
+      tema: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
+      local: ['', Validators.required],
+      dataEvento: ['', Validators.required],
+      qtdPessoas: ['', [Validators.required, Validators.minLength(1)]],
+      imagemURL: ['', Validators.required],
+      telefone: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]]
+    });
   }
 
   alternarImagem() {
@@ -47,6 +120,7 @@ export class EventoComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.validation(),
     this.getEventos()
   }
 
