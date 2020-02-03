@@ -1,8 +1,11 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TCC.Domain.curso;
 using TCC.Repository;
+using TCC.WebAPI.Views;
 
 namespace TCC.WebAPI.Controllers.curso
 {
@@ -11,9 +14,13 @@ namespace TCC.WebAPI.Controllers.curso
     public class EventoController : ControllerBase
     {
         private readonly ITCCRepository _rep;
-        public EventoController(ITCCRepository rep)
+
+        public IMapper _mapper { get; }
+
+        public EventoController(ITCCRepository rep, IMapper mapper)
         {
             _rep = rep;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -21,9 +28,11 @@ namespace TCC.WebAPI.Controllers.curso
         {
             try
             {
-                var result = await _rep.GetAllEventoAsync(true);
+                var eventos = await _rep.GetAllEventoAsync(true);
+
+                var results = _mapper.Map<IEnumerable<EventoView>>(eventos);
                 
-                return Ok(result);
+                return Ok(results);
             }
             catch (System.Exception)
             {
@@ -38,7 +47,9 @@ namespace TCC.WebAPI.Controllers.curso
         {
             try
             {
-                var result = await _rep.GetEventoAsyncById(EventoId, true);
+                var evento = await _rep.GetEventoAsyncById(EventoId, true);
+
+                var result = _mapper.Map<EventoView>(evento);
                 
                 return Ok(result);
             }
