@@ -54,7 +54,7 @@ export class EventoComponent implements OnInit {
     this.novoEvento = evento;
     this.bodyDeletarEvento = `Tem certeza que deseja excluir o Evento: ${evento.tema}, Código: ${evento.id}`;
   }
-  
+
   confirmeDelete(template: any) {
     this.eventoService.deleteEvento(this.novoEvento.id).subscribe(
       () => {
@@ -91,7 +91,7 @@ export class EventoComponent implements OnInit {
             this.toastr.error('Erro ao editar.');
           }
         );
-      }      
+      }
     }
   }
 
@@ -140,6 +140,10 @@ export class EventoComponent implements OnInit {
         console.log(error);
       }
     )
+  }
+
+  onFileChange(event) {
+    console.log(event);
   }
 
 }
