@@ -7,7 +7,7 @@ import { Evento } from '../models/Evento';
   providedIn: 'root'
 })
 export class EventoService {
-  
+
   baseUrl = 'http://localhost:5000/api/evento';
 
 constructor(private http: HttpClient) { }
@@ -24,11 +24,11 @@ constructor(private http: HttpClient) { }
     return this.http.get<Evento>(`${this.baseUrl}/${id}`);
   }
 
-  postUpload(file: File) {
+  postUpload(file: File, nome: string) {
     const fileToUpload = <File>file[0];
     const formData = new FormData();
-    formData.append('file', fileToUpload, fileToUpload.name);
-    
+    formData.append('file', fileToUpload, nome);
+
     return this.http.post(`${this.baseUrl}/upload`, formData);
   }
 
