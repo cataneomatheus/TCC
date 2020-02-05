@@ -45,3 +45,5 @@ TCC-App/dist/TCC-App/vendor-es5.js.map
 TCC-App/dist/TCC-App/vendor-es2015.js
 TCC-App/dist/TCC-App/vendor-es2015.js.map
 package-lock.json
+.vscode/launch.json
+.vscode/tasks.json
