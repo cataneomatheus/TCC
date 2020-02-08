@@ -93,7 +93,7 @@ namespace TCC.WebAPI
                 app.UseHsts();
             }
 
-            //app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseCors( x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader() );
             app.UseStaticFiles( new StaticFileOptions() {
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),

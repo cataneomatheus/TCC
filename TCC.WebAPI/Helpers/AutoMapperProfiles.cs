@@ -1,6 +1,8 @@
 using System.Linq;
 using AutoMapper;
 using TCC.Domain.curso;
+using TCC.Domain.Identity;
+using TCC.WebAPI.Dtos;
 using TCC.WebAPI.Views;
 
 namespace TCC.WebAPI.Helpers 
@@ -14,15 +16,18 @@ namespace TCC.WebAPI.Helpers
                 opt.MapFrom(src => src.PalestranteEventos.Select(
                     x=> x.Palestrante
                 ).ToList());
-            });
+            }).ReverseMap();
             CreateMap<Palestrante, PalestranteView>()
             .ForMember(dest => dest.Eventos, opt => {
                 opt.MapFrom(src => src.PalestranteEventos.Select(
                     x => x.Evento
                 ).ToList());
-            });
-            CreateMap<Lote, LoteView>();
-            CreateMap<RedeSocial, RedeSocialView>();
+            }).ReverseMap();
+            CreateMap<Lote, LoteView>().ReverseMap();
+            CreateMap<RedeSocial, RedeSocialView>().ReverseMap();
+
+            CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<User, UserLoginDto>().ReverseMap();
         }
     }
 }
