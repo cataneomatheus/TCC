@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './Login/Login.component';
 import { NavComponent } from './nav/nav.component';
 import { EventoComponent } from './Evento/Evento.component';
 import { PalestranteComponent } from './Palestrante/Palestrante.component';
@@ -13,22 +12,29 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BsDropdownModule, TooltipModule, ModalModule, BsDatepickerModule } from 'ngx-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { from } from 'rxjs';
+import { UserComponent } from './user/user.component';
+import { LoginComponent } from './user/login/login.component';
+import { RegistrationComponent } from './user/registration/registration.component';
+import { EventoService } from './services/evento.service';
+import { AuthInterceptor } from './auth/auth.interceptor';
 
 @NgModule({
    declarations: [
       AppComponent,
-      LoginComponent,
       NavComponent,
       EventoComponent,
       PalestranteComponent,
       DashboardComponent,
       ContatoComponent,
       TituloComponent,
-      DateTimeFormatPipePipe
+      DateTimeFormatPipePipe,
+      UserComponent,
+      LoginComponent,
+      RegistrationComponent
    ],
    imports: [
       BrowserModule,
@@ -47,7 +53,14 @@ import { from } from 'rxjs';
       BrowserAnimationsModule,
       ReactiveFormsModule
    ],
-   providers: [],
+   providers: [
+      EventoService,
+      {
+         provide: HTTP_INTERCEPTORS,
+         useClass: AuthInterceptor,
+         multi: true
+      }
+   ],
    bootstrap: [
       AppComponent
    ]
