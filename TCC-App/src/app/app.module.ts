@@ -9,8 +9,9 @@ import { DateTimeFormatPipePipe } from './helps/DateTimeFormatPipe.pipe';
 import { TituloComponent } from './_shared/titulo/titulo.component';
 
 import { BrowserModule } from '@angular/platform-browser';
-import { BsDropdownModule, TooltipModule, ModalModule, BsDatepickerModule } from 'ngx-bootstrap';
+import { BsDropdownModule, TooltipModule, ModalModule, BsDatepickerModule, TabsModule } from 'ngx-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
+import { NgxMaskModule } from 'ngx-mask';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -21,12 +22,14 @@ import { LoginComponent } from './user/login/login.component';
 import { RegistrationComponent } from './user/registration/registration.component';
 import { EventoService } from './services/evento.service';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { EventoEditComponent } from './Evento/eventoEdit/eventoEdit.component';
 
 @NgModule({
    declarations: [
       AppComponent,
       NavComponent,
       EventoComponent,
+      EventoEditComponent,
       PalestranteComponent,
       DashboardComponent,
       ContatoComponent,
@@ -42,6 +45,8 @@ import { AuthInterceptor } from './auth/auth.interceptor';
       TooltipModule.forRoot(),
       ModalModule.forRoot(),
       BsDatepickerModule.forRoot(),
+      TabsModule.forRoot(),
+      NgxMaskModule.forRoot(),
       ToastrModule.forRoot({
          timeOut: 10000,
          positionClass: 'toast-bottom-right',

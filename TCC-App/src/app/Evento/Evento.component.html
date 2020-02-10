@@ -31,7 +31,7 @@
     <th>N° pessoas</th>
     <th>Telefone</th>
     <th>Lotes</th>
-    <th>Ações</th>
+    <th colspan="2">Ações</th>
   </tr>
 </thead>
 <tbody *ngIf="eventos && eventos.length">
@@ -69,8 +69,12 @@
       </button>
     </div>
   </div>
-  
-</td>
+  </td>
+  <td>
+    <a [routerLink]="['/evento', evento.id, 'edit']" tooltip="Edição detalhada" class="btn btn-sm btn-warning">
+      <i class="fa fa-edit"></i>
+    </a>
+  </td>
 </tr>
 </tbody>
 <tfoot *ngIf="!eventos">
