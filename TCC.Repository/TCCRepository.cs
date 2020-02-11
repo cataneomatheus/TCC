@@ -86,7 +86,8 @@ namespace TCC.Repository
                 .ThenInclude(p => p.Palestrante);
             }
 
-            query = query.OrderByDescending(c => c.DataEvento)
+            query = query.AsNoTracking()
+            .OrderBy(c => c.Id)
             .Where(c => c.Id == EventoId);
 
             return await query.FirstOrDefaultAsync();
@@ -145,6 +146,11 @@ namespace TCC.Repository
             query = query.OrderByDescending(p => p.Nome);
 
             return await query.ToArrayAsync();
+        }
+
+        public void DeleteRange<T>(T[] entityArray) where T : class
+        {
+            _dataContext.RemoveRange(entityArray);
         }
     }
 }

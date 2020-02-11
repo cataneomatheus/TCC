@@ -12,6 +12,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BsDropdownModule, TooltipModule, ModalModule, BsDatepickerModule, TabsModule } from 'ngx-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxMaskModule } from 'ngx-mask';
+import { NgxCurrencyModule } from 'ngx-currency';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -47,6 +48,7 @@ import { EventoEditComponent } from './Evento/eventoEdit/eventoEdit.component';
       BsDatepickerModule.forRoot(),
       TabsModule.forRoot(),
       NgxMaskModule.forRoot(),
+      NgxCurrencyModule,
       ToastrModule.forRoot({
          timeOut: 10000,
          positionClass: 'toast-bottom-right',

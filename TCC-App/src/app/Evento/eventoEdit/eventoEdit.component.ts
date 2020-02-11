@@ -18,7 +18,8 @@ export class EventoEditComponent implements OnInit {
   imagemURL = 'assets/img/upload.png'
   registerForm: FormGroup;
   fileNameToUpdate: string;
-  dataAtual: ''
+  file: File;
+  dataAtual: string;
 
   get lotes(): FormArray {
     return <FormArray>this.registerForm.get('lotes');
@@ -52,12 +53,20 @@ export class EventoEditComponent implements OnInit {
           this.imagemURL = 'http://localhost:5000/resources/images/${this.evento.imagemURL}?_ts=${this.dataAtual}'
           this.evento.imagemURL = '';
           this.registerForm.patchValue(this.evento);
+
+          this.evento.lotes.forEach(lote => {
+            this.lotes.push(this.criaLote(lote));
+          })
+          this.evento.redesSociais.forEach(redeSocial => {
+            this.redesSociais.push(this.criaRedesSociais(redeSocial));
+          })
         }
       )
     }
 
     validation() {
       this.registerForm = this.fb.group({
+        id: [],
         tema: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
         local: ['', Validators.required],
         dataEvento: ['', Validators.required],
@@ -65,34 +74,36 @@ export class EventoEditComponent implements OnInit {
         imagemURL: [''],
         telefone: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
-        lotes: this.fb.array([this.criaLote()]),
-        redesSociais: this.fb.array([this.criaRedesSociais()])
+        lotes: this.fb.array([]),
+        redesSociais: this.fb.array([])
       });
     }    
 
-    criaLote(): FormGroup {
+    criaLote(lote: any): FormGroup {
       return this.fb.group({
-        nome: ['', Validators.required ],
-        quantidade: ['', Validators.required ],
-        preco: ['', Validators.required ],
-        dataInicio: [''],
-        dataFim: ['']
-      })
+        id: [lote.id],
+        nome: [lote.nome, Validators.required ],
+        quantidade: [lote.quantidade, Validators.required ],
+        preco: [lote.preco, Validators.required ],
+        dataInicio: [lote.dataInicio],
+        dataFim: [lote.dataFim]
+      });
     }
 
-    criaRedesSociais(): FormGroup {
+    criaRedesSociais(redeSocial: any): FormGroup {
       return this.fb.group({
-        nome: ['', Validators.required ],
-        url: ['', Validators.required ]
-      })
+        id:[redeSocial.id],
+        nome: [redeSocial.nome, Validators.required ],
+        url: [redeSocial.url, Validators.required ]
+      });
     }
 
     adicionarLote() {
-      this.lotes.push(this.criaLote());
+      this.lotes.push(this.criaLote({ id: 0}));
     }
 
     adicionarRedeSocial() {
-      this.redesSociais.push(this.criaRedesSociais());
+      this.redesSociais.push(this.criaRedesSociais({ id: 0}));
     }
 
     removerRedeSocial(id: number) {
@@ -103,11 +114,40 @@ export class EventoEditComponent implements OnInit {
       this.lotes.removeAt(id);
     }
 
-    onFileChange(file: FileList) {
+    onFileChange(evento: any, file: FileList) {
       const reader = new FileReader();
-
+  
       reader.onload = (event: any) => this.imagemURL = event.target.result;
+  
+      this.file = evento.target.files;
       reader.readAsDataURL(file[0]);
+    }
+
+    salvarEvento() {
+      this.evento = Object.assign({id: this.evento.id}, this.registerForm.value);
+      this.evento.imagemURL = this.fileNameToUpdate;
+
+      this.uploadImagem();
+
+      this.eventoService.putEvento(this.evento).subscribe(
+        (response: Evento) => {
+          this.toastr.success('Editado com sucesso.');
+        }, error => {
+          this.toastr.error('Erro ao editar.');
+        }
+      )
+    }
+
+    uploadImagem() {
+      if(this.registerForm.get('imagemURL').value !== '') {
+        this.eventoService.postUpload(this.file, this.fileNameToUpdate)
+        .subscribe(
+        () => {
+          this.dataAtual = new Date().getMilliseconds().toString();
+          this.imagemURL = 'http://localhost:5000/resources/images/${this.evento.imagemURL}?_ts=${this.dataAtual}';
+        }
+        );
+      }    
     }
 
 }
