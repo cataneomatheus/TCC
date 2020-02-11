@@ -50,9 +50,9 @@ import { EventoEditComponent } from './Evento/eventoEdit/eventoEdit.component';
       NgxMaskModule.forRoot(),
       NgxCurrencyModule,
       ToastrModule.forRoot({
-         timeOut: 10000,
-         positionClass: 'toast-bottom-right',
+         timeOut: 3000,
          preventDuplicates: true,
+         progressBar: true
       }),
       AppRoutingModule,
       HttpClientModule,

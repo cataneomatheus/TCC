@@ -144,22 +144,21 @@ namespace TCC.WebAPI.Controllers.curso
 
                 model.Lotes.ForEach(item => idLotes.Add(item.Id));
                 model.RedesSociais.ForEach(item => idRedesSociais.Add(item.Id));
-                               
 
                 var lotes = evento.Lotes.Where(
                     lote => !idLotes.Contains(lote.Id))
                     .ToArray();
-                
+
                 var redesSociais = evento.RedesSociais.Where(
                     rede => !idRedesSociais.Contains(rede.Id))
                     .ToArray();
 
-                if(lotes.Length > 0)  _rep.DeleteRange(lotes);
-                
-                if(redesSociais.Length > 0)  _rep.DeleteRange(redesSociais);
+                if(lotes.Any())  _rep.DeleteRange(lotes);
+
+                if(redesSociais.Any())  _rep.DeleteRange(redesSociais);
 
                 _mapper.Map(model, evento);
-                
+
                 _rep.Update(model);
 
                 if(await _rep.SaveChangesAsync()){

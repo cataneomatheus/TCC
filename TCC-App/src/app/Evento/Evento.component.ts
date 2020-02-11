@@ -15,6 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 export class EventoComponent implements OnInit {
 
   titulo = 'Eventos';
+  dataEvento: string;
   eventosFiltrados: Evento[] = [];
   eventos: Evento[] = [];
   evento: Evento;

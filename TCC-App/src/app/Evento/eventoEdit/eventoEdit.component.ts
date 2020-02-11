@@ -46,22 +46,25 @@ export class EventoEditComponent implements OnInit {
 
     carregarEvento() {
       const idEvento = +this.router.snapshot.paramMap.get('id');
-      this.eventoService.getEventoById(idEvento).subscribe(
-        (evento: Evento) => {
-          this.evento = Object.assign({}, evento);
-          this.fileNameToUpdate = evento.imagemURL.toString();
-          this.imagemURL = 'http://localhost:5000/resources/images/${this.evento.imagemURL}?_ts=${this.dataAtual}'
-          this.evento.imagemURL = '';
-          this.registerForm.patchValue(this.evento);
+      this.eventoService.getEventoById(idEvento)
+        .subscribe(
+          (evento: Evento) => {
+            this.evento = Object.assign({}, evento);
+            this.fileNameToUpdate = evento.imagemURL.toString();
 
-          this.evento.lotes.forEach(lote => {
-            this.lotes.push(this.criaLote(lote));
-          })
-          this.evento.redesSociais.forEach(redeSocial => {
-            this.redesSociais.push(this.criaRedesSociais(redeSocial));
-          })
-        }
-      )
+            this.imagemURL = `http://localhost:5000/resources/images/${this.evento.imagemURL}?_ts=${this.dataAtual}`;
+
+            this.evento.imagemURL = '';
+            this.registerForm.patchValue(this.evento);
+
+            this.evento.lotes.forEach(lote => {
+              this.lotes.push(this.criaLote(lote));
+            });
+            this.evento.redesSociais.forEach(redeSocial => {
+              this.redesSociais.push(this.criaRedesSociais(redeSocial));
+            });
+          }
+        );
     }
 
     validation() {
@@ -77,7 +80,7 @@ export class EventoEditComponent implements OnInit {
         lotes: this.fb.array([]),
         redesSociais: this.fb.array([])
       });
-    }    
+    }
 
     criaLote(lote: any): FormGroup {
       return this.fb.group({
@@ -116,26 +119,26 @@ export class EventoEditComponent implements OnInit {
 
     onFileChange(evento: any, file: FileList) {
       const reader = new FileReader();
-  
+
       reader.onload = (event: any) => this.imagemURL = event.target.result;
-  
+
       this.file = evento.target.files;
       reader.readAsDataURL(file[0]);
     }
 
     salvarEvento() {
-      this.evento = Object.assign({id: this.evento.id}, this.registerForm.value);
+      this.evento = Object.assign({ id: this.evento.id }, this.registerForm.value);
       this.evento.imagemURL = this.fileNameToUpdate;
 
       this.uploadImagem();
 
       this.eventoService.putEvento(this.evento).subscribe(
-        (response: Evento) => {
-          this.toastr.success('Editado com sucesso.');
+        () => {
+          this.toastr.success('Editado com Sucesso!');
         }, error => {
-          this.toastr.error('Erro ao editar.');
+          this.toastr.error(`Erro ao Editar: ${error}`);
         }
-      )
+      );
     }
 
     uploadImagem() {
@@ -147,7 +150,7 @@ export class EventoEditComponent implements OnInit {
           this.imagemURL = 'http://localhost:5000/resources/images/${this.evento.imagemURL}?_ts=${this.dataAtual}';
         }
         );
-      }    
+      }
     }
 
 }

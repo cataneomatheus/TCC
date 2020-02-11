@@ -191,7 +191,7 @@
     <div class="col-md-4">
       <div class="form-row">
         <div class="form-group col-md-9">
-          <input type="file" #file (change)="onFileChange($event.target.files)" class="form-control is-invalid"
+          <input type="file" #file (change)="onFileChange($event, $event.target.files)" class="form-control is-invalid"
             formControlName="imagemURL" placeholder="" style="display: none">
         </div>
       </div>
