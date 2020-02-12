@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using TCC.Domain.consultas;
 using TCC.Domain.curso;
 using TCC.Domain.Identity;
 
@@ -13,11 +14,17 @@ namespace TCC.Repository
     {
         public DataContext(DbContextOptions<DataContext> options) : base (options) {}
 
+        //consulta
+        public DbSet<Consulta> Consultas {get; set;}
+        public DbSet<PerguntaResposta> PerguntaRespostas {get; set;}
+        public DbSet<Exame> Exames {get; set;}
+
+        //treinamento
         public DbSet<Evento> Eventos { get; set; }
         public DbSet<Palestrante> Palestrantes { get; set; }
         public DbSet<PalestranteEvento> PalestranteEventos { get; set; }
         public DbSet<Lote> Lotes { get; set; }
-        public DbSet<RedeSocial> RedeSociais { get; set; }
+        public DbSet<RedeSocial> RedeSociais { get; set; }        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
