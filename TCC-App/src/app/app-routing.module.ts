@@ -9,16 +9,18 @@ import { LoginComponent } from './user/login/login.component';
 import { RegistrationComponent } from './user/registration/registration.component';
 import { AuthGuard } from './auth/auth.guard';
 import { EventoEditComponent } from './Evento/eventoEdit/eventoEdit.component';
+import { ConsultaComponent } from './Consulta/Consulta.component';
 
 
 const routes: Routes = [
   { path: 'user', component: UserComponent,
     children: [
       { path: 'login', component: LoginComponent },
-      { path: 'registration', component: RegistrationComponent }  
+      { path: 'registration', component: RegistrationComponent }
     ]
   },
 
+  { path: 'consultas', component: ConsultaComponent, canActivate: [AuthGuard] },
   { path: 'eventos', component: EventoComponent, canActivate: [AuthGuard] },
   { path: 'evento/:id/edit', component: EventoEditComponent, canActivate: [AuthGuard] },
   { path: 'palestrantes', component: PalestranteComponent, canActivate: [AuthGuard] },

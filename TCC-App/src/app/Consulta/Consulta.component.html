@@ -1,0 +1,57 @@
+<app-titulo [titulo]="titulo"></app-titulo>
+
+<div class="d-flex">
+  <div class="form-inline mr-auto">
+    <div class="form-group mb-2">
+      <input type="text" class="form-control mr-2" placeholder="Buscar" [(ngModel)]="filtroLista">
+    </div>
+  </div>
+  <div>
+    <button class="btn btn-outline-primary" (click)="novaConsulta(template)">
+      <i class="fa fa-plus-circle"></i>&nbsp;
+      Novo
+    </button>
+  </div>
+</div>
+
+<h3>Filtro: {{filtroLista}}</h3>
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th>Id</th>
+      <th>Paciente</th>
+      <th>Sexo</th>
+      <th>Tipo do atendimento </th>
+      <th colspan="2">Ações</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="consultas && consultas.length">
+    <tr *ngFor="let consulta of consultasFiltradas">
+      <td>{{consulta.id}}</td>
+      <td>{{consulta.nomePaciente}}</td>
+      <td>{{consulta.sexo}}</td>
+      <td>{{consulta.tipoAtendimento}}</td>
+      <td>
+        <div>
+          <div class="btn-group">
+            <button class="btn btn-sm btn-success" tooltip="Editar" (click)="editarConsulta()">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button class="btn btn-sm btn-danger" tooltip="Excluir" (click)="excluirConsulta()">
+              <i class="fa fa-eraser"></i>
+            </button>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot *ngIf="!consultas">
+    <tr>
+      <td colspan="3" class="text-center">
+        <h4>
+          Nenhuma consulta encontrada!
+        </h4>
+      </td>
+    </tr>
+  </tfoot>
+</table>

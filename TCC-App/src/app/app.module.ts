@@ -24,6 +24,7 @@ import { RegistrationComponent } from './user/registration/registration.componen
 import { EventoService } from './services/evento.service';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { EventoEditComponent } from './Evento/eventoEdit/eventoEdit.component';
+import { ConsultaComponent } from './Consulta/Consulta.component';
 
 @NgModule({
    declarations: [
@@ -38,7 +39,8 @@ import { EventoEditComponent } from './Evento/eventoEdit/eventoEdit.component';
       DateTimeFormatPipePipe,
       UserComponent,
       LoginComponent,
-      RegistrationComponent
+      RegistrationComponent,
+      ConsultaComponent
    ],
    imports: [
       BrowserModule,
