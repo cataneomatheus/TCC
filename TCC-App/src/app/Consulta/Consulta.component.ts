@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-Consulta',
@@ -7,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConsultaComponent implements OnInit {
 
-  constructor() { }
+  titulo = 'Consultas';
+  registerForm: FormGroup;
+  bodyDeletarConsulta: string;
+
+  constructor(
+    private fb: FormBuilder
+  ) { }
 
   ngOnInit() {
     this.getEventos()
@@ -16,5 +23,25 @@ export class ConsultaComponent implements OnInit {
   getEventos() {
     return console.log()
   }
+
+  openModal(template: any) {
+      this.registerForm.reset();
+      template.show();
+    }
+
+  novaConsulta(template: any) {
+    this.openModal(template);
+  }
+
+  validation() {
+      this.registerForm = this.fb.group({
+        nomePaciente: ['', [Validators.required, Validators.maxLength(50)]],
+        sexo: ['', [Validators.required, Validators.maxLength(20)]],
+        dataNascimento: ['', Validators.required],
+        tipoAtendimento: ['', [Validators.required, Validators.maxLength(50)]],
+        queixaPrincipal: ['', [Validators.required, Validators.maxLength(50)]],
+        inicioSintomas: ['', [Validators.required, Validators.maxLength(50)]]
+      });
+    }
 
 }
