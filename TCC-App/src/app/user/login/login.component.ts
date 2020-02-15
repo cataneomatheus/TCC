@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     if(localStorage.getItem('token') !== null) {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/consultas']);
     }
   }
 
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.model)
     .subscribe(
       () => {
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/consultas']);
         this.toastr.success('Seja bem vindo');
       },
       error => {

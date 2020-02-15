@@ -26,8 +26,8 @@ const routes: Routes = [
   { path: 'palestrantes', component: PalestranteComponent, canActivate: [AuthGuard] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'contatos', component: ContatoComponent, canActivate: [AuthGuard] },
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-  { path: '**', redirectTo: 'dasboard', pathMatch: 'full' }
+  { path: '', redirectTo: 'consultas', pathMatch: 'full' },
+  { path: '**', redirectTo: 'consultas', pathMatch: 'full' }
 ];
 
 @NgModule({

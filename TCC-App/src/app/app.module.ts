@@ -22,6 +22,7 @@ import { UserComponent } from './user/user.component';
 import { LoginComponent } from './user/login/login.component';
 import { RegistrationComponent } from './user/registration/registration.component';
 import { EventoService } from './services/evento.service';
+import { ConsultaService } from './services/Consulta/consulta.service';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { EventoEditComponent } from './Evento/eventoEdit/eventoEdit.component';
 import { ConsultaComponent } from './Consulta/Consulta.component';
@@ -68,7 +69,14 @@ import { ConsultaComponent } from './Consulta/Consulta.component';
          provide: HTTP_INTERCEPTORS,
          useClass: AuthInterceptor,
          multi: true
+      },
+      ConsultaService,
+      {
+         provide: HTTP_INTERCEPTORS,
+         useClass: AuthInterceptor,
+         multi: true
       }
+      
    ],
    bootstrap: [
       AppComponent
