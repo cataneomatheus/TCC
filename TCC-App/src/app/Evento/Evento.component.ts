@@ -193,5 +193,4 @@ export class EventoComponent implements OnInit {
         this.file = event.target.files;
       }
     }
-
-    }
+  }

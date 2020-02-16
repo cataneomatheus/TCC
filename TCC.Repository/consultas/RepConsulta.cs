@@ -40,7 +40,7 @@ namespace TCC.Repository.consultas
             return await query.ToArrayAsync();
         }
 
-        public async Task<Consulta> GetEventoAsyncById(int ConsultaId)
+        public async Task<Consulta> GetConsultaAsyncById(int ConsultaId)
         {
             IQueryable<Consulta> query = _dataContext.Consultas
             .Include( c => c.PerguntaRespostas)

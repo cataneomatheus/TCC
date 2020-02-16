@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TCC.Domain.consultas;
 using TCC.Repository.consultas;
+using TCC.WebAPI.Views.Consulta;
 
 namespace TCC.WebAPI.Controllers.consultas
 {
@@ -28,7 +29,27 @@ namespace TCC.WebAPI.Controllers.consultas
         {
             try
             {
-                var result = await Rep.GelAllConsultas();
+                var consultas = await Rep.GelAllConsultas();
+                var result = mapper.Map<IEnumerable<ConsultaView>>(consultas);
+
+                return Ok(result);
+            }
+            catch (System.Exception)
+            {
+
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Banco de dados falhou");
+            }
+
+        }
+
+        [HttpGet("{ConsultaId}")]
+        public async Task<IActionResult> Get(int ConsultaId)
+        {
+            try
+            {
+                var consulta = await Rep.GetConsultaAsyncById(ConsultaId);
+
+                var result = mapper.Map<ConsultaView>(consulta);
 
                 return Ok(result);
             }
@@ -67,26 +88,26 @@ namespace TCC.WebAPI.Controllers.consultas
         {
             try
             {
-                var consulta = await Rep.GetEventoAsyncById(ConsultaId);
+                var consulta = await Rep.GetConsultaAsyncById(ConsultaId);
                 if(consulta == null) return NotFound();
 
-                var idPerguntaRespostas = new List<int>();
-                var idExames = new List<int>();
+                // var idPerguntaRespostas = new List<int>();
+                // var idExames = new List<int>();
 
-                model.PerguntaRespostas.ForEach(item => idPerguntaRespostas.Add(item.Id));
-                model.Exames.ForEach(item => idExames.Add(item.Id));
+                // model.PerguntaRespostas.ForEach(item => idPerguntaRespostas.Add(item.Id));
+                // model.Exames.ForEach(item => idExames.Add(item.Id));
 
-                var perguntasRespostas = consulta.PerguntaRespostas.Where(
-                    perguntaResposta => !idPerguntaRespostas.Contains(perguntaResposta.Id))
-                    .ToArray();
+                // var perguntasRespostas = consulta.PerguntaRespostas.Where(
+                //     perguntaResposta => !idPerguntaRespostas.Contains(perguntaResposta.Id))
+                //     .ToArray();
 
-                var exames = consulta.Exames.Where(
-                    exame => !idExames.Contains(exame.Id))
-                    .ToArray();
+                // var exames = consulta.Exames.Where(
+                //     exame => !idExames.Contains(exame.Id))
+                //     .ToArray();
 
-                if(perguntasRespostas.Any())  Rep.DeleteRange(perguntasRespostas);
+                // if(perguntasRespostas.Any())  Rep.DeleteRange(perguntasRespostas);
 
-                if(exames.Any())  Rep.DeleteRange(exames);
+                // if(exames.Any())  Rep.DeleteRange(exames);
 
                 mapper.Map(model, consulta);
 
@@ -112,7 +133,7 @@ namespace TCC.WebAPI.Controllers.consultas
         {
             try
             {
-                var consulta = await Rep.GetEventoAsyncById(ConsultaId);
+                var consulta = await Rep.GetConsultaAsyncById(ConsultaId);
                 if(consulta == null) return NotFound();
 
                 Rep.Delete(consulta);

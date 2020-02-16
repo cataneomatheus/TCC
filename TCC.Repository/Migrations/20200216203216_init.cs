@@ -50,6 +50,24 @@ namespace TCC.Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Consultas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    NomePaciente = table.Column<string>(nullable: true),
+                    DataNascimento = table.Column<DateTime>(nullable: false),
+                    Sexo = table.Column<string>(nullable: true),
+                    TipoAtendimento = table.Column<string>(nullable: true),
+                    QueixaPrincipal = table.Column<string>(nullable: true),
+                    InicioSintomas = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Consultas", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Eventos",
                 columns: table => new
                 {
@@ -192,6 +210,48 @@ namespace TCC.Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Exames",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Nome = table.Column<string>(nullable: true),
+                    ImgExame = table.Column<string>(nullable: true),
+                    ConsultaId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Exames", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Exames_Consultas_ConsultaId",
+                        column: x => x.ConsultaId,
+                        principalTable: "Consultas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PerguntaRespostas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Pergunta = table.Column<string>(nullable: true),
+                    Resposta = table.Column<string>(nullable: true),
+                    ConsultaId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PerguntaRespostas", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PerguntaRespostas_Consultas_ConsultaId",
+                        column: x => x.ConsultaId,
+                        principalTable: "Consultas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Lotes",
                 columns: table => new
                 {
@@ -305,6 +365,11 @@ namespace TCC.Repository.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Exames_ConsultaId",
+                table: "Exames",
+                column: "ConsultaId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Lotes_EventoId",
                 table: "Lotes",
                 column: "EventoId");
@@ -313,6 +378,11 @@ namespace TCC.Repository.Migrations
                 name: "IX_PalestranteEventos_PalestranteId",
                 table: "PalestranteEventos",
                 column: "PalestranteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PerguntaRespostas_ConsultaId",
+                table: "PerguntaRespostas",
+                column: "ConsultaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RedeSociais_EventoId",
@@ -343,10 +413,16 @@ namespace TCC.Repository.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Exames");
+
+            migrationBuilder.DropTable(
                 name: "Lotes");
 
             migrationBuilder.DropTable(
                 name: "PalestranteEventos");
+
+            migrationBuilder.DropTable(
+                name: "PerguntaRespostas");
 
             migrationBuilder.DropTable(
                 name: "RedeSociais");
@@ -356,6 +432,9 @@ namespace TCC.Repository.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Consultas");
 
             migrationBuilder.DropTable(
                 name: "Eventos");

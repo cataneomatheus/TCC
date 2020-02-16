@@ -16,6 +16,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using TCC.Domain.Identity;
 using TCC.Repository;
+using TCC.Repository.consultas;
 
 namespace TCC.WebAPI
 {
@@ -76,6 +77,7 @@ namespace TCC.WebAPI
                 Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             
             services.AddScoped<ITCCRepository, TCCRepository>();
+            services.AddScoped<IRepConsulta, RepConsulta>();
             services.AddAutoMapper();
             services.AddCors();
         }

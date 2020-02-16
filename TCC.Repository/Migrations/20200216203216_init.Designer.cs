@@ -9,7 +9,7 @@ using TCC.Repository;
 namespace TCC.Repository.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200207014116_init")]
+    [Migration("20200216203216_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -175,6 +175,64 @@ namespace TCC.Repository.Migrations
                     b.ToTable("AspNetUserRoles");
                 });
 
+            modelBuilder.Entity("TCC.Domain.consultas.Consulta", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("DataNascimento");
+
+                    b.Property<string>("InicioSintomas");
+
+                    b.Property<string>("NomePaciente");
+
+                    b.Property<string>("QueixaPrincipal");
+
+                    b.Property<string>("Sexo");
+
+                    b.Property<string>("TipoAtendimento");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Consultas");
+                });
+
+            modelBuilder.Entity("TCC.Domain.consultas.Exame", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("ConsultaId");
+
+                    b.Property<string>("ImgExame");
+
+                    b.Property<string>("Nome");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConsultaId");
+
+                    b.ToTable("Exames");
+                });
+
+            modelBuilder.Entity("TCC.Domain.consultas.PerguntaResposta", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("ConsultaId");
+
+                    b.Property<string>("Pergunta");
+
+                    b.Property<string>("Resposta");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConsultaId");
+
+                    b.ToTable("PerguntaRespostas");
+                });
+
             modelBuilder.Entity("TCC.Domain.curso.Evento", b =>
                 {
                     b.Property<int>("Id")
@@ -320,6 +378,22 @@ namespace TCC.Repository.Migrations
                     b.HasOne("TCC.Domain.Identity.User", "User")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TCC.Domain.consultas.Exame", b =>
+                {
+                    b.HasOne("TCC.Domain.consultas.Consulta")
+                        .WithMany("Exames")
+                        .HasForeignKey("ConsultaId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TCC.Domain.consultas.PerguntaResposta", b =>
+                {
+                    b.HasOne("TCC.Domain.consultas.Consulta")
+                        .WithMany("PerguntaRespostas")
+                        .HasForeignKey("ConsultaId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

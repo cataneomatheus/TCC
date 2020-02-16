@@ -18,6 +18,7 @@ export class ConsultaComponent implements OnInit {
   consulta: Consulta;
   registerForm: FormGroup;
   bodyDeletarConsulta: string;
+  acao = 'post';
 
   _filtroLista: string;
   
@@ -69,6 +70,7 @@ export class ConsultaComponent implements OnInit {
     }
     
     novaConsulta(template: any) {
+      this.acao = 'post';
       this.openModal(template);
     }
     
@@ -83,16 +85,59 @@ export class ConsultaComponent implements OnInit {
       });
     }
     
-    editarConsulta() {
-      console.log('Nao implementado');
+    editarConsulta(consulta: Consulta, template: any) {
+      this.acao = 'put';
+      this.openModal(template);
+      this.consulta = Object.assign({}, consulta);
+      this.registerForm.patchValue(this.consulta);
     }
 
-    excluirConsulta() {
-      console.log('Nao implementado');
+    excluirConsulta(consulta: Consulta, template: any) {
+      this.openModal(template);
+      this.consulta = consulta;
+      this.bodyDeletarConsulta = `Tem certeza que deseja EXCLUIR a consulta: ${consulta.nomePaciente}, do atendimento: ${consulta.tipoAtendimento}, código: ${consulta.id}`;
     }
 
-    salvarAlteracao() {
-      console.log('Nao implementado');
+    confirmeDelete(template: any) {
+      this.consultaService.deleteConsulta(this.consulta.id).subscribe(
+        () => {
+          template.hide();
+          this.getConsultas();
+          this.toastr.success('Deletado consulta  com sucesso');
+        }, error => {
+          this.toastr.error('Erro ao excluir.');
+        }
+      );
+    }
+
+    salvar(template: any) {
+      if(this.registerForm.valid) {
+        if(this.acao === 'post') {
+          this.consulta = Object.assign({}, this.registerForm.value);
+
+          this.consultaService.postConsulta(this.consulta).subscribe(
+            (response: Consulta) => {
+              template.hide();
+              this.getConsultas();
+              this.toastr.success('Inserida consulta com sucesso.');
+            }, error => {
+              this.toastr.error('Erro ao inserir');
+            }
+          );
+        } else {
+          this.consulta = Object.assign({id: this.consulta.id}, this.registerForm.value);
+
+          this.consultaService.putConsulta(this.consulta).subscribe(
+            (response: Consulta) => {
+              template.hide();
+              this.getConsultas();
+              this.toastr.success('Editado consulta com sucesso.');
+            }, error => {
+              this.toastr.error('Erro ao editar');
+            }
+          );
+        }
+      }
     }
     
   }

@@ -152,5 +152,6 @@ namespace TCC.Repository
         {
             _dataContext.RemoveRange(entityArray);
         }
+        
     }
 }
