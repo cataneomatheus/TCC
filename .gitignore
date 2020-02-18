@@ -47,3 +47,6 @@ TCC-App/dist/TCC-App/vendor-es2015.js.map
 package-lock.json
 .vscode/launch.json
 .vscode/tasks.json
+.vs/TCC/DesignTimeBuild/.dtbcache
+.vs/TCC/v16/.suo
+.vs/TCC/v16/Server/sqlite3/storage.ide

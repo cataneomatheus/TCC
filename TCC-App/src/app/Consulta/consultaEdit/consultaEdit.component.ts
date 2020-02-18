@@ -17,8 +17,8 @@ export class ConsultaEditComponent implements OnInit {
   consulta: Consulta = new Consulta();
   registerForm: FormGroup;
 
-  get perguntasRespostas(): FormArray {
-    return <FormArray>this.registerForm.get('perguntasRespostas');
+  get perguntaRespostas(): FormArray {
+    return <FormArray>this.registerForm.get('perguntaRespostas');
   }
 
   get exames(): FormArray {
@@ -37,7 +37,7 @@ export class ConsultaEditComponent implements OnInit {
 
   ngOnInit() {
     this.validation(),
-    this.carregarEvento()
+    this.carregarConsulta()
   }
 
   validation() {
@@ -48,7 +48,7 @@ export class ConsultaEditComponent implements OnInit {
       tipoAtendimento: ['', [Validators.required, Validators.maxLength(50)]],
       queixaPrincipal: ['', [Validators.required, Validators.maxLength(50)]],
       inicioSintomas: ['', [Validators.required, Validators.maxLength(50)]],
-      perguntasRespostas: this.fb.array([]),
+      perguntaRespostas: this.fb.array([]),
       exames: this.fb.array([])
     });
   }
@@ -69,19 +69,25 @@ export class ConsultaEditComponent implements OnInit {
     });
   }
 
-  carregarEvento() {
+  carregarConsulta() {
     const idConsulta = +this.router.snapshot.paramMap.get('id');
     this.consultaService.getConsultaById(idConsulta)
     .subscribe(
       (consulta: Consulta) => {
         this.consulta = Object.assign({}, consulta);
         this.registerForm.patchValue(this.consulta);
+        this.consulta.perguntaRespostas.forEach(perguntaResposta => {
+          this.perguntaRespostas.push(this.criaPerguntaResposta(perguntaResposta));
+        });
+        this.consulta.exames.forEach(exame => {
+          this.exames.push(this.criaExame(exame));
+        });
       }
     );
   }
 
   adicionarPerguntaResposta() {
-    this.perguntasRespostas.push(this.criaPerguntaResposta({id: 0}));
+    this.perguntaRespostas.push(this.criaPerguntaResposta({id: 0}));
   }
 
   adicionarExame() {
@@ -89,7 +95,7 @@ export class ConsultaEditComponent implements OnInit {
   }
 
   removePerguntaResposta(id: number) {
-    this.perguntasRespostas.removeAt(id);
+    this.perguntaRespostas.removeAt(id);
   }
 
   removeExame(id: number) {

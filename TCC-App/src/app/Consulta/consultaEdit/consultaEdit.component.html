@@ -35,7 +35,7 @@
           <div class="invalid-feedback">
             O sexo do paciente é obrigatório
           </div>
-        </div>      
+        </div>
       </div>
       <div class="form-row">
         <div class="form-group col-md-12">
@@ -81,16 +81,16 @@
   Maximo 50 caracteres.
 </div>
 </div>
-</div>  
+</div>
 </tab>
 <tab heading="Perguntas e respostas">
   <div>
-    <div formArrayName="perguntasRespostas" *ngFor="let perguntaResposta of perguntasRespostas.controls; let i=index">
+    <div formArrayName="perguntaRespostas" *ngFor="let perguntaResposta of perguntaRespostas.controls; let i=index">
       <fieldset [formGroupName]="i" class="form-group">
         <legend class="d-flex justify-content-between capitalize">
-          {{ perguntasRespostas.get(i+'.pergunta').value === '' ?
+          {{ perguntaRespostas.get(i+'.pergunta').value === '' ?
           'Perguntas' :
-          perguntasRespostas.get(i+'.pergunta').value
+          perguntaRespostas.get(i+'.pergunta').value
         }}
         <button class="btn btn-sm btn-warning mb-1" (click)="removePerguntaResposta(i)">Remover</button>
       </legend>
@@ -98,13 +98,13 @@
         <div class="form-group col-md-12">
           <label>Pergunta</label>
           <input type="text" class="form-control"
-          [ngClass]="{'is-invalid': perguntasRespostas.get(i+'.pergunta').errors && perguntasRespostas.get(i+'.pergunta').touched}"
+          [ngClass]="{'is-invalid': perguntaRespostas.get(i+'.pergunta').errors && perguntaRespostas.get(i+'.pergunta').touched}"
           formControlName="pergunta" placeholder="Ex: Sennte dor em mais algum lugar?">
         </div>
         <div class="form-group col-md-12">
           <label>Resposta</label>
           <input type="text" class="form-control"
-          [ngClass]="{'is-invalid': perguntasRespostas.get(i+'.resposta').errors && perguntasRespostas.get(i+'.resposta').touched}"
+          [ngClass]="{'is-invalid': perguntaRespostas.get(i+'.resposta').errors && perguntaRespostas.get(i+'.resposta').touched}"
           formControlName="resposta" placeholder="Ex: Sim doutor, minha cabeça também dói..">
         </div>
       </div>
@@ -129,8 +129,8 @@
         <div class="form-group col-md-12">
           <label>Exame</label>
           <input type="text" class="form-control"
-          [ngClass]="{'is-invalid': exames.get(i+'.exame').errors && exames.get(i+'.exame').touched}"
-          formControlName="exame" placeholder="Ex: Raio X">
+          [ngClass]="{'is-invalid': exames.get(i+'.nome').errors && exames.get(i+'.nome').touched}"
+          formControlName="nome" placeholder="Ex: Raio X">
         </div>
         <div class="form-group col-md-12">
           <label>Imagem</label>

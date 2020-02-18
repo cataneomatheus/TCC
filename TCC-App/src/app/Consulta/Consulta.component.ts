@@ -11,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./Consulta.component.css']
 })
 export class ConsultaComponent implements OnInit {
-  
+
   titulo = 'Consultas';
   consultas: Consulta[] = [];
   consultasFiltradas: Consulta[] = [];
@@ -21,7 +21,7 @@ export class ConsultaComponent implements OnInit {
   acao = 'post';
 
   _filtroLista: string;
-  
+
   constructor(
     private consultaService: ConsultaService,
     private fb: FormBuilder,
@@ -30,7 +30,7 @@ export class ConsultaComponent implements OnInit {
     ) {
       this.localeService.use('pt-br')
     }
-    
+
     ngOnInit() {
       this.validation(),
       this.getConsultas()
@@ -51,29 +51,29 @@ export class ConsultaComponent implements OnInit {
       this._filtroLista = value;
       this.consultasFiltradas = this.filtroLista ? this.filtrarEvento(this.filtroLista) : this.consultas;
     }
-    
+
     getConsultas() {
       this.consultaService.getAllConsultas().subscribe(
         (_consultas: Consulta[]) => {
           this.consultas = _consultas;
-          this.consultasFiltradas = this.consultas;          
+          this.consultasFiltradas = this.consultas;
         }, error => {
           this.toastr.error(`Erro ao tentar carregar consultas: ${error}`);
         }
-        
+
       )
     }
-    
+
     openModal(template: any) {
       this.registerForm.reset();
       template.show();
     }
-    
+
     novaConsulta(template: any) {
       this.acao = 'post';
       this.openModal(template);
     }
-    
+
     validation() {
       this.registerForm = this.fb.group({
         nomePaciente: ['', [Validators.required, Validators.maxLength(50)]],
@@ -81,10 +81,12 @@ export class ConsultaComponent implements OnInit {
         dataNascimento: ['', Validators.required],
         tipoAtendimento: ['', [Validators.required, Validators.maxLength(50)]],
         queixaPrincipal: ['', [Validators.required, Validators.maxLength(50)]],
-        inicioSintomas: ['', [Validators.required, Validators.maxLength(50)]]
+        inicioSintomas: ['', [Validators.required, Validators.maxLength(50)]],
+        perguntaRespostas: this.fb.array([]),
+        exames: this.fb.array([])
       });
     }
-    
+
     editarConsulta(consulta: Consulta, template: any) {
       this.acao = 'put';
       this.openModal(template);
@@ -139,5 +141,5 @@ export class ConsultaComponent implements OnInit {
         }
       }
     }
-    
+
   }

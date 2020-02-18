@@ -10,5 +10,5 @@ export class Consulta {
     queixaPrincipal: string;
     inicioSintomas: string;
     exames: Exame[];
-    PerguntaRespostas: PerguntaResposta[];
+    perguntaRespostas: PerguntaResposta[];
 }
