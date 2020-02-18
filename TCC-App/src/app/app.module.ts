@@ -26,6 +26,7 @@ import { ConsultaService } from './services/Consulta/consulta.service';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { EventoEditComponent } from './Evento/eventoEdit/eventoEdit.component';
 import { ConsultaComponent } from './Consulta/Consulta.component';
+import { ConsultaEditComponent } from './Consulta/consultaEdit/consultaEdit.component';
 
 @NgModule({
    declarations: [
@@ -41,7 +42,8 @@ import { ConsultaComponent } from './Consulta/Consulta.component';
       UserComponent,
       LoginComponent,
       RegistrationComponent,
-      ConsultaComponent
+      ConsultaComponent,
+      ConsultaEditComponent
    ],
    imports: [
       BrowserModule,

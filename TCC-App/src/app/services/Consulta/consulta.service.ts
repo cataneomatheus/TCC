@@ -16,6 +16,10 @@ getAllConsultas(): Observable<Consulta[]> {
   return this.http.get<Consulta[]>(this.baseUrl);
 }
 
+getConsultaById(id: number): Observable<Consulta> {
+  return this.http.get<Consulta>(`${this.baseUrl}/${id}`);
+}
+
 postConsulta(consulta: Consulta){
   return this.http.post(this.baseUrl, consulta);
 }

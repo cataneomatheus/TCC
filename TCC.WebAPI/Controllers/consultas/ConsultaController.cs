@@ -91,23 +91,23 @@ namespace TCC.WebAPI.Controllers.consultas
                 var consulta = await Rep.GetConsultaAsyncById(ConsultaId);
                 if(consulta == null) return NotFound();
 
-                // var idPerguntaRespostas = new List<int>();
-                // var idExames = new List<int>();
+                var idPerguntaRespostas = new List<int>();
+                var idExames = new List<int>();
 
-                // model.PerguntaRespostas.ForEach(item => idPerguntaRespostas.Add(item.Id));
-                // model.Exames.ForEach(item => idExames.Add(item.Id));
+                model.PerguntaRespostas.ForEach(item => idPerguntaRespostas.Add(item.Id));
+                model.Exames.ForEach(item => idExames.Add(item.Id));
 
-                // var perguntasRespostas = consulta.PerguntaRespostas.Where(
-                //     perguntaResposta => !idPerguntaRespostas.Contains(perguntaResposta.Id))
-                //     .ToArray();
+                var perguntasRespostas = consulta.PerguntaRespostas.Where(
+                    perguntaResposta => !idPerguntaRespostas.Contains(perguntaResposta.Id))
+                    .ToArray();
 
-                // var exames = consulta.Exames.Where(
-                //     exame => !idExames.Contains(exame.Id))
-                //     .ToArray();
+                var exames = consulta.Exames.Where(
+                    exame => !idExames.Contains(exame.Id))
+                    .ToArray();
 
-                // if(perguntasRespostas.Any())  Rep.DeleteRange(perguntasRespostas);
+                if(perguntasRespostas.Any())  Rep.DeleteRange(perguntasRespostas);
 
-                // if(exames.Any())  Rep.DeleteRange(exames);
+                if(exames.Any())  Rep.DeleteRange(exames);
 
                 mapper.Map(model, consulta);
 
