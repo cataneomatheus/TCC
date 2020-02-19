@@ -94,6 +94,16 @@ namespace TCC.WebAPI.Controllers.consultas
                 var idPerguntaRespostas = new List<int>();
                 var idExames = new List<int>();
 
+                if(model.Exames == null)
+                {
+                    model.Exames = consulta.Exames;
+                }
+
+                if (model.PerguntaRespostas == null)
+                {
+                    model.PerguntaRespostas = consulta.PerguntaRespostas;
+                }
+
                 model.PerguntaRespostas.ForEach(item => idPerguntaRespostas.Add(item.Id));
                 model.Exames.ForEach(item => idExames.Add(item.Id));
 

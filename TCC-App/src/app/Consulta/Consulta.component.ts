@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { Consulta } from '../models/Consulta/Consulta';
 import { BsLocaleService } from 'ngx-bootstrap';
 import { ConsultaService } from '../services/Consulta/consulta.service';
@@ -81,9 +81,7 @@ export class ConsultaComponent implements OnInit {
         dataNascimento: ['', Validators.required],
         tipoAtendimento: ['', [Validators.required, Validators.maxLength(50)]],
         queixaPrincipal: ['', [Validators.required, Validators.maxLength(50)]],
-        inicioSintomas: ['', [Validators.required, Validators.maxLength(50)]],
-        perguntaRespostas: this.fb.array([]),
-        exames: this.fb.array([])
+        inicioSintomas: ['', [Validators.required, Validators.maxLength(50)]]
       });
     }
 
@@ -128,7 +126,7 @@ export class ConsultaComponent implements OnInit {
           );
         } else {
           this.consulta = Object.assign({id: this.consulta.id}, this.registerForm.value);
-
+          debugger;
           this.consultaService.putConsulta(this.consulta).subscribe(
             (response: Consulta) => {
               template.hide();

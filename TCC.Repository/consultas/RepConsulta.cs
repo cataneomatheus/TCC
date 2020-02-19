@@ -24,9 +24,9 @@ namespace TCC.Repository.consultas
             _dataContext.Remove(entity);
         }
 
-        public void DeleteRange<T>(T[] entity) where T : class
+        public void DeleteRange<T>(T[] entityArray) where T : class
         {
-            throw new System.NotImplementedException();
+            _dataContext.RemoveRange(entityArray);
         }
 
         public async Task<Consulta[]> GelAllConsultas()
