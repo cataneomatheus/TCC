@@ -126,7 +126,7 @@ export class ConsultaComponent implements OnInit {
           );
         } else {
           this.consulta = Object.assign({id: this.consulta.id}, this.registerForm.value);
-          debugger;
+          
           this.consultaService.putConsulta(this.consulta).subscribe(
             (response: Consulta) => {
               template.hide();
