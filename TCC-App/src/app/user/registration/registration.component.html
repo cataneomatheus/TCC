@@ -1,7 +1,7 @@
 <div class="row mt-4">
-  <div class="col-md-6" style="height: 450px;">
+  <div class="col-md-6" style="height: 100px;">
     <div class="row col-md-12 my-auto side-heder">
-      <h1>Cadastro de Usuário</h1>
+      <h1>Cadastre-se</h1>
     </div>
   </div>
   <div class="col-md-6">
@@ -21,7 +21,7 @@
       <div class="form-group">
         <label for="">Email:</label>
         <input class="form-control" type="text" formControlName="email"
-          [ngClass]="{ 'is-invalid': registerForm.get('email').errors && 
+          [ngClass]="{ 'is-invalid': registerForm.get('email').errors &&
                                      registerForm.get('email').touched}"
           placeholder="Insira o Nome Completo"/>
         <div *ngIf="registerForm.get('email').hasError('required') &&
@@ -67,9 +67,9 @@
         <div class="form-group">
           <label for="">Confirmar Senha:</label>
           <input class="form-control" type="password" formControlName="confirmPassword"
-            [ngClass]="{ 'is-invalid': registerForm.get('passwords.confirmPassword').errors 
-                         && registerForm.get('passwords.confirmPassword').touched 
-                         ||registerForm.get('passwords.confirmPassword').hasError('mismatch') 
+            [ngClass]="{ 'is-invalid': registerForm.get('passwords.confirmPassword').errors
+                         && registerForm.get('passwords.confirmPassword').touched
+                         ||registerForm.get('passwords.confirmPassword').hasError('mismatch')
                          && registerForm.get('passwords.confirmPassword').touched }"
             placeholder="Confirme a Senha" />
           <div *ngIf="registerForm.get('passwords.confirmPassword').hasError('required') &&
@@ -77,7 +77,7 @@
             class="invalid-feedback">
             Confirme a Senha
           </div>
-          <div *ngIf="registerForm.get('passwords.confirmPassword').hasError('mismatch') 
+          <div *ngIf="registerForm.get('passwords.confirmPassword').hasError('mismatch')
                       && registerForm.get('passwords.confirmPassword').touched"
             class="invalid-feedback">
             Confirmação não confere
