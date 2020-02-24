@@ -20,6 +20,14 @@ getConsultaById(id: number): Observable<Consulta> {
   return this.http.get<Consulta>(`${this.baseUrl}/${id}`);
 }
 
+postUpload(file: File, nome: string) {
+  const fileToUpload = <File>file[0];
+  const formData = new FormData();
+  formData.append('file', fileToUpload, nome);
+
+  return this.http.post(`${this.baseUrl}/upload`, formData);
+}
+
 postConsulta(consulta: Consulta){
   return this.http.post(this.baseUrl, consulta);
 }

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { EventoComponent } from './Evento/Evento.component';
@@ -27,6 +27,10 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { EventoEditComponent } from './Evento/eventoEdit/eventoEdit.component';
 import { ConsultaComponent } from './Consulta/Consulta.component';
 import { ConsultaEditComponent } from './Consulta/consultaEdit/consultaEdit.component';
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
+
+registerLocaleData(localePt);
 
 @NgModule({
    declarations: [
@@ -77,6 +81,10 @@ import { ConsultaEditComponent } from './Consulta/consultaEdit/consultaEdit.comp
          provide: HTTP_INTERCEPTORS,
          useClass: AuthInterceptor,
          multi: true
+      },
+      { 
+         provide: LOCALE_ID, 
+         useValue: 'pt'
       }
       
    ],

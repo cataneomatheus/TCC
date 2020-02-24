@@ -134,9 +134,19 @@
         </div>
         <div class="form-group col-md-12">
           <label>Imagem</label>
-          <input type="text" class="form-control"
-          [ngClass]="{'is-invalid': exames.get(i+'.imgExame').errors && exames.get(i+'.imgExame').touched}"
-          formControlName="imgExame">
+          <table>
+            <tr>
+              <td>
+                <button class="btn btn-success" (click)="file.click()"> Enviar imagem</button>
+                <input type="file" #file [ngClass]="{'is-invalid': exames.get(i+'.imgExame').errors && 
+                exames.get(i+'.imgExame').touched}" (change)="onFileChange($event)" 
+                formControlName="imgExame" placeholder="Selecione uma imagem" style="display: none;">
+              </td>
+            </tr>
+          </table>
+          <div class="invalid-feedback">
+            Imagem é obrigatório
+          </div>
         </div>
       </div>
     </fieldset>
@@ -148,7 +158,6 @@
 </tabset>
 <div class="row">
   <div class="col-md-12 d-flex justify-content-end">
-    <!-- {{registerForm.value | json}} -->
     <button [disabled]="!registerForm.valid" class="btn btn-success my-2" (click)="salvarConsulta()">Salvar
       Alterações</button>
     </div>

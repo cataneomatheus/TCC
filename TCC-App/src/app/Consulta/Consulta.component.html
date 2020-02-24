@@ -92,7 +92,7 @@
           <label>Data de nascimento</label>
           <input type="text" class="form-control" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY'}"
           [ngClass]="{'is-invalid': registerForm.get('dataNascimento').errors
-          && registerForm.get('dataNascimento').touched}" formControlName="dataNascimento">
+          && registerForm.get('dataNascimento').touched}" formControlName="dataNascimento">         
           <div *ngIf="registerForm.get('dataNascimento').hasError('required') && registerForm.get('dataNascimento').touched"
           class="invalid-feedback">A data de nascimento é obrigatório.</div>
         </div>

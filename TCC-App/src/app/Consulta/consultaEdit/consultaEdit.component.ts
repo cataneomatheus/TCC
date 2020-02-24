@@ -16,6 +16,9 @@ export class ConsultaEditComponent implements OnInit {
   titulo = 'Edição detalhada de consulta';
   consulta: Consulta = new Consulta();
   registerForm: FormGroup;
+  file: File;
+  fileNameToUpdate: string;
+  dataAtual: string;
 
   get perguntaRespostas(): FormArray {
     return <FormArray>this.registerForm.get('perguntaRespostas');
@@ -75,10 +78,21 @@ export class ConsultaEditComponent implements OnInit {
     .subscribe(
       (consulta: Consulta) => {
         this.consulta = Object.assign({}, consulta);
+        debugger;
+        this.consulta.exames.forEach(exame => {
+          if(exame.imgExame.startsWith('C:\\')) {
+            this.fileNameToUpdate =  exame.imgExame.split('\\', 3)[2];
+            
+          } else {
+            this.fileNameToUpdate = exame.imgExame.toString();
+          }
+        });
         this.registerForm.patchValue(this.consulta);
+
         this.consulta.perguntaRespostas.forEach(perguntaResposta => {
           this.perguntaRespostas.push(this.criaPerguntaResposta(perguntaResposta));
         });
+
         this.consulta.exames.forEach(exame => {
           this.exames.push(this.criaExame(exame));
         });
@@ -105,6 +119,19 @@ export class ConsultaEditComponent implements OnInit {
   salvarConsulta() {
     this.consulta = Object.assign({ id: this.consulta.id }, this.registerForm.value);
 
+    this.consulta.exames.forEach(exame => {
+      if(exame.imgExame.startsWith('C:\\')) {
+        const nomeArquivo = exame.imgExame.split('\\', 3);
+        exame.imgExame = nomeArquivo[2];
+        this.uploadImagem(this.file, nomeArquivo[2]);
+        
+      } else {
+        exame.imgExame = this.fileNameToUpdate;
+        this.uploadImagem(this.file, this.fileNameToUpdate);
+      }
+    });
+
+    debugger;
     this.consultaService.putConsulta(this.consulta).subscribe(
       () => {
         this.toastr.success('Editado consulta com sucesso');
@@ -112,6 +139,24 @@ export class ConsultaEditComponent implements OnInit {
         this.toastr.error(`Erro ao editar consulta: ${error}`);
       }
     );
+  }
+
+  uploadImagem(arquivo: File, nome: any) {
+    debugger;
+      this.consultaService.postUpload(arquivo, nome).
+      subscribe(
+        () => {
+          this.dataAtual = new Date().getMilliseconds().toString();
+        }
+      );
+    }
+
+  onFileChange(event) {
+    const reader = new FileReader();
+
+    if(event.target.files && event.target.files.length) {
+      this.file = event.target.files;
+    }
   }
 
 }
