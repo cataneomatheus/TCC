@@ -1,24 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { Consulta } from 'src/app/models/Consulta/Consulta';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { ConsultaService } from 'src/app/services/Consulta/consulta.service';
+import { Consulta } from '../models/Consulta/Consulta';
+import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
+import { ConsultaService } from '../services/Consulta/consulta.service';
 import { BsLocaleService } from 'ngx-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-consultaEdit',
-  templateUrl: './consultaEdit.component.html',
-  styleUrls: ['./consultaEdit.component.css']
+  selector: 'app-Simulacao',
+  templateUrl: './Simulacao.component.html',
+  styleUrls: ['./Simulacao.component.css']
 })
-export class ConsultaEditComponent implements OnInit {
+export class SimulacaoComponent implements OnInit {
 
-  titulo = 'Edição detalhada de consulta';
+  titulo = 'Simulação';
   consulta: Consulta = new Consulta();
   registerForm: FormGroup;
-  file: File;
-  fileNameToUpdate: string;
-  dataAtual: string;
 
   get perguntaRespostas(): FormArray {
     return <FormArray>this.registerForm.get('perguntaRespostas');
@@ -77,15 +74,8 @@ export class ConsultaEditComponent implements OnInit {
     this.consultaService.getConsultaById(idConsulta)
     .subscribe(
       (consulta: Consulta) => {
-        this.consulta = Object.assign({}, consulta);
-        this.consulta.exames.forEach(exame => {
-          if(exame.imgExame.startsWith('C:\\')) {
-            this.fileNameToUpdate =  exame.imgExame.split('\\', 3)[2];
-            
-          } else {
-            this.fileNameToUpdate = exame.imgExame.toString();
-          }
-        });
+                
+        this.consulta = Object.assign({}, consulta);        
         this.registerForm.patchValue(this.consulta);
 
         this.consulta.perguntaRespostas.forEach(perguntaResposta => {
@@ -97,63 +87,6 @@ export class ConsultaEditComponent implements OnInit {
         });
       }
     );
-  }
-
-  adicionarPerguntaResposta() {
-    this.perguntaRespostas.push(this.criaPerguntaResposta({id: 0}));
-  }
-
-  adicionarExame() {
-    this.exames.push(this.criaExame({id: 0}));
-  }
-
-  removePerguntaResposta(id: number) {
-    this.perguntaRespostas.removeAt(id);
-  }
-
-  removeExame(id: number) {
-    this.exames.removeAt(id);
-  }
-
-  salvarConsulta() {
-    this.consulta = Object.assign({ id: this.consulta.id }, this.registerForm.value);
-
-    this.consulta.exames.forEach(exame => {
-      if(exame.imgExame.startsWith('C:\\')) {
-        const nomeArquivo = exame.imgExame.split('\\', 3);
-        exame.imgExame = nomeArquivo[2];
-        this.uploadImagem(this.file, nomeArquivo[2]);
-        
-      } else {
-        exame.imgExame = this.fileNameToUpdate;
-        this.uploadImagem(this.file, this.fileNameToUpdate);
-      }
-    });
-
-    this.consultaService.putConsulta(this.consulta).subscribe(
-      () => {
-        this.toastr.success('Editado consulta com sucesso');
-      }, error => {
-        this.toastr.error(`Erro ao editar consulta: ${error}`);
-      }
-    );
-  }
-
-  uploadImagem(arquivo: File, nome: any) {    
-      this.consultaService.postUpload(arquivo, nome).
-      subscribe(
-        () => {
-          this.dataAtual = new Date().getMilliseconds().toString();
-        }
-      );
-    }
-
-  onFileChange(event) {
-    const reader = new FileReader();
-
-    if(event.target.files && event.target.files.length) {
-      this.file = event.target.files;
-    }
   }
 
 }

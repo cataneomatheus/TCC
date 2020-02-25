@@ -1,0 +1,36 @@
+<app-titulo [titulo]="titulo"></app-titulo>
+<form [formGroup]="registerForm">
+  <div class="row">
+    <div class="col-md-8">
+      <img src="http://localhost:5000/resources/images/consultaTeste.jpg">
+    </div>
+    <div class="col-md-4">
+      <tabset>
+        <tab heading="Perguntas">
+          <div formArrayName="perguntaRespostas" *ngFor="let perguntaResposta of perguntaRespostas.controls; let i=index">
+            <fieldset [formGroupName]="i" class="form-group">
+              <legend class="d-flex justify-content-between capitalize">
+                {{ perguntaRespostas.get(i+'.pergunta').value === '' ?
+                'Perguntas' :
+                perguntaRespostas.get(i+'.pergunta').value
+              }}
+            </legend>
+          </fieldset>
+        </div>
+      </tab>
+      <tab heading="Exames">
+        <div formArrayName="exames" *ngFor="let exame of exames.controls; let i=index">
+          <fieldset [formGroupName]="i" class="form-group">
+            <legend class="d-flex justify-content-between capitalize">
+              {{ exames.get(i+'.nome').value === '' ?
+              'Exame: ' :
+              exames.get(i+'.nome').value
+            }}
+          </legend>
+        </fieldset>
+      </div>
+    </tab>
+  </tabset>
+</div>
+</div>
+</form>

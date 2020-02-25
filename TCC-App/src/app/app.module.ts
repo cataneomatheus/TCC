@@ -29,6 +29,7 @@ import { ConsultaComponent } from './Consulta/Consulta.component';
 import { ConsultaEditComponent } from './Consulta/consultaEdit/consultaEdit.component';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
+import { SimulacaoComponent } from './Simulacao/Simulacao.component';
 
 registerLocaleData(localePt);
 
@@ -47,7 +48,8 @@ registerLocaleData(localePt);
       LoginComponent,
       RegistrationComponent,
       ConsultaComponent,
-      ConsultaEditComponent
+      ConsultaEditComponent,
+      SimulacaoComponent
    ],
    imports: [
       BrowserModule,

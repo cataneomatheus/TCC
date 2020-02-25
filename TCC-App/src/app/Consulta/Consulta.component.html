@@ -48,6 +48,11 @@
         <i class="fa fa-edit"></i>
       </a>
     </td>
+    <td>
+      <a [routerLink]="['/simulacao', consulta.id, 'edit']" tooltip="Simulação" class="btn btn-sm btn-warning">
+        <i class="fa fa-edit"></i>
+      </a>
+    </td>
     </tr>
   </tbody>
   <tfoot *ngIf="!consultas">
