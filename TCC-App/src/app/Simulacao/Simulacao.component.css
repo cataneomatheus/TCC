@@ -1,0 +1,13 @@
+#imagemConsulta {
+    display: inline-block;
+    position: relative;
+  }
+  
+  #imagemConsulta legend {
+    position: absolute;
+    top: 145px;
+    left: 60px;
+    font-size: 30px;
+    color: black;
+    text-shadow: 0px 0px 5px black;
+  }
