@@ -137,9 +137,9 @@
           <table>
             <tr>
               <td>
-                <button class="btn btn-success" (click)="file.click()"> Enviar imagem</button>
-                <input type="file" #file [ngClass]="{'is-invalid': exames.get(i+'.imgExame').errors && 
-                exames.get(i+'.imgExame').touched}" (change)="onFileChange($event)" 
+                <button class="btn btn-success"> Enviar imagem</button>
+                <input type="file" #file [ngClass]="{'is-invalid': exames.get(i+'.imgExame').errors &&
+                exames.get(i+'.imgExame').touched}" (change)="onFileChange($event, $event.target.files)"
                 formControlName="imgExame" placeholder="Selecione uma imagem" style="display: none;">
               </td>
             </tr>

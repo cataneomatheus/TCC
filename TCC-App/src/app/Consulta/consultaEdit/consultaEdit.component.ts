@@ -78,14 +78,7 @@ export class ConsultaEditComponent implements OnInit {
     .subscribe(
       (consulta: Consulta) => {
         this.consulta = Object.assign({}, consulta);
-        this.consulta.exames.forEach(exame => {
-          if(exame.imgExame.startsWith('C:\\')) {
-            this.fileNameToUpdate =  exame.imgExame.split('\\', 3)[2];
-            
-          } else {
-            this.fileNameToUpdate = exame.imgExame.toString();
-          }
-        });
+
         this.registerForm.patchValue(this.consulta);
 
         this.consulta.perguntaRespostas.forEach(perguntaResposta => {
@@ -93,7 +86,10 @@ export class ConsultaEditComponent implements OnInit {
         });
 
         this.consulta.exames.forEach(exame => {
+          debugger;
           this.exames.push(this.criaExame(exame));
+          this.fileNameToUpdate = exame.imgExame.toString();
+          exame.imgExame = '';
         });
       }
     );
@@ -123,7 +119,7 @@ export class ConsultaEditComponent implements OnInit {
         const nomeArquivo = exame.imgExame.split('\\', 3);
         exame.imgExame = nomeArquivo[2];
         this.uploadImagem(this.file, nomeArquivo[2]);
-        
+
       } else {
         exame.imgExame = this.fileNameToUpdate;
         this.uploadImagem(this.file, this.fileNameToUpdate);
@@ -139,7 +135,7 @@ export class ConsultaEditComponent implements OnInit {
     );
   }
 
-  uploadImagem(arquivo: File, nome: any) {    
+  uploadImagem(arquivo: File, nome: any) {
       this.consultaService.postUpload(arquivo, nome).
       subscribe(
         () => {
@@ -148,12 +144,15 @@ export class ConsultaEditComponent implements OnInit {
       );
     }
 
-  onFileChange(event) {
-    const reader = new FileReader();
+    onFileChange(evento: any, file: FileList) {
+      const reader = new FileReader();
 
-    if(event.target.files && event.target.files.length) {
-      this.file = event.target.files;
+      reader.onload = (event: any) => this.consulta.exames.forEach(exame => {
+        exame.imgExame = event.target.result;
+        this.file = evento.target.files;
+      });
+
+      reader.readAsDataURL(file[0]);
     }
-  }
 
 }
