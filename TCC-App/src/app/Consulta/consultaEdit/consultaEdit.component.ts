@@ -87,10 +87,12 @@ export class ConsultaEditComponent implements OnInit {
 
         this.consulta.exames.forEach(exame => {
           debugger;
-          this.exames.push(this.criaExame(exame));
           this.fileNameToUpdate = exame.imgExame.toString();
           exame.imgExame = '';
+          this.exames.push(this.criaExame(exame));
         });
+
+        this.registerForm.patchValue(this.consulta);
       }
     );
   }
@@ -144,15 +146,21 @@ export class ConsultaEditComponent implements OnInit {
       );
     }
 
-    onFileChange(evento: any, file: FileList) {
+    onFileChange(event) {
       const reader = new FileReader();
 
-      reader.onload = (event: any) => this.consulta.exames.forEach(exame => {
-        exame.imgExame = event.target.result;
-        this.file = evento.target.files;
+      reader.onload = (evento: any) => this.consulta.exames.forEach(exame => {
+        exame.imgExame = evento.target.result;
+        this.file = event.target.files[0];
+        this.registerForm.controls.exames.controls[0].controls.imgExame.setValue(this.file ? this.file.name : '');
       });
 
-      reader.readAsDataURL(file[0]);
-    }
+      reader.readAsDataURL(event.target.files[0]);
+
+    //   if(event.target.files && event.target.files.length) {
+    //     this.file = event.target.files[0];
+    //     this.registerForm.controls['imgExame'].setValue(this.file ? this.file.name : '');
+    // }
+  }
 
 }
