@@ -85,10 +85,8 @@ export class ConsultaEditComponent implements OnInit {
           this.perguntaRespostas.push(this.criaPerguntaResposta(perguntaResposta));
         });
 
-        this.consulta.exames.forEach(exame => {
-          debugger;
-          this.fileNameToUpdate = exame.imgExame.toString();
-          exame.imgExame = '';
+        this.consulta.exames.forEach(exame => {          
+          this.fileNameToUpdate = exame.imgExame.toString();          
           this.exames.push(this.criaExame(exame));
         });
 
@@ -104,6 +102,10 @@ export class ConsultaEditComponent implements OnInit {
   adicionarExame() {
     this.exames.push(this.criaExame({id: 0}));
   }
+
+  createItem(data): FormGroup {
+    return this.fb.group(data);
+}
 
   removePerguntaResposta(id: number) {
     this.perguntaRespostas.removeAt(id);
@@ -146,21 +148,13 @@ export class ConsultaEditComponent implements OnInit {
       );
     }
 
-    onFileChange(event) {
-      const reader = new FileReader();
+    onFileChange(event: any, file: FileList) {
+      let reader = new FileReader();
 
-      reader.onload = (evento: any) => this.consulta.exames.forEach(exame => {
-        exame.imgExame = evento.target.result;
-        this.file = event.target.files[0];
-        this.registerForm.controls.exames.controls[0].controls.imgExame.setValue(this.file ? this.file.name : '');
-      });
-
-      reader.readAsDataURL(event.target.files[0]);
-
-    //   if(event.target.files && event.target.files.length) {
-    //     this.file = event.target.files[0];
-    //     this.registerForm.controls['imgExame'].setValue(this.file ? this.file.name : '');
-    // }
+      if(event.target.files && event.target.files.length) {
+        this.file = event.target.files;
+        reader.readAsDataURL(file[0]);              
+      }
   }
 
 }
