@@ -85,8 +85,7 @@ export class ConsultaEditComponent implements OnInit {
           this.perguntaRespostas.push(this.criaPerguntaResposta(perguntaResposta));
         });
 
-        this.consulta.exames.forEach(exame => {          
-          this.fileNameToUpdate = exame.imgExame.toString();          
+        this.consulta.exames.forEach(exame => {
           this.exames.push(this.criaExame(exame));
         });
 
@@ -118,17 +117,7 @@ export class ConsultaEditComponent implements OnInit {
   salvarConsulta() {
     this.consulta = Object.assign({ id: this.consulta.id }, this.registerForm.value);
 
-    this.consulta.exames.forEach(exame => {
-      if(exame.imgExame.startsWith('C:\\')) {
-        const nomeArquivo = exame.imgExame.split('\\', 3);
-        exame.imgExame = nomeArquivo[2];
-        this.uploadImagem(this.file, nomeArquivo[2]);
-
-      } else {
-        exame.imgExame = this.fileNameToUpdate;
-        this.uploadImagem(this.file, this.fileNameToUpdate);
-      }
-    });
+    this.uploadImagem();
 
     this.consultaService.putConsulta(this.consulta).subscribe(
       () => {
@@ -139,8 +128,11 @@ export class ConsultaEditComponent implements OnInit {
     );
   }
 
-  uploadImagem(arquivo: File, nome: any) {
-      this.consultaService.postUpload(arquivo, nome).
+  uploadImagem() {
+      if(!this.file)
+        return;
+
+      this.consultaService.postUpload(this.file, this.fileNameToUpdate).
       subscribe(
         () => {
           this.dataAtual = new Date().getMilliseconds().toString();
@@ -148,12 +140,14 @@ export class ConsultaEditComponent implements OnInit {
       );
     }
 
-    onFileChange(event: any, file: FileList) {
+    onFileChange(event: any, index: any) {
       let reader = new FileReader();
 
-      if(event.target.files && event.target.files.length) {
-        this.file = event.target.files;
-        reader.readAsDataURL(file[0]);              
+      if(event.target.files && event.target.files.length > 0) {
+          this.file = event.target.files;
+          this.exames.at(index).patchValue({
+            imgExame: event.target.files[0].name
+          });
       }
   }
 
