@@ -3,17 +3,17 @@
   <div class="row">
     <div class="col-md-8" id="imagemConsulta">
       <img src="assets/img/consultaTeste.jpg">
-      <legend> teste </legend>
+      <legend> {{ textoNaTela }} </legend>
     </div>
     <div class="col-md-4">
       <tabset>
         <tab heading="Perguntas">
           <div formArrayName="perguntaRespostas" *ngFor="let perguntaResposta of perguntaRespostas.controls; let i=index">
             <fieldset [formGroupName]="i" class="form-group">
-              <legend class="d-flex justify-content-between capitalize">
+              <legend class="d-flex justify-content-between capitalize" (click)="mostraResposta(i)" >
                 {{ perguntaRespostas.get(i+'.pergunta').value === '' ?
                 'Perguntas' :
-                perguntaRespostas.get(i+'.pergunta').value
+                perguntaRespostas.get(i+'.pergunta').value 
               }}
             </legend>
           </fieldset>
@@ -21,7 +21,7 @@
       </tab>
       <tab heading="Exames">
         <div formArrayName="exames" *ngFor="let exame of exames.controls; let i=index">
-          <fieldset [formGroupName]="i" class="form-group">
+          <fieldset [formGroupName]="i" class="form-group" (click)="mostrarExame(template, i)">
             <legend class="d-flex justify-content-between capitalize">
               {{ exames.get(i+'.nome').value === '' ?
               'Exame: ' :
@@ -35,3 +35,25 @@
 </div>
 </div>
 </form>
+
+<div bsModal #template="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left">Exame médico</h4>
+        <button type="button" class="close pull-right" (click)="template.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img src="http://localhost:5000/resources/images/{{imgExameEscolhido}}"
+        [style.width.px]="imagemLargura" [style.height.px]="imagemMargem">        
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="template.hide()">
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

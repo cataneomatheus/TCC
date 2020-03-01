@@ -16,6 +16,10 @@ export class SimulacaoComponent implements OnInit {
   titulo = 'Simulação';
   consulta: Consulta = new Consulta();
   registerForm: FormGroup;
+  textoNaTela: string;
+  imagemLargura = '100%';
+  imagemMargem = '100%';
+  imgExameEscolhido: string;
 
   get perguntaRespostas(): FormArray {
     return <FormArray>this.registerForm.get('perguntaRespostas');
@@ -38,6 +42,10 @@ export class SimulacaoComponent implements OnInit {
   ngOnInit() {
     this.validation(),
     this.carregarConsulta()
+  }
+
+  openModal(template: any) {
+    template.show();
   }
 
   validation() {
@@ -85,8 +93,21 @@ export class SimulacaoComponent implements OnInit {
         this.consulta.exames.forEach(exame => {
           this.exames.push(this.criaExame(exame));
         });
+        
+        this.textoNaTela = "Olá, meu nome é " +this.consulta.nomePaciente + "eu vim aqui hoje pois estou com " +this.consulta.queixaPrincipal + 
+        "e começou " + this.consulta.inicioSintomas;
       }
+
     );
+  }
+
+  mostraResposta(index: number) {    
+    this.textoNaTela = this.consulta.perguntaRespostas[index].resposta;
+  }
+
+  mostrarExame(template: any, index: number) {
+    this.openModal(template);
+    this.imgExameEscolhido = this.consulta.exames[index].imgExame;
   }
 
 }
