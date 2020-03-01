@@ -107,7 +107,7 @@ export class SimulacaoComponent implements OnInit {
 
   mostrarExame(template: any, index: number) {
     this.openModal(template);
-    this.imgExameEscolhido = this.consulta.exames[index].imgExame;
+    this.imgExameEscolhido = `http://localhost:5000/resources/images/${this.consulta.exames[index].imgExame}`;    ;
   }
 
 }
