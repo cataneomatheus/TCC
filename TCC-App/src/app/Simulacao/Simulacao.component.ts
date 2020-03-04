@@ -17,7 +17,7 @@ export class SimulacaoComponent implements OnInit {
   consulta: Consulta = new Consulta();
   registerForm: FormGroup;
   textoNaTela: string;
-  imagemLargura = '100%';
+  imagemLargura = '770';
   imagemMargem = '100%';
   imgExameEscolhido: string;
 
@@ -82,8 +82,8 @@ export class SimulacaoComponent implements OnInit {
     this.consultaService.getConsultaById(idConsulta)
     .subscribe(
       (consulta: Consulta) => {
-                
-        this.consulta = Object.assign({}, consulta);        
+
+        this.consulta = Object.assign({}, consulta);
         this.registerForm.patchValue(this.consulta);
 
         this.consulta.perguntaRespostas.forEach(perguntaResposta => {
@@ -93,15 +93,15 @@ export class SimulacaoComponent implements OnInit {
         this.consulta.exames.forEach(exame => {
           this.exames.push(this.criaExame(exame));
         });
-        
-        this.textoNaTela = "Olá, meu nome é " +this.consulta.nomePaciente + "eu vim aqui hoje pois estou com " +this.consulta.queixaPrincipal + 
-        "e começou " + this.consulta.inicioSintomas;
+
+        this.textoNaTela = "Olá, meu nome é " +this.consulta.nomePaciente + " eu vim aqui hoje pois estou com " +this.consulta.queixaPrincipal +
+        " e começou " + this.consulta.inicioSintomas;
       }
 
     );
   }
 
-  mostraResposta(index: number) {    
+  mostraResposta(index: number) {
     this.textoNaTela = this.consulta.perguntaRespostas[index].resposta;
   }
 

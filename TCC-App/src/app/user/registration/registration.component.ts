@@ -43,9 +43,9 @@ export class RegistrationComponent implements OnInit {
   compararSenhas(fb: FormGroup) {
     const confirmSenhaCtrl = fb.get('confirmPassword');
 
-    if(confirmSenhaCtrl.errors == null || 'missmatch' in confirmSenhaCtrl.errors) {
-      if(fb.get('password').value !== confirmSenhaCtrl.value) {
-        fb.get('password').setErrors( { missmatch: true });
+    if (confirmSenhaCtrl.errors == null || 'mismatch' in confirmSenhaCtrl.errors) {
+      if (fb.get('password').value !== confirmSenhaCtrl.value) {
+        confirmSenhaCtrl.setErrors({ mismatch: true });
       } else {
         confirmSenhaCtrl.setErrors(null);
       }
@@ -54,7 +54,7 @@ export class RegistrationComponent implements OnInit {
 
   cadastrarUsuario() {
     if(this.registerForm.valid) {
-      this.user = Object.assign({ 
+      this.user = Object.assign({
         password: this.registerForm.get('passwords.password').value },
         this.registerForm.value);
         this.authService.register(this.user).subscribe(

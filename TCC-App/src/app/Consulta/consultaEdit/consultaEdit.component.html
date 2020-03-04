@@ -30,8 +30,13 @@
         </div>
         <div class="form-group col-md-6">
           <label>Sexo</label>
-          <input type="text" class="form-control" [ngClass]="{'is-invalid': registerForm.get('sexo').errors
-          && registerForm.get('sexo'.touched)}" formControlName="sexo">
+          <select class="form-control"
+            [ngClass]="{'is-invalid': registerForm.get('sexo').errors && registerForm.get('sexo'.touched)}"
+            formControlName="sexo">
+            <option value="Masculino">Masculino</option>
+            <option value="Feminino">Feminino</option>
+            <option value="Outro">Outro</option>
+            </select>
           <div class="invalid-feedback">
             O sexo do paciente é obrigatório
           </div>

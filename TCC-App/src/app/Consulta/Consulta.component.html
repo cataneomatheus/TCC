@@ -18,11 +18,13 @@
 <table class="table table-striped">
   <thead class="thead-dark">
     <tr>
-      <th>Id</th>
+      <th>Código</th>
       <th>Paciente</th>
       <th>Tipo do atendimento </th>
       <th>Sexo</th>
-      <th colspan="2">Ações</th>
+      <th>Ações</th>
+      <th>Detalhar</th>
+      <th>Simular</th>
     </tr>
   </thead>
   <tbody *ngIf="consultas && consultas.length">
@@ -97,14 +99,19 @@
           <label>Data de nascimento</label>
           <input type="text" class="form-control" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY'}"
           [ngClass]="{'is-invalid': registerForm.get('dataNascimento').errors
-          && registerForm.get('dataNascimento').touched}" formControlName="dataNascimento">         
+          && registerForm.get('dataNascimento').touched}" formControlName="dataNascimento">
           <div *ngIf="registerForm.get('dataNascimento').hasError('required') && registerForm.get('dataNascimento').touched"
           class="invalid-feedback">A data de nascimento é obrigatório.</div>
         </div>
         <div class="form-group col-md-6">
           <label>Sexo</label>
-          <input type="text" class="form-control" [ngClass]="{'is-invalid': registerForm.get('sexo').errors
-          && registerForm.get('sexo'.touched)}" formControlName="sexo">
+          <select class="form-control"
+            [ngClass]="{'is-invalid': registerForm.get('sexo').errors && registerForm.get('sexo'.touched)}"
+            formControlName="sexo">
+            <option value="Masculino">Masculino</option>
+            <option value="Feminino">Feminino</option>
+            <option value="Outro">Outro</option>
+            </select>
           <div class="invalid-feedback">
             O sexo do paciente é obrigatório
           </div>
