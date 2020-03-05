@@ -2,7 +2,7 @@
     display: inline-block;
     position: relative;
   }
-  
+
   #imagemConsulta legend {
     position: absolute;
     top: 145px;
@@ -10,4 +10,12 @@
     font-size: 30px;
     color: black;
     text-shadow: 0px 0px 5px black;
+  }
+
+  .tab-pane {
+    padding: 20px 8px 8px;
+    border-top: 0px;
+    border-right: 1px solid #dee2e6;
+    border-bottom: 1px solid #dee2e6;
+    border-left: 1px solid #dee2e6;
   }

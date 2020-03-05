@@ -2,38 +2,41 @@
 <form [formGroup]="registerForm">
   <div class="row">
     <div class="col-md-8" id="imagemConsulta">
-      <img src="assets/img/consultaTeste.jpg">
+      <img style="width: 100%;" src="assets/img/consultaTeste.jpg">
       <legend style="width: 400px;"> {{ textoNaTela }} </legend>
     </div>
     <div class="col-md-4">
       <tabset>
         <tab heading="Perguntas">
-          <div formArrayName="perguntaRespostas" *ngFor="let perguntaResposta of perguntaRespostas.controls; let i=index">
+          <div formArrayName="perguntaRespostas"
+            *ngFor="let perguntaResposta of perguntaRespostas.controls; let i=index">
             <fieldset [formGroupName]="i" class="form-group">
-              <legend class="d-flex justify-content-between capitalize" (click)="mostraResposta(i)" style="cursor: pointer;">
+              <legend class="d-flex justify-content-between capitalize" (click)="mostraResposta(i)"
+                style="cursor: pointer;">
                 {{ perguntaRespostas.get(i+'.pergunta').value === '' ?
                 'Perguntas' :
                 perguntaRespostas.get(i+'.pergunta').value
               }}
-            </legend>
-          </fieldset>
-        </div>
-      </tab>
-      <tab heading="Exames">
-        <div formArrayName="exames" *ngFor="let exame of exames.controls; let i=index">
-          <fieldset [formGroupName]="i" class="form-group" (click)="mostrarExame(template, i)" style="cursor: pointer;">
-            <legend class="d-flex justify-content-between capitalize">
-              {{ exames.get(i+'.nome').value === '' ?
+              </legend>
+            </fieldset>
+          </div>
+        </tab>
+        <tab heading="Exames">
+          <div formArrayName="exames" *ngFor="let exame of exames.controls; let i=index">
+            <fieldset [formGroupName]="i" class="form-group" (click)="mostrarExame(template, i)"
+              style="cursor: pointer;">
+              <legend class="d-flex justify-content-between capitalize">
+                {{ exames.get(i+'.nome').value === '' ?
               'Exame: ' :
               exames.get(i+'.nome').value
             }}
-          </legend>
-        </fieldset>
-      </div>
-    </tab>
-  </tabset>
-</div>
-</div>
+              </legend>
+            </fieldset>
+          </div>
+        </tab>
+      </tabset>
+    </div>
+  </div>
 </form>
 
 <div bsModal #template="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">

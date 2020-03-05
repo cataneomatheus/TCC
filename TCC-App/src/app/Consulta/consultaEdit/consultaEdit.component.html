@@ -8,178 +8,183 @@
             <div class="form-group col-md-12">
               <label>Nome do paciente</label>
               <input type="text" class="form-control" [ngClass]="{'is-invalid': registerForm.get('nomePaciente').errors
-              && registerForm.get('nomePaciente').touched}" formControlName="nomePaciente" placeholder="Ex: Josué José">
+              && registerForm.get('nomePaciente').touched}" formControlName="nomePaciente"
+                placeholder="Ex: Josué José">
               <div *ngIf="registerForm.get('nomePaciente').hasError('required')
               && registerForm.get('nomePaciente').touched" class="invalid-feedback">
-              O nome do paciente é obrigatório
-            </div>
-            <div *ngIf="registerForm.get('nomePaciente').hasError('maxlength')
+                O nome do paciente é obrigatório
+              </div>
+              <div *ngIf="registerForm.get('nomePaciente').hasError('maxlength')
             && registerForm.get('nomePaciente').touched" class="invalid-feedback">
-            Maximo 50 caracteres.
+                Maximo 50 caracteres.
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label>Data de nascimento</label>
-          <input type="text" class="form-control" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY'}"
-          [ngClass]="{'is-invalid': registerForm.get('dataNascimento').errors
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label>Data de nascimento</label>
+              <input type="text" class="form-control" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY'}"
+                [ngClass]="{'is-invalid': registerForm.get('dataNascimento').errors
           && registerForm.get('dataNascimento').touched}" formControlName="dataNascimento">
-          <div *ngIf="registerForm.get('dataNascimento').hasError('required') && registerForm.get('dataNascimento').touched"
-          class="invalid-feedback">A data de nascimento é obrigatório.</div>
-        </div>
-        <div class="form-group col-md-6">
-          <label>Sexo</label>
-          <select class="form-control"
-            [ngClass]="{'is-invalid': registerForm.get('sexo').errors && registerForm.get('sexo'.touched)}"
-            formControlName="sexo">
-            <option value="Masculino">Masculino</option>
-            <option value="Feminino">Feminino</option>
-            <option value="Outro">Outro</option>
-            </select>
-          <div class="invalid-feedback">
-            O sexo do paciente é obrigatório
+              <div
+                *ngIf="registerForm.get('dataNascimento').hasError('required') && registerForm.get('dataNascimento').touched"
+                class="invalid-feedback">A data de nascimento é obrigatório.</div>
+            </div>
+            <div class="form-group col-md-6">
+              <label>Sexo</label>
+              <select class="form-control"
+                [ngClass]="{'is-invalid': registerForm.get('sexo').errors && registerForm.get('sexo'.touched)}"
+                formControlName="sexo">
+                <option value="Masculino">Masculino</option>
+                <option value="Feminino">Feminino</option>
+                <option value="Outro">Outro</option>
+              </select>
+              <div class="invalid-feedback">
+                O sexo do paciente é obrigatório
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-12">
-          <label>Tipo de atendimento</label>
-          <input type="text" class="form-control" [ngClass]="{'is-invalid': registerForm.get('tipoAtendimento').errors
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label>Tipo de atendimento</label>
+              <input type="text" class="form-control" [ngClass]="{'is-invalid': registerForm.get('tipoAtendimento').errors
           && registerForm.get('tipoAtendimento').touched}" formControlName="tipoAtendimento"
-          placeholder="Ex: Clínico geral">
-          <div *ngIf="registerForm.get('tipoAtendimento').hasError('required')
+                placeholder="Ex: Clínico geral">
+              <div *ngIf="registerForm.get('tipoAtendimento').hasError('required')
           && registerForm.get('tipoAtendimento').touched" class="invalid-feedback">
-          O tipo de atendimento é obrigatório
-        </div>
-        <div *ngIf="registerForm.get('tipoAtendimento').hasError('maxlength')
+                O tipo de atendimento é obrigatório
+              </div>
+              <div *ngIf="registerForm.get('tipoAtendimento').hasError('maxlength')
         && registerForm.get('tipoAtendimento').touched" class="invalid-feedback">
-        Maximo 50 caracteres.
-      </div>
-    </div>
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-12">
-      <label>Queixa principal</label>
-      <input type="text" class="form-control" [ngClass]="{'is-invalid': registerForm.get('queixaPrincipal').errors
-      && registerForm.get('queixaPrincipal').touched}" formControlName="queixaPrincipal" placeholder="Ex: Dor de cabeça, náuseas, tontura..">
-      <div class="invalid-feedback">
-        A queixa principal é obrigatória
-      </div>
-      <div *ngIf="registerForm.get('queixaPrincipal').hasError('maxlength')
+                Maximo 50 caracteres.
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label>Queixa principal</label>
+              <input type="text" class="form-control" [ngClass]="{'is-invalid': registerForm.get('queixaPrincipal').errors
+      && registerForm.get('queixaPrincipal').touched}" formControlName="queixaPrincipal"
+                placeholder="Ex: Dor de cabeça, náuseas, tontura..">
+              <div class="invalid-feedback">
+                A queixa principal é obrigatória
+              </div>
+              <div *ngIf="registerForm.get('queixaPrincipal').hasError('maxlength')
       && registerForm.get('queixaPrincipal').touched" class="invalid-feedback">
-      Maximo 50 caracteres.
-    </div>
-  </div>
-</div>
-<div class="form-row">
-  <div class="form-group col-md-12">
-    <label>Início dos sintomas</label>
-    <input type="text" class="form-control" [ngClass]="{'is-invalid': registerForm.get('inicioSintomas').errors
-    && registerForm.get('inicioSintomas').touched}" formControlName="inicioSintomas" placeholder="Ex: Começou uma semana atrás...">
-    <div *ngIf="registerForm.get('inicioSintomas').hasError('required')
+                Maximo 50 caracteres.
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label>Início dos sintomas</label>
+              <input type="text" class="form-control" [ngClass]="{'is-invalid': registerForm.get('inicioSintomas').errors
+    && registerForm.get('inicioSintomas').touched}" formControlName="inicioSintomas"
+                placeholder="Ex: Começou uma semana atrás...">
+              <div *ngIf="registerForm.get('inicioSintomas').hasError('required')
     && registerForm.get('inicioSintomas').touched" class="invalid-feedback">
-    O início dos sintomas é obrigatório
-  </div>
-  <div *ngIf="registerForm.get('inicioSintomas').hasError('maxlength')
+                O início dos sintomas é obrigatório
+              </div>
+              <div *ngIf="registerForm.get('inicioSintomas').hasError('maxlength')
   && registerForm.get('inicioSintomas').touched" class="invalid-feedback">
-  Maximo 50 caracteres.
-</div>
-</div>
-</div>
-</tab>
-<tab heading="Perguntas e respostas">
-  <div>
-    <div formArrayName="perguntaRespostas" *ngFor="let perguntaResposta of perguntaRespostas.controls; let i=index">
-      <fieldset [formGroupName]="i" class="form-group">
-        <legend class="d-flex justify-content-between capitalize">
-          {{ perguntaRespostas.get(i+'.pergunta').value === '' ?
+                Maximo 50 caracteres.
+              </div>
+            </div>
+          </div>
+        </tab>
+        <tab heading="Perguntas e respostas">
+          <div>
+            <div formArrayName="perguntaRespostas"
+              *ngFor="let perguntaResposta of perguntaRespostas.controls; let i=index">
+              <fieldset [formGroupName]="i" class="form-group">
+                <legend class="d-flex justify-content-between capitalize">
+                  {{ perguntaRespostas.get(i+'.pergunta').value === '' ?
           'Perguntas' :
           perguntaRespostas.get(i+'.pergunta').value
         }}
-        <button class="btn btn-sm btn-warning mb-1" (click)="removePerguntaResposta(i)">Remover</button>
-      </legend>
-      <div class="row">
-        <div class="form-group col-md-12">
-          <label>Pergunta</label>
-          <input type="text" class="form-control"
-          [ngClass]="{'is-invalid': perguntaRespostas.get(i+'.pergunta').errors && perguntaRespostas.get(i+'.pergunta').touched}"
-          formControlName="pergunta" placeholder="Ex: Sennte dor em mais algum lugar?">
-        </div>
-        <div class="form-group col-md-12">
-          <label>Resposta</label>
-          <input type="text" class="form-control"
-          [ngClass]="{'is-invalid': perguntaRespostas.get(i+'.resposta').errors && perguntaRespostas.get(i+'.resposta').touched}"
-          formControlName="resposta" placeholder="Ex: Sim doutor, minha cabeça também dói..">
-        </div>
-      </div>
-    </fieldset>
-  </div>
-  <button (click)="adicionarPerguntaResposta()" class="btn btn-outline-primary">
-    Adicionar pergunta e resposta
-  </button>
-</div>
-</tab>
-<tab heading="Exames">
-    <div formArrayName="exames" *ngFor="let exame of exames.controls; let i=index">
-      <fieldset [formGroupName]="i" class="form-group">
-        <legend class="d-flex justify-content-between capitalize">
-          {{ exames.get(i+'.nome').value === '' ?
+                  <button class="btn btn-sm btn-warning mb-1" (click)="removePerguntaResposta(i)">Remover</button>
+                </legend>
+                <div class="row">
+                  <div class="form-group col-md-12">
+                    <label>Pergunta</label>
+                    <input type="text" class="form-control"
+                      [ngClass]="{'is-invalid': perguntaRespostas.get(i+'.pergunta').errors && perguntaRespostas.get(i+'.pergunta').touched}"
+                      formControlName="pergunta" placeholder="Ex: Sennte dor em mais algum lugar?">
+                  </div>
+                  <div class="form-group col-md-12">
+                    <label>Resposta</label>
+                    <input type="text" class="form-control"
+                      [ngClass]="{'is-invalid': perguntaRespostas.get(i+'.resposta').errors && perguntaRespostas.get(i+'.resposta').touched}"
+                      formControlName="resposta" placeholder="Ex: Sim doutor, minha cabeça também dói..">
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+            <button (click)="adicionarPerguntaResposta()" class="btn btn-outline-primary">
+              Adicionar pergunta e resposta
+            </button>
+          </div>
+        </tab>
+        <tab heading="Exames">
+          <div formArrayName="exames" *ngFor="let exame of exames.controls; let i=index">
+            <fieldset [formGroupName]="i" class="form-group">
+              <legend class="d-flex justify-content-between capitalize">
+                {{ exames.get(i+'.nome').value === '' ?
           'Exame: ' :
           exames.get(i+'.nome').value
         }}
-        <button class="btn btn-sm btn-warning mb-1" (click)="removeExame(i)">Remover</button>
-      </legend>
-      <div class="row">
-        <div class="form-group col-md-12">
-          <label>Exame</label>
-          <input type="text" class="form-control"
-          [ngClass]="{'is-invalid': exames.get(i+'.nome').errors && exames.get(i+'.nome').touched}"
-          formControlName="nome" placeholder="Ex: Raio X">
-        </div>
-        <div class="form-group col-md-12">
-          <label>Imagem</label>
-          <table>
-            <tr>
-              <td>
-                <input name="file" #file type="file" (change)="onFileChange($event, i)" style="display: none;">
-                <input type="hidden" name="fileHidden" [ngClass]="{'is-invalid': exames.get(i+'.imgExame').errors &&
-                  exames.get(i+'.imgExame').touched}" formControlName="imgExame"/>
-                <button class="btn btn-success" (click)="file.click()"> Enviar imagem</button>
-              </td>
-            </tr>
-          </table>
-          <div class="invalid-feedback">
-            Imagem é obrigatório
+                <button class="btn btn-sm btn-warning mb-1" (click)="removeExame(i)">Remover</button>
+              </legend>
+              <div class="row">
+                <div class="form-group col-md-12">
+                  <label>Exame</label>
+                  <input type="text" class="form-control"
+                    [ngClass]="{'is-invalid': exames.get(i+'.nome').errors && exames.get(i+'.nome').touched}"
+                    formControlName="nome" placeholder="Ex: Raio X">
+                </div>
+                <div class="form-group col-md-12">
+                  <label>Imagem</label>
+                  <table>
+                    <tr>
+                      <td>
+                        <input name="file" #file type="file" (change)="onFileChange($event, i)" style="display: none;">
+                        <input type="hidden" name="fileHidden" [ngClass]="{'is-invalid': exames.get(i+'.imgExame').errors &&
+                  exames.get(i+'.imgExame').touched}" formControlName="imgExame" />
+                        <button class="btn btn-success" (click)="file.click()"> Enviar imagem</button>
+                      </td>
+                    </tr>
+                  </table>
+                  <div class="invalid-feedback">
+                    Imagem é obrigatório
+                  </div>
+                </div>
+              </div>
+            </fieldset>
           </div>
+          <button (click)="adicionarExame()" class="btn btn-outline-primary">
+            Adicionar exame
+          </button>
+        </tab>
+      </tabset>
+      <div class="row">
+        <div class="col-md-12 d-flex justify-content-end">
+          <button [disabled]="!registerForm.valid" class="btn btn-success my-2" (click)="salvarConsulta()">Salvar
+            Alterações</button>
         </div>
       </div>
-    </fieldset>
-  </div>
-  <button (click)="adicionarExame()" class="btn btn-outline-primary">
-    Adicionar exame
-  </button>
-</tab>
-</tabset>
-<div class="row">
-  <div class="col-md-12 d-flex justify-content-end">
-    <button [disabled]="!registerForm.valid" class="btn btn-success my-2" (click)="salvarConsulta()">Salvar
-      Alterações</button>
+    </div>
+    <div class="col-md-4">
+      <div class="card profile-card-2">
+        <div class="card-body pt-3">
+          <h4>{{consulta.tipoAtendimento}}</h4>
+          <p class="card-text">
+            <b>Paciente:</b> {{consulta.nomePaciente}}
+            <br>
+            <b>Data de nascimento:</b> {{consulta.dataNascimento | DateTimeFormatPipe}}
+          </p>
+          <hr>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-<div class="col-md-4">
-  <div class="card profile-card-2">
-    <div class="card-body pt-3">
-      <h4>{{consulta.tipoAtendimento}}</h4>
-      <p class="card-text">
-        <b>Paciente:</b> {{consulta.nomePaciente}}
-        <br>
-        <b>Data de nascimento:</b> {{consulta.dataNascimento | DateTimeFormatPipe}}
-      </p>
-      <hr>
-    </div>
-  </div>
-</div>
-</div>
 </form>
