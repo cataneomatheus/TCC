@@ -1,205 +1,190 @@
 <div class="banana">
 
-<app-titulo [titulo]="titulo"></app-titulo>
+  <app-titulo [titulo]="titulo"></app-titulo>
 
-<div class="d-flex">
-  <div class="form-inline mr-auto">
-    <div class="form-group mb-2">
-      <input type="text" class="form-control mr-2" placeholder="Buscar" [(ngModel)]="filtroLista">
+  <div class="d-flex">
+    <div class="form-inline mr-auto">
+      <div class="form-group mb-2">
+        <input type="text" class="form-control mr-2" placeholder="Buscar" [(ngModel)]="filtroLista">
+      </div>
+    </div>
+    <div>
+      <button class="btn btn-outline-primary" (click)="novaConsulta(template)">
+        <i class="fa fa-plus-circle"></i>&nbsp;
+        Nova consulta
+      </button>
     </div>
   </div>
-  <div>
-    <button class="btn btn-outline-primary" (click)="novaConsulta(template)">
-      <i class="fa fa-plus-circle"></i>&nbsp;
-      Nova consulta
-    </button>
-  </div>
-</div>
 
-<h3>Filtro: {{filtroLista}}</h3>
-<div style='height:100px;overflow: auto; flex:1'>
-<table class="table table-striped">
-  <thead class="thead-dark">
-    <tr>
-      <th>Código</th>
-      <th>Paciente</th>
-      <th>Tipo do atendimento </th>
-      <th>Sexo</th>
-      <th>Ações</th>
-      <th>Detalhar</th>
-      <th>Simular</th>
-    </tr>
-  </thead>
-  <tbody *ngIf="consultas && consultas.length">
-    <tr *ngFor="let consulta of consultasFiltradas">
-      <td>{{consulta.id}}</td>
-      <td>{{consulta.nomePaciente}}</td>
-      <td>{{consulta.tipoAtendimento}}</td>
-      <td>{{consulta.sexo}}</td>
-      <td>
-        <div>
-          <div class="btn-group">
-            <button class="btn btn-sm btn-success" tooltip="Editar" (click)="editarConsulta(consulta, template)">
+  <h3>Filtro: {{filtroLista}}</h3>
+  <div style='height:100px;overflow: auto; flex:1'>
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th>Código</th>
+          <th>Paciente</th>
+          <th>Tipo do atendimento </th>
+          <th>Sexo</th>
+          <th>Ações</th>
+          <th>Detalhar</th>
+          <th>Simular</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="consultas && consultas.length">
+        <tr *ngFor="let consulta of consultasFiltradas">
+          <td>{{consulta.id}}</td>
+          <td>{{consulta.nomePaciente}}</td>
+          <td>{{consulta.tipoAtendimento}}</td>
+          <td>{{consulta.sexo}}</td>
+          <td>
+            <div>
+              <div class="btn-group">
+                <button class="btn btn-sm btn-success" tooltip="Editar" (click)="editarConsulta(consulta, template)">
+                  <i class="fa fa-edit"></i>
+                </button>
+                <button class="btn btn-sm btn-danger" tooltip="Excluir" (click)="excluirConsulta(consulta, confirm)">
+                  <i class="fa fa-eraser"></i>
+                </button>
+              </div>
+            </div>
+          </td>
+          <td>
+            <a [routerLink]="['/consulta', consulta.id, 'edit']" tooltip="Edição detalhada"
+              class="btn btn-sm btn-warning">
               <i class="fa fa-edit"></i>
-            </button>
-            <button class="btn btn-sm btn-danger" tooltip="Excluir" (click)="excluirConsulta(consulta, confirm)">
-              <i class="fa fa-eraser"></i>
-            </button>
-          </div>
+            </a>
+          </td>
+          <td>
+            <a [routerLink]="['/simulacao', consulta.id, 'edit']" tooltip="Simulação" class="btn btn-sm btn-warning">
+              <i class="fa fa-edit"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot *ngIf="!consultas">
+        <tr>
+          <td colspan="3" class="text-center">
+            <h4>
+              Nenhuma consulta encontrada!
+            </h4>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+
+  </div>
+
+  <div bsModal #template="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 id="dialog-sizes-name1" class="modal-title pull-left">Consulta</h4>
+          <button type="button" class="close pull-right" (click)="template.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-      </td>
-      <td>
-        <a [routerLink]="['/consulta', consulta.id, 'edit']" tooltip="Edição detalhada" class="btn btn-sm btn-warning">
-          <i class="fa fa-edit"></i>
-        </a>
-      </td>
-      <td>
-        <a [routerLink]="['/simulacao', consulta.id, 'edit']" tooltip="Simulação" class="btn btn-sm btn-warning">
-          <i class="fa fa-edit"></i>
-        </a>
-      </td>
-    </tr>
-
-    <tr *ngFor="let consulta of consultasFiltradas"> <td>{{consulta.id}}</td> <td>{{consulta.nomePaciente}}</td> <td>{{consulta.tipoAtendimento}}</td> <td>{{consulta.sexo}}</td> <td> <div> <div class="btn-group"> <button class="btn btn-sm btn-success" tooltip="Editar" (click)="editarConsulta(consulta, template)"> <i class="fa fa-edit"></i> </button> <button class="btn btn-sm btn-danger" tooltip="Excluir" (click)="excluirConsulta(consulta, confirm)"> <i class="fa fa-eraser"></i> </button> </div> </div> </td> <td> <a [routerLink]="['/consulta', consulta.id, 'edit']" tooltip="Edição detalhada" class="btn btn-sm btn-warning"> <i class="fa fa-edit"></i> </a> </td> <td> <a [routerLink]="['/simulacao', consulta.id, 'edit']" tooltip="Simulação" class="btn btn-sm btn-warning"> <i class="fa fa-edit"></i> </a> </td> </tr>
-    <tr *ngFor="let consulta of consultasFiltradas"> <td>{{consulta.id}}</td> <td>{{consulta.nomePaciente}}</td> <td>{{consulta.tipoAtendimento}}</td> <td>{{consulta.sexo}}</td> <td> <div> <div class="btn-group"> <button class="btn btn-sm btn-success" tooltip="Editar" (click)="editarConsulta(consulta, template)"> <i class="fa fa-edit"></i> </button> <button class="btn btn-sm btn-danger" tooltip="Excluir" (click)="excluirConsulta(consulta, confirm)"> <i class="fa fa-eraser"></i> </button> </div> </div> </td> <td> <a [routerLink]="['/consulta', consulta.id, 'edit']" tooltip="Edição detalhada" class="btn btn-sm btn-warning"> <i class="fa fa-edit"></i> </a> </td> <td> <a [routerLink]="['/simulacao', consulta.id, 'edit']" tooltip="Simulação" class="btn btn-sm btn-warning"> <i class="fa fa-edit"></i> </a> </td> </tr>
-    <tr *ngFor="let consulta of consultasFiltradas"> <td>{{consulta.id}}</td> <td>{{consulta.nomePaciente}}</td> <td>{{consulta.tipoAtendimento}}</td> <td>{{consulta.sexo}}</td> <td> <div> <div class="btn-group"> <button class="btn btn-sm btn-success" tooltip="Editar" (click)="editarConsulta(consulta, template)"> <i class="fa fa-edit"></i> </button> <button class="btn btn-sm btn-danger" tooltip="Excluir" (click)="excluirConsulta(consulta, confirm)"> <i class="fa fa-eraser"></i> </button> </div> </div> </td> <td> <a [routerLink]="['/consulta', consulta.id, 'edit']" tooltip="Edição detalhada" class="btn btn-sm btn-warning"> <i class="fa fa-edit"></i> </a> </td> <td> <a [routerLink]="['/simulacao', consulta.id, 'edit']" tooltip="Simulação" class="btn btn-sm btn-warning"> <i class="fa fa-edit"></i> </a> </td> </tr>
-    <tr *ngFor="let consulta of consultasFiltradas"> <td>{{consulta.id}}</td> <td>{{consulta.nomePaciente}}</td> <td>{{consulta.tipoAtendimento}}</td> <td>{{consulta.sexo}}</td> <td> <div> <div class="btn-group"> <button class="btn btn-sm btn-success" tooltip="Editar" (click)="editarConsulta(consulta, template)"> <i class="fa fa-edit"></i> </button> <button class="btn btn-sm btn-danger" tooltip="Excluir" (click)="excluirConsulta(consulta, confirm)"> <i class="fa fa-eraser"></i> </button> </div> </div> </td> <td> <a [routerLink]="['/consulta', consulta.id, 'edit']" tooltip="Edição detalhada" class="btn btn-sm btn-warning"> <i class="fa fa-edit"></i> </a> </td> <td> <a [routerLink]="['/simulacao', consulta.id, 'edit']" tooltip="Simulação" class="btn btn-sm btn-warning"> <i class="fa fa-edit"></i> </a> </td> </tr>
-    <tr *ngFor="let consulta of consultasFiltradas"> <td>{{consulta.id}}</td> <td>{{consulta.nomePaciente}}</td> <td>{{consulta.tipoAtendimento}}</td> <td>{{consulta.sexo}}</td> <td> <div> <div class="btn-group"> <button class="btn btn-sm btn-success" tooltip="Editar" (click)="editarConsulta(consulta, template)"> <i class="fa fa-edit"></i> </button> <button class="btn btn-sm btn-danger" tooltip="Excluir" (click)="excluirConsulta(consulta, confirm)"> <i class="fa fa-eraser"></i> </button> </div> </div> </td> <td> <a [routerLink]="['/consulta', consulta.id, 'edit']" tooltip="Edição detalhada" class="btn btn-sm btn-warning"> <i class="fa fa-edit"></i> </a> </td> <td> <a [routerLink]="['/simulacao', consulta.id, 'edit']" tooltip="Simulação" class="btn btn-sm btn-warning"> <i class="fa fa-edit"></i> </a> </td> </tr>
-    <tr *ngFor="let consulta of consultasFiltradas"> <td>{{consulta.id}}</td> <td>{{consulta.nomePaciente}}</td> <td>{{consulta.tipoAtendimento}}</td> <td>{{consulta.sexo}}</td> <td> <div> <div class="btn-group"> <button class="btn btn-sm btn-success" tooltip="Editar" (click)="editarConsulta(consulta, template)"> <i class="fa fa-edit"></i> </button> <button class="btn btn-sm btn-danger" tooltip="Excluir" (click)="excluirConsulta(consulta, confirm)"> <i class="fa fa-eraser"></i> </button> </div> </div> </td> <td> <a [routerLink]="['/consulta', consulta.id, 'edit']" tooltip="Edição detalhada" class="btn btn-sm btn-warning"> <i class="fa fa-edit"></i> </a> </td> <td> <a [routerLink]="['/simulacao', consulta.id, 'edit']" tooltip="Simulação" class="btn btn-sm btn-warning"> <i class="fa fa-edit"></i> </a> </td> </tr>
-    <tr *ngFor="let consulta of consultasFiltradas"> <td>{{consulta.id}}</td> <td>{{consulta.nomePaciente}}</td> <td>{{consulta.tipoAtendimento}}</td> <td>{{consulta.sexo}}</td> <td> <div> <div class="btn-group"> <button class="btn btn-sm btn-success" tooltip="Editar" (click)="editarConsulta(consulta, template)"> <i class="fa fa-edit"></i> </button> <button class="btn btn-sm btn-danger" tooltip="Excluir" (click)="excluirConsulta(consulta, confirm)"> <i class="fa fa-eraser"></i> </button> </div> </div> </td> <td> <a [routerLink]="['/consulta', consulta.id, 'edit']" tooltip="Edição detalhada" class="btn btn-sm btn-warning"> <i class="fa fa-edit"></i> </a> </td> <td> <a [routerLink]="['/simulacao', consulta.id, 'edit']" tooltip="Simulação" class="btn btn-sm btn-warning"> <i class="fa fa-edit"></i> </a> </td> </tr>
-    <tr *ngFor="let consulta of consultasFiltradas"> <td>{{consulta.id}}</td> <td>{{consulta.nomePaciente}}</td> <td>{{consulta.tipoAtendimento}}</td> <td>{{consulta.sexo}}</td> <td> <div> <div class="btn-group"> <button class="btn btn-sm btn-success" tooltip="Editar" (click)="editarConsulta(consulta, template)"> <i class="fa fa-edit"></i> </button> <button class="btn btn-sm btn-danger" tooltip="Excluir" (click)="excluirConsulta(consulta, confirm)"> <i class="fa fa-eraser"></i> </button> </div> </div> </td> <td> <a [routerLink]="['/consulta', consulta.id, 'edit']" tooltip="Edição detalhada" class="btn btn-sm btn-warning"> <i class="fa fa-edit"></i> </a> </td> <td> <a [routerLink]="['/simulacao', consulta.id, 'edit']" tooltip="Simulação" class="btn btn-sm btn-warning"> <i class="fa fa-edit"></i> </a> </td> </tr>
-    <tr *ngFor="let consulta of consultasFiltradas"> <td>{{consulta.id}}</td> <td>{{consulta.nomePaciente}}</td> <td>{{consulta.tipoAtendimento}}</td> <td>{{consulta.sexo}}</td> <td> <div> <div class="btn-group"> <button class="btn btn-sm btn-success" tooltip="Editar" (click)="editarConsulta(consulta, template)"> <i class="fa fa-edit"></i> </button> <button class="btn btn-sm btn-danger" tooltip="Excluir" (click)="excluirConsulta(consulta, confirm)"> <i class="fa fa-eraser"></i> </button> </div> </div> </td> <td> <a [routerLink]="['/consulta', consulta.id, 'edit']" tooltip="Edição detalhada" class="btn btn-sm btn-warning"> <i class="fa fa-edit"></i> </a> </td> <td> <a [routerLink]="['/simulacao', consulta.id, 'edit']" tooltip="Simulação" class="btn btn-sm btn-warning"> <i class="fa fa-edit"></i> </a> </td> </tr>
-    <tr *ngFor="let consulta of consultasFiltradas"> <td>{{consulta.id}}</td> <td>{{consulta.nomePaciente}}</td> <td>{{consulta.tipoAtendimento}}</td> <td>{{consulta.sexo}}</td> <td> <div> <div class="btn-group"> <button class="btn btn-sm btn-success" tooltip="Editar" (click)="editarConsulta(consulta, template)"> <i class="fa fa-edit"></i> </button> <button class="btn btn-sm btn-danger" tooltip="Excluir" (click)="excluirConsulta(consulta, confirm)"> <i class="fa fa-eraser"></i> </button> </div> </div> </td> <td> <a [routerLink]="['/consulta', consulta.id, 'edit']" tooltip="Edição detalhada" class="btn btn-sm btn-warning"> <i class="fa fa-edit"></i> </a> </td> <td> <a [routerLink]="['/simulacao', consulta.id, 'edit']" tooltip="Simulação" class="btn btn-sm btn-warning"> <i class="fa fa-edit"></i> </a> </td> </tr>
-    <tr *ngFor="let consulta of consultasFiltradas"> <td>{{consulta.id}}</td> <td>{{consulta.nomePaciente}}</td> <td>{{consulta.tipoAtendimento}}</td> <td>{{consulta.sexo}}</td> <td> <div> <div class="btn-group"> <button class="btn btn-sm btn-success" tooltip="Editar" (click)="editarConsulta(consulta, template)"> <i class="fa fa-edit"></i> </button> <button class="btn btn-sm btn-danger" tooltip="Excluir" (click)="excluirConsulta(consulta, confirm)"> <i class="fa fa-eraser"></i> </button> </div> </div> </td> <td> <a [routerLink]="['/consulta', consulta.id, 'edit']" tooltip="Edição detalhada" class="btn btn-sm btn-warning"> <i class="fa fa-edit"></i> </a> </td> <td> <a [routerLink]="['/simulacao', consulta.id, 'edit']" tooltip="Simulação" class="btn btn-sm btn-warning"> <i class="fa fa-edit"></i> </a> </td> </tr>
-    <tr *ngFor="let consulta of consultasFiltradas"> <td>{{consulta.id}}</td> <td>{{consulta.nomePaciente}}</td> <td>{{consulta.tipoAtendimento}}</td> <td>{{consulta.sexo}}</td> <td> <div> <div class="btn-group"> <button class="btn btn-sm btn-success" tooltip="Editar" (click)="editarConsulta(consulta, template)"> <i class="fa fa-edit"></i> </button> <button class="btn btn-sm btn-danger" tooltip="Excluir" (click)="excluirConsulta(consulta, confirm)"> <i class="fa fa-eraser"></i> </button> </div> </div> </td> <td> <a [routerLink]="['/consulta', consulta.id, 'edit']" tooltip="Edição detalhada" class="btn btn-sm btn-warning"> <i class="fa fa-edit"></i> </a> </td> <td> <a [routerLink]="['/simulacao', consulta.id, 'edit']" tooltip="Simulação" class="btn btn-sm btn-warning"> <i class="fa fa-edit"></i> </a> </td> </tr>
-    <tr *ngFor="let consulta of consultasFiltradas"> <td>{{consulta.id}}</td> <td>{{consulta.nomePaciente}}</td> <td>{{consulta.tipoAtendimento}}</td> <td>{{consulta.sexo}}</td> <td> <div> <div class="btn-group"> <button class="btn btn-sm btn-success" tooltip="Editar" (click)="editarConsulta(consulta, template)"> <i class="fa fa-edit"></i> </button> <button class="btn btn-sm btn-danger" tooltip="Excluir" (click)="excluirConsulta(consulta, confirm)"> <i class="fa fa-eraser"></i> </button> </div> </div> </td> <td> <a [routerLink]="['/consulta', consulta.id, 'edit']" tooltip="Edição detalhada" class="btn btn-sm btn-warning"> <i class="fa fa-edit"></i> </a> </td> <td> <a [routerLink]="['/simulacao', consulta.id, 'edit']" tooltip="Simulação" class="btn btn-sm btn-warning"> <i class="fa fa-edit"></i> </a> </td> </tr>
-    <tr *ngFor="let consulta of consultasFiltradas"> <td>{{consulta.id}}</td> <td>{{consulta.nomePaciente}}</td> <td>{{consulta.tipoAtendimento}}</td> <td>{{consulta.sexo}}</td> <td> <div> <div class="btn-group"> <button class="btn btn-sm btn-success" tooltip="Editar" (click)="editarConsulta(consulta, template)"> <i class="fa fa-edit"></i> </button> <button class="btn btn-sm btn-danger" tooltip="Excluir" (click)="excluirConsulta(consulta, confirm)"> <i class="fa fa-eraser"></i> </button> </div> </div> </td> <td> <a [routerLink]="['/consulta', consulta.id, 'edit']" tooltip="Edição detalhada" class="btn btn-sm btn-warning"> <i class="fa fa-edit"></i> </a> </td> <td> <a [routerLink]="['/simulacao', consulta.id, 'edit']" tooltip="Simulação" class="btn btn-sm btn-warning"> <i class="fa fa-edit"></i> </a> </td> </tr>
-    <tr *ngFor="let consulta of consultasFiltradas"> <td>{{consulta.id}}</td> <td>{{consulta.nomePaciente}}</td> <td>{{consulta.tipoAtendimento}}</td> <td>{{consulta.sexo}}</td> <td> <div> <div class="btn-group"> <button class="btn btn-sm btn-success" tooltip="Editar" (click)="editarConsulta(consulta, template)"> <i class="fa fa-edit"></i> </button> <button class="btn btn-sm btn-danger" tooltip="Excluir" (click)="excluirConsulta(consulta, confirm)"> <i class="fa fa-eraser"></i> </button> </div> </div> </td> <td> <a [routerLink]="['/consulta', consulta.id, 'edit']" tooltip="Edição detalhada" class="btn btn-sm btn-warning"> <i class="fa fa-edit"></i> </a> </td> <td> <a [routerLink]="['/simulacao', consulta.id, 'edit']" tooltip="Simulação" class="btn btn-sm btn-warning"> <i class="fa fa-edit"></i> </a> </td> </tr>
-  </tbody>
-  <tfoot *ngIf="!consultas">
-    <tr>
-      <td colspan="3" class="text-center">
-        <h4>
-          Nenhuma consulta encontrada!
-        </h4>
-      </td>
-    </tr>
-  </tfoot>
-</table>
-
-</div>
-
-<div bsModal #template="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 id="dialog-sizes-name1" class="modal-title pull-left">Consulta</h4>
-        <button type="button" class="close pull-right" (click)="template.hide()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="registerForm">
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <label>Nome do paciente</label>
-              <input type="text" class="form-control" [ngClass]="{'is-invalid': registerForm.get('nomePaciente').errors
+        <div class="modal-body">
+          <form [formGroup]="registerForm">
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label>Nome do paciente</label>
+                <input type="text" class="form-control" [ngClass]="{'is-invalid': registerForm.get('nomePaciente').errors
               && registerForm.get('nomePaciente').touched}" formControlName="nomePaciente"
-                placeholder="Ex: Josué José">
-              <div *ngIf="registerForm.get('nomePaciente').hasError('required')
+                  placeholder="Ex: Josué José">
+                <div *ngIf="registerForm.get('nomePaciente').hasError('required')
               && registerForm.get('nomePaciente').touched" class="invalid-feedback">
-                O nome do paciente é obrigatório
-              </div>
-              <div *ngIf="registerForm.get('nomePaciente').hasError('maxlength')
+                  O nome do paciente é obrigatório
+                </div>
+                <div *ngIf="registerForm.get('nomePaciente').hasError('maxlength')
             && registerForm.get('nomePaciente').touched" class="invalid-feedback">
-                Maximo 50 caracteres.
+                  Maximo 50 caracteres.
+                </div>
               </div>
             </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label>Data de nascimento</label>
-              <input type="text" class="form-control" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY'}"
-                [ngClass]="{'is-invalid': registerForm.get('dataNascimento').errors
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label>Data de nascimento</label>
+                <input type="text" class="form-control" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY'}"
+                  [ngClass]="{'is-invalid': registerForm.get('dataNascimento').errors
           && registerForm.get('dataNascimento').touched}" formControlName="dataNascimento">
-              <div
-                *ngIf="registerForm.get('dataNascimento').hasError('required') && registerForm.get('dataNascimento').touched"
-                class="invalid-feedback">A data de nascimento é obrigatório.</div>
-            </div>
-            <div class="form-group col-md-6">
-              <label>Sexo</label>
-              <select class="form-control"
-                [ngClass]="{'is-invalid': registerForm.get('sexo').errors && registerForm.get('sexo'.touched)}"
-                formControlName="sexo">
-                <option value="Masculino">Masculino</option>
-                <option value="Feminino">Feminino</option>
-                <option value="Outro">Outro</option>
-              </select>
-              <div class="invalid-feedback">
-                O sexo do paciente é obrigatório
+                <div
+                  *ngIf="registerForm.get('dataNascimento').hasError('required') && registerForm.get('dataNascimento').touched"
+                  class="invalid-feedback">A data de nascimento é obrigatório.</div>
+              </div>
+              <div class="form-group col-md-6">
+                <label>Sexo</label>
+                <select class="form-control"
+                  [ngClass]="{'is-invalid': registerForm.get('sexo').errors && registerForm.get('sexo'.touched)}"
+                  formControlName="sexo">
+                  <option value="Masculino">Masculino</option>
+                  <option value="Feminino">Feminino</option>
+                  <option value="Outro">Outro</option>
+                </select>
+                <div class="invalid-feedback">
+                  O sexo do paciente é obrigatório
+                </div>
               </div>
             </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <label>Tipo de atendimento</label>
-              <input type="text" class="form-control" [ngClass]="{'is-invalid': registerForm.get('tipoAtendimento').errors
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label>Tipo de atendimento</label>
+                <input type="text" class="form-control" [ngClass]="{'is-invalid': registerForm.get('tipoAtendimento').errors
           && registerForm.get('tipoAtendimento').touched}" formControlName="tipoAtendimento"
-                placeholder="Ex: Clínico geral">
-              <div *ngIf="registerForm.get('tipoAtendimento').hasError('required')
+                  placeholder="Ex: Clínico geral">
+                <div *ngIf="registerForm.get('tipoAtendimento').hasError('required')
           && registerForm.get('tipoAtendimento').touched" class="invalid-feedback">
-                O tipo de atendimento é obrigatório
-              </div>
-              <div *ngIf="registerForm.get('tipoAtendimento').hasError('maxlength')
+                  O tipo de atendimento é obrigatório
+                </div>
+                <div *ngIf="registerForm.get('tipoAtendimento').hasError('maxlength')
         && registerForm.get('tipoAtendimento').touched" class="invalid-feedback">
-                Maximo 50 caracteres.
+                  Maximo 50 caracteres.
+                </div>
               </div>
             </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <label>Queixa principal</label>
-              <input type="text" class="form-control" [ngClass]="{'is-invalid': registerForm.get('queixaPrincipal').errors
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label>Queixa principal</label>
+                <input type="text" class="form-control" [ngClass]="{'is-invalid': registerForm.get('queixaPrincipal').errors
       && registerForm.get('queixaPrincipal').touched}" formControlName="queixaPrincipal"
-                placeholder="Ex: Dor de cabeça, náuseas, tontura..">
-              <div class="invalid-feedback">
-                A queixa principal é obrigatória
-              </div>
-              <div *ngIf="registerForm.get('queixaPrincipal').hasError('maxlength')
+                  placeholder="Ex: Dor de cabeça, náuseas, tontura..">
+                <div class="invalid-feedback">
+                  A queixa principal é obrigatória
+                </div>
+                <div *ngIf="registerForm.get('queixaPrincipal').hasError('maxlength')
       && registerForm.get('queixaPrincipal').touched" class="invalid-feedback">
-                Maximo 50 caracteres.
+                  Maximo 50 caracteres.
+                </div>
               </div>
             </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <label>Início dos sintomas</label>
-              <input type="text" class="form-control" [ngClass]="{'is-invalid': registerForm.get('inicioSintomas').errors
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label>Início dos sintomas</label>
+                <input type="text" class="form-control" [ngClass]="{'is-invalid': registerForm.get('inicioSintomas').errors
     && registerForm.get('inicioSintomas').touched}" formControlName="inicioSintomas"
-                placeholder="Ex: Começou uma semana atrás...">
-              <div *ngIf="registerForm.get('inicioSintomas').hasError('required')
+                  placeholder="Ex: Começou uma semana atrás...">
+                <div *ngIf="registerForm.get('inicioSintomas').hasError('required')
     && registerForm.get('inicioSintomas').touched" class="invalid-feedback">
-                O início dos sintomas é obrigatório
-              </div>
-              <div *ngIf="registerForm.get('inicioSintomas').hasError('maxlength')
+                  O início dos sintomas é obrigatório
+                </div>
+                <div *ngIf="registerForm.get('inicioSintomas').hasError('maxlength')
   && registerForm.get('inicioSintomas').touched" class="invalid-feedback">
-                Maximo 50 caracteres.
+                  Maximo 50 caracteres.
+                </div>
               </div>
             </div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" (click)="template.hide()">
-          Fechar
-        </button>
-        <button class="btn btn-primary" [disabled]="!registerForm.valid" (click)="salvar(template)">
-          Salvar
-        </button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="template.hide()">
+            Fechar
+          </button>
+          <button class="btn btn-primary" [disabled]="!registerForm.valid" (click)="salvar(template)">
+            Salvar
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </div>
 
 <div bsModal #confirm="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">

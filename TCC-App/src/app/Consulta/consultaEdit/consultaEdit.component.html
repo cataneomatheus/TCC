@@ -97,11 +97,7 @@
             <div formArrayName="perguntaRespostas"
               *ngFor="let perguntaResposta of perguntaRespostas.controls; let i=index">
               <fieldset [formGroupName]="i" class="form-group">
-                <legend class="d-flex justify-content-between capitalize">
-                  {{ perguntaRespostas.get(i+'.pergunta').value === '' ?
-          'Perguntas' :
-          perguntaRespostas.get(i+'.pergunta').value
-        }}
+                <legend class="d-flex justify-content-end capitalize">
                   <button class="btn btn-sm btn-warning mb-1" (click)="removePerguntaResposta(i)">Remover</button>
                 </legend>
                 <div class="row">
@@ -128,11 +124,7 @@
         <tab heading="Exames">
           <div formArrayName="exames" *ngFor="let exame of exames.controls; let i=index">
             <fieldset [formGroupName]="i" class="form-group">
-              <legend class="d-flex justify-content-between capitalize">
-                {{ exames.get(i+'.nome').value === '' ?
-          'Exame: ' :
-          exames.get(i+'.nome').value
-        }}
+              <legend class="d-flex justify-content-end capitalize">
                 <button class="btn btn-sm btn-warning mb-1" (click)="removeExame(i)">Remover</button>
               </legend>
               <div class="row">

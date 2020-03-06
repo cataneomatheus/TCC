@@ -18,3 +18,7 @@ i {
   border-bottom: 1px solid #dee2e6;
   border-left: 1px solid #dee2e6;
 }
+
+label{
+  font-weight:bold;
+}
