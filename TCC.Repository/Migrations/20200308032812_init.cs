@@ -42,7 +42,8 @@ namespace TCC.Repository.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    FullName = table.Column<string>(type: "nvarchar(150)", nullable: true)
+                    FullName = table.Column<string>(type: "nvarchar(150)", nullable: true),
+                    Adm = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

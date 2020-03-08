@@ -14,7 +14,7 @@ namespace TCC.Repository.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
+                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687");
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
@@ -113,6 +113,8 @@ namespace TCC.Repository.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
+
+                    b.Property<bool>("Adm");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
