@@ -25,7 +25,7 @@
             ],
             "styles": [
               "src/styles.css",
-              "node_modules/ngx-toastr/toastr.css" 
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": []
           },
@@ -121,6 +121,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "TCC-App"
+    }
+  },
+  "defaultProject": "TCC-App",
+  "cli": {
+    "analytics": false
+  }
 }

@@ -97,15 +97,15 @@
             <div formArrayName="perguntaRespostas"
               *ngFor="let perguntaResposta of perguntaRespostas.controls; let i=index">
               <fieldset [formGroupName]="i" class="form-group">
-                <legend class="d-flex justify-content-end capitalize">
+                <div class="col-md-12 d-flex justify-content-end capitalize">
                   <button class="btn btn-sm btn-warning mb-1" (click)="removePerguntaResposta(i)">Remover</button>
-                </legend>
+                </div>
                 <div class="row">
                   <div class="form-group col-md-12">
                     <label>Pergunta</label>
                     <input type="text" class="form-control"
                       [ngClass]="{'is-invalid': perguntaRespostas.get(i+'.pergunta').errors && perguntaRespostas.get(i+'.pergunta').touched}"
-                      formControlName="pergunta" placeholder="Ex: Sennte dor em mais algum lugar?">
+                      formControlName="pergunta" placeholder="Ex: Sente dor em mais algum lugar?">
                   </div>
                   <div class="form-group col-md-12">
                     <label>Resposta</label>
@@ -124,9 +124,9 @@
         <tab heading="Exames">
           <div formArrayName="exames" *ngFor="let exame of exames.controls; let i=index">
             <fieldset [formGroupName]="i" class="form-group">
-              <legend class="d-flex justify-content-end capitalize">
+              <div class="col-md-12 d-flex justify-content-end capitalize">
                 <button class="btn btn-sm btn-warning mb-1" (click)="removeExame(i)">Remover</button>
-              </legend>
+              </div>
               <div class="row">
                 <div class="form-group col-md-12">
                   <label>Exame</label>

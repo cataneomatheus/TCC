@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-md-8" id="imagemConsulta">
       <img style="width: 100%;" src="assets/img/consultaTeste.jpg">
-      <legend style="width: 400px;"> {{ textoNaTela }} </legend>
+      <legend style="width: 400px;font-size: medium;"> {{ textoNaTela }} </legend>
     </div>
     <div class="col-md-4">
       <tabset>
@@ -12,7 +12,7 @@
             *ngFor="let perguntaResposta of perguntaRespostas.controls; let i=index">
             <fieldset [formGroupName]="i" class="form-group">
               <legend class="d-flex justify-content-between capitalize" (click)="mostraResposta(i)"
-                style="cursor: pointer;">
+                style="cursor: pointer;font-size: medium;">
                 {{ perguntaRespostas.get(i+'.pergunta').value === '' ?
                 'Perguntas' :
                 perguntaRespostas.get(i+'.pergunta').value
@@ -23,9 +23,9 @@
         </tab>
         <tab heading="Exames">
           <div formArrayName="exames" *ngFor="let exame of exames.controls; let i=index">
-            <fieldset [formGroupName]="i" class="form-group" (click)="mostrarExame(template, i)"
-              style="cursor: pointer;">
-              <legend class="d-flex justify-content-between capitalize">
+            <fieldset [formGroupName]="i" class="form-group">
+              <legend class="d-flex justify-content-between capitalize" (click)="mostrarExame(template, i)"
+              style="cursor: pointer;font-size: medium;">
                 {{ exames.get(i+'.nome').value === '' ?
               'Exame: ' :
               exames.get(i+'.nome').value

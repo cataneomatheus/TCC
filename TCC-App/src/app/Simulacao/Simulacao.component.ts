@@ -94,15 +94,29 @@ export class SimulacaoComponent implements OnInit {
           this.exames.push(this.criaExame(exame));
         });
 
-        this.textoNaTela = "Olá, meu nome é " +this.consulta.nomePaciente + " eu vim aqui hoje pois estou com " +this.consulta.queixaPrincipal +
-        " e começou " + this.consulta.inicioSintomas;
+        this.textoNaTela = "Olá, meu nome é " + this.consulta.nomePaciente;
+        
+
+        setTimeout(() => {
+          this.textoNaTela = "Eu vim aqui hoje pois estou com " +this.consulta.queixaPrincipal;
+        }, 10000);
+
+        setTimeout(() => {
+          this.textoNaTela = "E começou " + this.consulta.inicioSintomas;
+        }, 20000);
+
+        setTimeout(() => {
+          this.textoNaTela = " ";
+        }, 30000);
       }
 
     );
   }
 
   mostraResposta(index: number) {
+    debugger;
     this.textoNaTela = this.consulta.perguntaRespostas[index].resposta;
+    setTimeout(() => this.textoNaTela = " " , 10000);
   }
 
   mostrarExame(template: any, index: number) {
