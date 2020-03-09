@@ -22,6 +22,7 @@ export class AuthService {
           localStorage.setItem('token', user.token);
           this.decodeToken = this.jwtHelper.decodeToken(user.token);
           sessionStorage.setItem('username', this.decodeToken.unique_name);
+          sessionStorage.setItem('adm', this.decodeToken.actort);         
         }
       })
     );
