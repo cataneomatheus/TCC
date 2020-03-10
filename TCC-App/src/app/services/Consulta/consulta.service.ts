@@ -8,7 +8,7 @@ import { Consulta } from 'src/app/models/Consulta/Consulta';
 })
 export class ConsultaService {
 
-  baseUrl = 'http://localhost:5000/api/consulta';
+  baseUrl = 'http://localhost:5000/api/consulta';  
 
 constructor(private http: HttpClient) { }
 

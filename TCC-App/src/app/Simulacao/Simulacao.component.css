@@ -18,3 +18,10 @@
     border-bottom: 1px solid #dee2e6;
     border-left: 1px solid #dee2e6;
   }
+
+  .alignTab {
+    display: flex !important;
+     max-height: calc(100vh - 200px) !important; 
+     overflow-y: auto !important; 
+     flex-direction: column !important;      
+  }

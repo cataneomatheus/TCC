@@ -19,6 +19,7 @@ export class ConsultaComponent implements OnInit {
   registerForm: FormGroup;
   bodyDeletarConsulta: string;
   acao = 'post';
+  adiministrador = false;
 
   _filtroLista: string;
 
@@ -80,8 +81,8 @@ export class ConsultaComponent implements OnInit {
         sexo: ['', [Validators.required, Validators.maxLength(20)]],
         dataNascimento: ['', Validators.required],
         tipoAtendimento: ['', [Validators.required, Validators.maxLength(50)]],
-        queixaPrincipal: ['', [Validators.required, Validators.maxLength(50)]],
-        inicioSintomas: ['', [Validators.required, Validators.maxLength(50)]]
+        queixaPrincipal: ['', [Validators.required, Validators.maxLength(500)]],
+        inicioSintomas: ['', [Validators.required, Validators.maxLength(500)]]
       });
     }
 

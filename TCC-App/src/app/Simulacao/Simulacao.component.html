@@ -5,10 +5,11 @@
       <img style="width: 100%;" src="assets/img/consultaTeste.jpg">
       <legend style="width: 400px;font-size: medium;"> {{ textoNaTela }} </legend>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4" style="max-height: 100%;">
       <tabset>
         <tab heading="Perguntas">
-          <div formArrayName="perguntaRespostas"
+          <div class="alignTab">       
+          <div formArrayName="perguntaRespostas"                            
             *ngFor="let perguntaResposta of perguntaRespostas.controls; let i=index">
             <fieldset [formGroupName]="i" class="form-group">
               <legend class="d-flex justify-content-between capitalize" (click)="mostraResposta(i)"
@@ -20,8 +21,10 @@
               </legend>
             </fieldset>
           </div>
+        </div>
         </tab>
         <tab heading="Exames">
+          <div class="alignTab">
           <div formArrayName="exames" *ngFor="let exame of exames.controls; let i=index">
             <fieldset [formGroupName]="i" class="form-group">
               <legend class="d-flex justify-content-between capitalize" (click)="mostrarExame(template, i)"
@@ -33,6 +36,7 @@
               </legend>
             </fieldset>
           </div>
+        </div>
         </tab>
       </tabset>
     </div>

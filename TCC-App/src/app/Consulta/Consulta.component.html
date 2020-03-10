@@ -1,7 +1,7 @@
 <div class="banana">
 
   <app-titulo [titulo]="titulo"></app-titulo>
-
+  <div [hidden]="adiministrador">
   <div class="d-flex">
     <div class="form-inline mr-auto">
       <div class="form-group mb-2">
@@ -152,7 +152,7 @@
                 </div>
                 <div *ngIf="registerForm.get('queixaPrincipal').hasError('maxlength')
       && registerForm.get('queixaPrincipal').touched" class="invalid-feedback">
-                  Maximo 50 caracteres.
+                  Maximo 500 caracteres.
                 </div>
               </div>
             </div>
@@ -168,7 +168,7 @@
                 </div>
                 <div *ngIf="registerForm.get('inicioSintomas').hasError('maxlength')
   && registerForm.get('inicioSintomas').touched" class="invalid-feedback">
-                  Maximo 50 caracteres.
+                  Maximo 500 caracteres.
                 </div>
               </div>
             </div>
@@ -211,4 +211,5 @@
       </div>
     </div>
   </div>
+</div>
 </div>
