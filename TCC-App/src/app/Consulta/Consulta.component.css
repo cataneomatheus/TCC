@@ -5,6 +5,55 @@
     flex-direction: column;
 }
 
-label{
+label {
     font-weight:bold;
-  }
+}
+
+/* table {
+    width: 100%;
+    min-width: 70vw;
+} */
+
+/* thead, tbody, tr, td, th { display: block; } */
+/* thead, tbody { display: block; width: 100% }
+
+table th, td {
+    width: 14.3%;
+}
+
+tbody {
+    height: 100px;
+    overflow-y: ;
+} */
+
+/* table {
+    min-width: 100%
+} */
+
+/* tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+} */
+
+/*thead th {
+    height: 50px;
+
+    text-align: left;
+}
+
+tbody {
+    height: 120px;
+    overflow-y: auto;
+}
+
+thead {
+    width: 100%;
+}
+
+
+tbody td, thead th {
+    width: 14.2%;
+    float: left;
+} */
