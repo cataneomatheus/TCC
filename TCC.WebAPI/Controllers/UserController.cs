@@ -43,6 +43,25 @@ namespace TCC.WebAPI.Controllers
             return Ok(new UserDto());
         }
 
+        // [HttpGet("{UserId}")]
+        // public async Task<IActionResult> Get(int UserId)
+        // {
+        //     try
+        //     {
+        //         var user = await Rep.GetUserAsyncById(UserId);
+
+        //         var result = _mapper.Map<UserDto>(user);
+
+        //         return Ok(result);
+        //     }
+        //     catch (System.Exception)
+        //     {
+
+        //         return this.StatusCode(StatusCodes.Status500InternalServerError, "Banco de dados falhou");
+        //     }
+
+        // }
+
         [HttpPost("Register")]
         [AllowAnonymous]
         public async Task<IActionResult> Register(UserDto dto)
@@ -63,7 +82,7 @@ namespace TCC.WebAPI.Controllers
             }
             catch (System.Exception ex)
             {
-                
+
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Falhou {ex.Message}");
             }
         }
@@ -88,7 +107,7 @@ namespace TCC.WebAPI.Controllers
                     return Ok( new {
                         token = GenerateJwToken(appUser).Result,
                         user = userToReturn
-                    });                    
+                    });
                 }
 
                 return Unauthorized();
@@ -96,7 +115,7 @@ namespace TCC.WebAPI.Controllers
             }
             catch (System.Exception ex)
             {
-                
+
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Falhou {ex.Message}");
             }
         }

@@ -34,7 +34,8 @@ export class ConsultaComponent implements OnInit {
 
     ngOnInit() {
       this.validation(),
-      this.getConsultas()
+      this.getConsultas(),
+      this.getUser()
     }
 
     filtrarEvento(filtrarPor: string): Consulta[] {
@@ -51,6 +52,14 @@ export class ConsultaComponent implements OnInit {
     set filtroLista(value: string) {
       this._filtroLista = value;
       this.consultasFiltradas = this.filtroLista ? this.filtrarEvento(this.filtroLista) : this.consultas;
+    }
+
+    getUser() {
+      const idUser = parseInt(sessionStorage.getItem('id'));
+
+      this.consultaService.getUserLogado().subscribe(
+
+      )
     }
 
     getConsultas() {
@@ -127,7 +136,7 @@ export class ConsultaComponent implements OnInit {
           );
         } else {
           this.consulta = Object.assign({id: this.consulta.id}, this.registerForm.value);
-          
+
           this.consultaService.putConsulta(this.consulta).subscribe(
             (response: Consulta) => {
               template.hide();

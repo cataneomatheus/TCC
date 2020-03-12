@@ -95,7 +95,7 @@ export class SimulacaoComponent implements OnInit {
         });
 
         this.textoNaTela = "Olá, meu nome é " + this.consulta.nomePaciente;
-        
+
 
         setTimeout(() => {
           this.textoNaTela = "Eu vim aqui hoje pois estou com " +this.consulta.queixaPrincipal;

@@ -7,13 +7,13 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-  
+
   baseUrl = 'http://localhost:5000/api/user/';
   jwtHelper = new JwtHelperService();
   decodeToken: any;
-  
+
   constructor(private http: HttpClient) { }
-  
+
   login(model: any) {
     return this.http.post(`${this.baseUrl}login`, model).pipe(
       map((response: any) => {
@@ -22,7 +22,7 @@ export class AuthService {
           localStorage.setItem('token', user.token);
           this.decodeToken = this.jwtHelper.decodeToken(user.token);
           sessionStorage.setItem('username', this.decodeToken.unique_name);
-          sessionStorage.setItem('adm', this.decodeToken.actort);         
+          sessionStorage.setItem('id', this.decodeToken.nameid);
         }
       })
     );
