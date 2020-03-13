@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using TCC.Domain.Identity;
+using TCC.Repository.user;
 using TCC.WebAPI.Dtos;
 
 namespace TCC.WebAPI.Controllers
@@ -25,16 +26,19 @@ namespace TCC.WebAPI.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IMapper _mapper;
+        private readonly IRepUser Rep;
 
         public UserController(IConfiguration config,
                               UserManager<User> userManager,
                               SignInManager<User> signInManager,
-                              IMapper mapper)
+                              IMapper mapper,
+                              IRepUser _rep)
         {
             _config = config;
             _userManager = userManager;
             _signInManager = signInManager;
             _mapper = mapper;
+            Rep = _rep;
         }
 
         [HttpGet("GetUser")]
@@ -43,24 +47,24 @@ namespace TCC.WebAPI.Controllers
             return Ok(new UserDto());
         }
 
-        // [HttpGet("{UserId}")]
-        // public async Task<IActionResult> Get(int UserId)
-        // {
-        //     try
-        //     {
-        //         var user = await Rep.GetUserAsyncById(UserId);
+        [HttpGet("{UserId}")]
+        public async Task<IActionResult> Get(int UserId)
+        {
+            try
+            {
+                var user = await Rep.GetUserById(UserId);
 
-        //         var result = _mapper.Map<UserDto>(user);
+                var result = _mapper.Map<UserDto>(user);
 
-        //         return Ok(result);
-        //     }
-        //     catch (System.Exception)
-        //     {
+                return Ok(result);
+            }
+            catch (System.Exception)
+            {
 
-        //         return this.StatusCode(StatusCodes.Status500InternalServerError, "Banco de dados falhou");
-        //     }
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Banco de dados falhou");
+            }
 
-        // }
+        }
 
         [HttpPost("Register")]
         [AllowAnonymous]

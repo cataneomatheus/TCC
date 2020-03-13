@@ -4,6 +4,7 @@ import { Consulta } from '../models/Consulta/Consulta';
 import { BsLocaleService } from 'ngx-bootstrap';
 import { ConsultaService } from '../services/Consulta/consulta.service';
 import { ToastrService } from 'ngx-toastr';
+import { User } from '../models/User';
 
 @Component({
   selector: 'app-Consulta',
@@ -14,6 +15,7 @@ export class ConsultaComponent implements OnInit {
 
   titulo = 'Consultas';
   consultas: Consulta[] = [];
+  user: User[];
   consultasFiltradas: Consulta[] = [];
   consulta: Consulta;
   registerForm: FormGroup;
@@ -57,8 +59,12 @@ export class ConsultaComponent implements OnInit {
     getUser() {
       const idUser = parseInt(sessionStorage.getItem('id'));
 
-      this.consultaService.getUserLogado().subscribe(
-
+      debugger;
+      this.consultaService.getUserLogado(idUser).subscribe(
+        (_user: User[]) => {
+          this.user = _user;
+          debugger;
+        }
       )
     }
 

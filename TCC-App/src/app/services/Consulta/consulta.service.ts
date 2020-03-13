@@ -18,8 +18,8 @@ getAllConsultas(): Observable<Consulta[]> {
   return this.http.get<Consulta[]>(this.baseUrl);
 }
 
-getUserLogado(): Observable<User[]> {
-  return this.http.get<User[]>(`${this.baseUrlUser}/getUser`);
+getUserLogado(id: number): Observable<User[]> {
+  return this.http.get<User[]>(`${this.baseUrlUser}/${id}`);
 }
 
 getConsultaById(id: number): Observable<Consulta> {
