@@ -31,39 +31,18 @@ namespace TCC.WebAPI.Controllers
         public UserController(IConfiguration config,
                               UserManager<User> userManager,
                               SignInManager<User> signInManager,
-                              IMapper mapper,
-                              IRepUser _rep)
+                              IMapper mapper)
         {
             _config = config;
             _userManager = userManager;
             _signInManager = signInManager;
             _mapper = mapper;
-            Rep = _rep;
         }
 
         [HttpGet("GetUser")]
         public async Task<IActionResult> GetUser()
         {
             return Ok(new UserDto());
-        }
-
-        [HttpGet("{UserId}")]
-        public async Task<IActionResult> Get(int UserId)
-        {
-            try
-            {
-                var user = await Rep.GetUserById(UserId);
-
-                var result = _mapper.Map<UserDto>(user);
-
-                return Ok(result);
-            }
-            catch (System.Exception)
-            {
-
-                return this.StatusCode(StatusCodes.Status500InternalServerError, "Banco de dados falhou");
-            }
-
         }
 
         [HttpPost("Register")]
