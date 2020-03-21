@@ -1,0 +1,12 @@
+<app-titulo [titulo]="titulo"></app-titulo>
+<div class="d-flex">
+  <div class="form-inline mr-auto">
+    <div class="form-group mb-2">
+      <label>Digite o código da consulta</label>
+      <input type="text" class="form-control mr-2" placeholder="Código da simulação" [(ngModel)]="filtroLista">
+      <button class="btn btn-secondary" (click)="abrirSimulacao">
+        Entrar
+      </button>
+    </div>
+  </div>
+</div>

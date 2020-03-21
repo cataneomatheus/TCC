@@ -12,6 +12,7 @@ import { EventoEditComponent } from './Evento/eventoEdit/eventoEdit.component';
 import { ConsultaComponent } from './Consulta/Consulta.component';
 import { ConsultaEditComponent } from './Consulta/consultaEdit/consultaEdit.component';
 import { SimulacaoComponent } from './Simulacao/Simulacao.component';
+import { AlunoComponent } from './Aluno/Aluno.component';
 
 
 const routes: Routes = [
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'consultas', component: ConsultaComponent, canActivate: [AuthGuard] },
   { path: 'consulta/:id/edit', component: ConsultaEditComponent, canActivate: [AuthGuard] },
   { path: 'simulacao/:id/edit', component: SimulacaoComponent, canActivate: [AuthGuard] },
+  { path: 'aluno', component: AlunoComponent, canActivate: [AuthGuard] },
   { path: 'eventos', component: EventoComponent, canActivate: [AuthGuard] },
   { path: 'evento/:id/edit', component: EventoEditComponent, canActivate: [AuthGuard] },
   { path: 'palestrantes', component: PalestranteComponent, canActivate: [AuthGuard] },

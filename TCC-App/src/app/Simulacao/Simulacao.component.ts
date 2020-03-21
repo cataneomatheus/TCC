@@ -114,7 +114,6 @@ export class SimulacaoComponent implements OnInit {
   }
 
   mostraResposta(index: number) {
-    debugger;
     this.textoNaTela = this.consulta.perguntaRespostas[index].resposta;
     setTimeout(() => this.textoNaTela = " " , 10000);
   }

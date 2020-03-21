@@ -1,5 +1,4 @@
 <div class="banana">
-
   <app-titulo [titulo]="titulo"></app-titulo>
   <div [hidden]="adiministrador">
   <div class="d-flex">
@@ -19,15 +18,15 @@
   <h3>Filtro: {{filtroLista}}</h3>
   <div style="overflow-x:auto">
     <table class="table table-striped">
-      <thead class="thead-dark">
+      <thead style="background-color: #00afef;">
         <tr>
-          <th>Código</th>
-          <th>Paciente</th>
-          <th>Tipo do atendimento </th>
-          <th>Sexo</th>
-          <th>Ações</th>
-          <th>Detalhar</th>
-          <th>Simular</th>
+          <th style="color: white;">Código</th>
+          <th style="color: white;">Paciente</th>
+          <th style="color: white;">Tipo do atendimento </th>
+          <th style="color: white;">Sexo</th>
+          <th style="color: white;">Ações</th>
+          <th style="color: white;">Detalhar</th>
+          <th style="color: white;">Simular</th>
         </tr>
       </thead>
       <tbody *ngIf="consultas && consultas.length">

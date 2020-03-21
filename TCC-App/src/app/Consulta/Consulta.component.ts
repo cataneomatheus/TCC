@@ -36,8 +36,7 @@ export class ConsultaComponent implements OnInit {
 
     ngOnInit() {
       this.validation(),
-      this.getConsultas(),
-      this.getUser()
+      this.getConsultas()
     }
 
     filtrarEvento(filtrarPor: string): Consulta[] {
@@ -54,18 +53,6 @@ export class ConsultaComponent implements OnInit {
     set filtroLista(value: string) {
       this._filtroLista = value;
       this.consultasFiltradas = this.filtroLista ? this.filtrarEvento(this.filtroLista) : this.consultas;
-    }
-
-    getUser() {
-      const idUser = parseInt(sessionStorage.getItem('id'));
-
-      debugger;
-      this.consultaService.getUserLogado(idUser).subscribe(
-        (_user: User[]) => {
-          this.user = _user;
-          debugger;
-        }
-      )
     }
 
     getConsultas() {

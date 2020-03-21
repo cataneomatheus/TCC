@@ -30,6 +30,7 @@ import { ConsultaEditComponent } from './Consulta/consultaEdit/consultaEdit.comp
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 import { SimulacaoComponent } from './Simulacao/Simulacao.component';
+import { AlunoComponent } from './Aluno/Aluno.component';
 
 registerLocaleData(localePt);
 
@@ -49,7 +50,8 @@ registerLocaleData(localePt);
       RegistrationComponent,
       ConsultaComponent,
       ConsultaEditComponent,
-      SimulacaoComponent
+      SimulacaoComponent,
+      AlunoComponent
    ],
    imports: [
       BrowserModule,
@@ -84,11 +86,11 @@ registerLocaleData(localePt);
          useClass: AuthInterceptor,
          multi: true
       },
-      { 
-         provide: LOCALE_ID, 
+      {
+         provide: LOCALE_ID,
          useValue: 'pt'
       }
-      
+
    ],
    bootstrap: [
       AppComponent
