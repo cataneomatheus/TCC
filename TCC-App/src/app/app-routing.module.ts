@@ -13,6 +13,8 @@ import { ConsultaComponent } from './Consulta/Consulta.component';
 import { ConsultaEditComponent } from './Consulta/consultaEdit/consultaEdit.component';
 import { SimulacaoComponent } from './Simulacao/Simulacao.component';
 import { AlunoComponent } from './Aluno/Aluno.component';
+import { config } from 'rxjs';
+import { RoleGuardService } from './guards/role-guard.service';
 
 
 const routes: Routes = [
@@ -23,17 +25,17 @@ const routes: Routes = [
     ]
   },
 
-  { path: 'consultas', component: ConsultaComponent, canActivate: [AuthGuard] },
-  { path: 'consulta/:id/edit', component: ConsultaEditComponent, canActivate: [AuthGuard] },
+  { path: 'consultas', component: ConsultaComponent, canActivate: [RoleGuardService], data: { expectedRole: "Admin"} },
+  { path: 'consulta/:id/edit', component: ConsultaEditComponent, canActivate:[RoleGuardService], data: { expectedRole: "Admin"} },
   { path: 'simulacao/:id/edit', component: SimulacaoComponent, canActivate: [AuthGuard] },
   { path: 'aluno', component: AlunoComponent, canActivate: [AuthGuard] },
-  { path: 'eventos', component: EventoComponent, canActivate: [AuthGuard] },
+  { path: 'eventos', component: EventoComponent, canActivate: [RoleGuardService], data: { expectedRole: "Admin"} },
   { path: 'evento/:id/edit', component: EventoEditComponent, canActivate: [AuthGuard] },
   { path: 'palestrantes', component: PalestranteComponent, canActivate: [AuthGuard] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'contatos', component: ContatoComponent, canActivate: [AuthGuard] },
-  { path: '', redirectTo: 'consultas', pathMatch: 'full' },
-  { path: '**', redirectTo: 'consultas', pathMatch: 'full' }
+  { path: '', redirectTo: 'aluno', pathMatch: 'full' },
+  { path: '**', redirectTo: 'aluno', pathMatch: 'full' }
 ];
 
 @NgModule({

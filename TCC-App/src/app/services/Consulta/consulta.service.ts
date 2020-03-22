@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Consulta } from 'src/app/models/Consulta/Consulta';
-import { User } from 'src/app/models/User';
 
 @Injectable({
   providedIn: 'root'
@@ -10,16 +9,11 @@ import { User } from 'src/app/models/User';
 export class ConsultaService {
 
   baseUrl = 'http://localhost:5000/api/consulta';
-  baseUrlUser = 'http://localhost:5000/api/user';
 
 constructor(private http: HttpClient) { }
 
 getAllConsultas(): Observable<Consulta[]> {
   return this.http.get<Consulta[]>(this.baseUrl);
-}
-
-getUserLogado(id: number): Observable<User[]> {
-  return this.http.get<User[]>(`${this.baseUrlUser}/${id}`);
 }
 
 getConsultaById(id: number): Observable<Consulta> {

@@ -17,10 +17,6 @@ export class AuthInterceptor implements HttpInterceptor {
         if (localStorage.getItem('token') !== null){
             this.decodeToken = this.jwtHelper.decodeToken(localStorage.getItem('token'));
 
-            if(this.decodeToken.actort == "False") {
-                this.router.navigate(['/eventos']);
-            }
-
             const cloneReq = req.clone({
                 headers: req.headers.set('Authorization', `Bearer ${localStorage.getItem('token')}`)
             });
