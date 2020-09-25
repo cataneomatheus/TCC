@@ -6,5 +6,6 @@
   <PropertyGroup>
     <ActiveDebugProfile>TCC.WebAPI</ActiveDebugProfile>
     <ShowAllFiles>false</ShowAllFiles>
+    <NameOfLastUsedPublishProfile>FolderProfile</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>

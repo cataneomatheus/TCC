@@ -117,7 +117,7 @@
       <div class="form-group col-md-8">
         <label>Local</label>
         <input type="text" class="form-control" [ngClass]="{'is-invalid': registerForm.get('local').errors
-        && registerForm.get('local'.touched)}" formControlName="local" placeholder="Insira o local">
+        && registerForm.get('local').touched}" formControlName="local" placeholder="Insira o local">
         <div class="invalid-feedback">
           Local é obrigatório
         </div>

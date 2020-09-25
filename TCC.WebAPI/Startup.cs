@@ -32,7 +32,7 @@ namespace TCC.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefautConection")));
+            services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefautConection")));            
 
             IdentityBuilder builder = services.AddIdentityCore<User>(
                 options => {
@@ -80,6 +80,7 @@ namespace TCC.WebAPI
             services.AddScoped<IRepConsulta, RepConsulta>();
             services.AddAutoMapper();
             services.AddCors();
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -102,6 +103,12 @@ namespace TCC.WebAPI
                 RequestPath = new PathString("/Resources")
             });
             app.UseMvc();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "TCC");
+            });
         }
     }
 }
