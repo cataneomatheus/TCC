@@ -19,6 +19,8 @@ export class SimulacaoComponent implements OnInit {
   textoNaTela: string;
   dialogos: Array<{ texto: string }> = [];
   indiceDialogoAtual: number;
+  imagemLargura = '770';
+  imagemMargem = '100%';
   imgExameEscolhido: string;
   qtdePerguntasFeitas: number;
   qtdeMaxPerguntas: number;

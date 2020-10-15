@@ -52,7 +52,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <img [src]="imgExameEscolhido" style="display: block;width: 100%;">
+        <img [src]="imgExameEscolhido" [style.width.px]="imagemLargura" [style.height.px]="imagemMargem">
       </div>
       <div class="modal-footer">
         <button class="btn btn-secondary" (click)="template.hide()">
