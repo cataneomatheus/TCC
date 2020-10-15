@@ -34,23 +34,22 @@ export class AlunoComponent implements OnInit {
   }
 
   iniciarSimulacao() {
-    var idConsulta = parseInt(this.registerForm.controls.coigoConsulta.value);
-
+    var idConsulta = this.registerForm.controls.coigoConsulta.value;
+    
     if(!idConsulta)
       return this.toastr.error('Código da simulação está vazio, preencha o campo.');
-    debugger;
-    this.getConsulta(idConsulta);
-
-    this.router.navigate(['/simulacao', idConsulta, 'edit']);
-
+    
+    this.getConsulta(idConsulta);    
   }
 
   getConsulta(idConsulta) {
-    this.consultaService.getConsultaById(idConsulta).subscribe(
+    this.consultaService.getConsultaAlunoById(idConsulta).subscribe(
       (consulta: Consulta) => {
+        this.consulta = Object.assign({}, consulta);    
         this.toastr.success('Simulação carregada com sucesso.');
+        this.router.navigate(['/simulacao', idConsulta, 'edit']);
       }, error => {
-        this.toastr.error(`Erro ao tentar carregar a simulação: ${error}`);
+        this.toastr.error(`Erro ao tentar carregar a simulação: ${error.error.Message}`);
       }
 
     )

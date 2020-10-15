@@ -13,7 +13,7 @@ namespace TCC.Repository.user
         {
             _dataContext = dataContext;
             _dataContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-        }
+        }       
 
         public async Task<User> GetUserById(int UserId)
         {

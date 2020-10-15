@@ -29,18 +29,31 @@ namespace TCC.Repository.consultas
             _dataContext.RemoveRange(entityArray);
         }
 
-        public async Task<Consulta[]> GelAllConsultas()
+        public async Task<Consulta[]> GelAllConsultas(int userId)
         {
             IQueryable<Consulta> query = _dataContext.Consultas
             .Include( c => c.PerguntaRespostas)
             .Include(c => c.Exames);
             
-            query = query.OrderBy(c => c.Id);
+            query = query.Where(c => c.UserId == userId).OrderBy(c => c.Id);
 
             return await query.ToArrayAsync();
         }
 
-        public async Task<Consulta> GetConsultaAsyncById(int ConsultaId)
+        public async Task<Consulta> GetConsultaAlunoAsyncById(string ConsultaId)
+        {
+            IQueryable<Consulta> query = _dataContext.Consultas
+            .Include(c => c.PerguntaRespostas)
+            .Include(c => c.Exames);
+
+            query = query.AsNoTracking()
+            .OrderBy(c => c.Id)
+            .Where(c => c.HashLib == ConsultaId);
+
+            return await query.FirstOrDefaultAsync();
+        }
+
+        public async Task<Consulta> GetConsultaAsyncById(int ConsultaId, int userId)
         {
             IQueryable<Consulta> query = _dataContext.Consultas
             .Include( c => c.PerguntaRespostas)
@@ -48,7 +61,7 @@ namespace TCC.Repository.consultas
             
             query = query.AsNoTracking()
             .OrderBy(c => c.Id)
-            .Where(c => c.Id == ConsultaId);
+            .Where(c => c.Id == ConsultaId && c.UserId == userId);
 
             return await query.FirstOrDefaultAsync();
         }

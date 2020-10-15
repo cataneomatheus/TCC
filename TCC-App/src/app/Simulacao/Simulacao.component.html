@@ -1,42 +1,41 @@
 <app-titulo [titulo]="titulo"></app-titulo>
 <form [formGroup]="registerForm">
   <div class="row">
+    <div class="col-md-8" style="max-width: 100%;">
+      <button class="btn btn-secondary" style="margin: 5px;" (click)="dialogoAnt()"> Diálogo anterior </button>
+      <button class="btn btn-secondary" style="margin: 5px;" (click)="proxDialogo()"> Próximo diálogo </button>
+    </div>
     <div class="col-md-8" id="imagemConsulta">
       <img style="width: 100%;" src="assets/img/consultaTeste.jpg">
-      <legend style="width: 400px;font-size: medium;"> {{ textoNaTela }} </legend>
+      <legend> {{ textoNaTela }} </legend>
     </div>
     <div class="col-md-4" style="max-height: 100%;">
       <tabset>
         <tab heading="Perguntas">
-          <div class="alignTab">       
-          <div formArrayName="perguntaRespostas"                            
-            *ngFor="let perguntaResposta of perguntaRespostas.controls; let i=index">
-            <fieldset [formGroupName]="i" class="form-group">
-              <legend class="d-flex justify-content-between capitalize" (click)="mostraResposta(i)"
-                style="cursor: pointer;font-size: medium;">
-                {{ perguntaRespostas.get(i+'.pergunta').value === '' ?
-                'Perguntas' :
-                perguntaRespostas.get(i+'.pergunta').value
-              }}
-              </legend>
-            </fieldset>
+          <div class="alignTab">
+            <table class="table">
+              <tbody>
+                <tr style="color: blue; text-decoration: underline; cursor: pointer;"  *ngFor="let perguntaResposta of consulta.perguntaRespostas"
+                  [ngStyle]="perguntaResposta.isSelected ?{'color': 'gray','font-style': 'italic'} : {}">
+                  <td (click)="mostraResposta(perguntaResposta.id)">{{perguntaResposta.pergunta}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <b style="font-size: small;">Quantidade máxima de perguntas: {{qtdeMaxPerguntas}} </b>
           </div>
-        </div>
         </tab>
         <tab heading="Exames">
           <div class="alignTab">
-          <div formArrayName="exames" *ngFor="let exame of exames.controls; let i=index">
-            <fieldset [formGroupName]="i" class="form-group">
-              <legend class="d-flex justify-content-between capitalize" (click)="mostrarExame(template, i)"
-              style="cursor: pointer;font-size: medium;">
-                {{ exames.get(i+'.nome').value === '' ?
-              'Exame: ' :
-              exames.get(i+'.nome').value
-            }}
-              </legend>
-            </fieldset>
+            <table class="table">
+              <tbody>
+                <tr style="color: blue; text-decoration: underline; cursor: pointer;"  *ngFor="let exame of consulta.exames"
+                  [ngStyle]="exame.isSelected ?{'color': 'gray','font-style': 'italic'} : {}">
+                  <td (click)="mostrarExame(template, exame.id)">{{exame.nome}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <b style="font-size: small;">Quantidade máxima de exames: {{qtdeMaxExames}} </b>
           </div>
-        </div>
         </tab>
       </tabset>
     </div>

@@ -31,9 +31,7 @@ const routes: Routes = [
   { path: 'aluno', component: AlunoComponent, canActivate: [AuthGuard] },
   { path: 'eventos', component: EventoComponent, canActivate: [RoleGuardService], data: { expectedRole: "Admin"} },
   { path: 'evento/:id/edit', component: EventoEditComponent, canActivate: [AuthGuard] },
-  { path: 'palestrantes', component: PalestranteComponent, canActivate: [AuthGuard] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
-  { path: 'contatos', component: ContatoComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: 'aluno', pathMatch: 'full' },
   { path: '**', redirectTo: 'aluno', pathMatch: 'full' }
 ];

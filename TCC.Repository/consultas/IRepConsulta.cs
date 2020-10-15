@@ -10,7 +10,8 @@ namespace TCC.Repository.consultas
          void Delete<T>(T entity) where T : class;
          void DeleteRange<T>(T[] entity) where T : class;
          Task<bool> SaveChangesAsync();
-         Task<Consulta[]> GelAllConsultas();
-        Task<Consulta> GetConsultaAsyncById(int ConsultaId);
+         Task<Consulta[]> GelAllConsultas(int userId);
+        Task<Consulta> GetConsultaAsyncById(int ConsultaId, int userId);
+        Task<Consulta> GetConsultaAlunoAsyncById(string consultaId);
     }
 }

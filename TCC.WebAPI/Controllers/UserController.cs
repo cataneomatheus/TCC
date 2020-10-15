@@ -77,7 +77,6 @@ namespace TCC.WebAPI.Controllers
             try
             {
                 var user = await _userManager.FindByNameAsync(dto.UserName);
-
                 var result = await _signInManager.CheckPasswordSignInAsync(user, dto.Password, false);
 
                 if(result.Succeeded)
@@ -85,7 +84,7 @@ namespace TCC.WebAPI.Controllers
                     var appUser = await _userManager.Users
                         .FirstOrDefaultAsync(u => u.NormalizedUserName == dto.UserName.ToUpper());
 
-                    var userToReturn = _mapper.Map<UserLoginDto>(user);
+                    var userToReturn = _mapper.Map<UserLoginDto>(user);                    
 
                     return Ok( new {
                         token = GenerateJwToken(appUser).Result,

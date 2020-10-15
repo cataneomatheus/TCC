@@ -9,14 +9,14 @@ using TCC.Repository;
 namespace TCC.Repository.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200308032812_init")]
-    partial class init
+    [Migration("20201012211340_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687");
+                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034");
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
@@ -184,15 +184,23 @@ namespace TCC.Repository.Migrations
 
                     b.Property<DateTime>("DataNascimento");
 
+                    b.Property<string>("HashLib");
+
                     b.Property<string>("InicioSintomas");
 
                     b.Property<string>("NomePaciente");
+
+                    b.Property<int?>("QtdMaxExame");
+
+                    b.Property<int?>("QtdMaxPergunta");
 
                     b.Property<string>("QueixaPrincipal");
 
                     b.Property<string>("Sexo");
 
                     b.Property<string>("TipoAtendimento");
+
+                    b.Property<int>("UserId");
 
                     b.HasKey("Id");
 

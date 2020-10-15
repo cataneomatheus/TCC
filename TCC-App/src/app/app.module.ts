@@ -7,7 +7,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ContatoComponent } from './Contato/Contato.component';
 import { DateTimeFormatPipePipe } from './helps/DateTimeFormatPipe.pipe';
 import { TituloComponent } from './_shared/titulo/titulo.component';
-
 import { BrowserModule } from '@angular/platform-browser';
 import { BsDropdownModule, TooltipModule, ModalModule, BsDatepickerModule, TabsModule } from 'ngx-bootstrap';
 import { ToastrModule } from 'ngx-toastr';

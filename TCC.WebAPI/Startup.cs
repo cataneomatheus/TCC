@@ -36,11 +36,11 @@ namespace TCC.WebAPI
 
             IdentityBuilder builder = services.AddIdentityCore<User>(
                 options => {
-                    options.Password.RequireDigit = false;
+                    options.Password.RequireDigit = true;
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireLowercase = false;
-                    options.Password.RequireUppercase = false;
-                    options.Password.RequiredLength = 4;
+                    options.Password.RequireUppercase = true;
+                    options.Password.RequiredLength = 6;
                     
                 }
             );
@@ -52,7 +52,7 @@ namespace TCC.WebAPI
             builder.AddSignInManager<SignInManager<User>>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options => 
+            .AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {

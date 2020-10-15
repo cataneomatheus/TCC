@@ -22,3 +22,12 @@ i {
 label{
   font-weight:bold;
 }
+
+.alerta{
+  color: red;
+  font-size: 12px;
+}
+
+.tipoimg{
+  font-size: 12px;
+}

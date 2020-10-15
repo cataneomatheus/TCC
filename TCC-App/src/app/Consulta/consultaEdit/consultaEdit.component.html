@@ -94,6 +94,12 @@
         </tab>
         <tab heading="Perguntas e respostas">
           <div>
+            <div class="form-row">
+              <label>Quantidade máxima de perguntas que o aluno poderá fazer:</label>
+              <div class="form-group col-md-2">
+                <input type="number" class="form-control" formControlName="qtdMaxPergunta">
+              </div>
+            </div>
             <div formArrayName="perguntaRespostas"
               *ngFor="let perguntaResposta of perguntaRespostas.controls; let i=index">
               <fieldset [formGroupName]="i" class="form-group">
@@ -122,6 +128,18 @@
           </div>
         </tab>
         <tab heading="Exames">
+          <div class="form-row">
+            <label>Quantidade máxima de exames que o aluno poderá analisar:</label>
+            <div class="form-group col-md-2">
+              <input type="number" class="form-control" formControlName="qtdMaxExame">
+            </div>
+          </div>
+          <div class="form-row">
+            <label class="alerta">As imagens anexadas na simulação é de responsabilidade do professor.</label>
+          </div>
+          <div class="form-row">
+            <label class="tipoimg">Será aceito imagens de formato .jpg.</label>
+          </div>
           <div formArrayName="exames" *ngFor="let exame of exames.controls; let i=index">
             <fieldset [formGroupName]="i" class="form-group">
               <div class="col-md-12 d-flex justify-content-end capitalize">
@@ -142,7 +160,7 @@
                         <input name="file" #file type="file" (change)="onFileChange($event, i)" style="display: none;">
                         <input type="hidden" name="fileHidden" [ngClass]="{'is-invalid': exames.get(i+'.imgExame').errors &&
                   exames.get(i+'.imgExame').touched}" formControlName="imgExame" />
-                        <button class="btn btn-success" (click)="file.click()"> Enviar imagem</button>
+                        <button class="btn btn-success" (click)="file.click()"> Enviar imagem .jpg</button>
                       </td>
                     </tr>
                   </table>
@@ -156,6 +174,17 @@
           <button (click)="adicionarExame()" class="btn btn-outline-primary">
             Adicionar exame
           </button>
+        </tab>
+        <tab heading="Liberar/Fechar">
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <b>Código da consulta para o aluno acessar:</b> {{consulta.hashLib}}
+            </div>
+          </div>
+          <button [disabled]="!registerForm.valid" (click)="liberarSimulacao()" class="btn btn-success"> Liberar
+            simulação </button>
+          <button [disabled]="!registerForm.valid" (click)="bloaquearSimulacao()" class="btn btn-warning"
+            style="margin-left: 5px;"> Bloquear simulação </button>
         </tab>
       </tabset>
       <div class="row">
@@ -173,6 +202,8 @@
             <b>Paciente:</b> {{consulta.nomePaciente}}
             <br>
             <b>Data de nascimento:</b> {{consulta.dataNascimento | DateTimeFormatPipe}}
+            <br>
+            <b>Código da consulta:</b> {{consulta.hashLib}} <i class="fa fa-copy" style="cursor: pointer;" title="Copiar" (click)="copiarCodigo()"></i>
           </p>
           <hr>
         </div>

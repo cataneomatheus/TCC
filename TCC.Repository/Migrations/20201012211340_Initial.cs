@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TCC.Repository.Migrations
 {
-    public partial class init : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -61,7 +61,11 @@ namespace TCC.Repository.Migrations
                     Sexo = table.Column<string>(nullable: true),
                     TipoAtendimento = table.Column<string>(nullable: true),
                     QueixaPrincipal = table.Column<string>(nullable: true),
-                    InicioSintomas = table.Column<string>(nullable: true)
+                    InicioSintomas = table.Column<string>(nullable: true),
+                    UserId = table.Column<int>(nullable: false),
+                    QtdMaxPergunta = table.Column<int>(nullable: true),
+                    QtdMaxExame = table.Column<int>(nullable: true),
+                    HashLib = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

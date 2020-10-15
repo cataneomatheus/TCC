@@ -36,11 +36,11 @@ export class ConsultaEditComponent implements OnInit {
     private router: ActivatedRoute
   ) {
     this.localeService.use('pt-br')
-   }
+  }
 
   ngOnInit() {
     this.validation(),
-    this.carregarConsulta()
+      this.carregarConsulta()
   }
 
   validation() {
@@ -51,6 +51,9 @@ export class ConsultaEditComponent implements OnInit {
       tipoAtendimento: ['', [Validators.required, Validators.maxLength(50)]],
       queixaPrincipal: ['', [Validators.required, Validators.maxLength(500)]],
       inicioSintomas: ['', [Validators.required, Validators.maxLength(500)]],
+      qtdMaxPergunta: [0, Validators.required],
+      qtdMaxExame: [0, Validators.required],
+      hashLib: [''],
       perguntaRespostas: this.fb.array([]),
       exames: this.fb.array([])
     });
@@ -75,36 +78,36 @@ export class ConsultaEditComponent implements OnInit {
   carregarConsulta() {
     const idConsulta = +this.router.snapshot.paramMap.get('id');
     this.consultaService.getConsultaById(idConsulta)
-    .subscribe(
-      (consulta: Consulta) => {
-        this.consulta = Object.assign({}, consulta);
+      .subscribe(
+        (consulta: Consulta) => {
+          this.consulta = Object.assign({}, consulta);
 
-        this.registerForm.patchValue(this.consulta);
+          this.registerForm.patchValue(this.consulta);
 
-        this.consulta.perguntaRespostas.forEach(perguntaResposta => {
-          this.perguntaRespostas.push(this.criaPerguntaResposta(perguntaResposta));
-        });
+          this.consulta.perguntaRespostas.forEach(perguntaResposta => {
+            this.perguntaRespostas.push(this.criaPerguntaResposta(perguntaResposta));
+          });
 
-        this.consulta.exames.forEach(exame => {
-          this.exames.push(this.criaExame(exame));
-        });
+          this.consulta.exames.forEach(exame => {
+            this.exames.push(this.criaExame(exame));
+          });
 
-        this.registerForm.patchValue(this.consulta);
-      }
-    );
+          this.registerForm.patchValue(this.consulta);
+        }
+      );
   }
 
   adicionarPerguntaResposta() {
-    this.perguntaRespostas.push(this.criaPerguntaResposta({id: 0}));
+    this.perguntaRespostas.push(this.criaPerguntaResposta({ id: 0 }));
   }
 
   adicionarExame() {
-    this.exames.push(this.criaExame({id: 0}));
+    this.exames.push(this.criaExame({ id: 0 }));
   }
 
   createItem(data): FormGroup {
     return this.fb.group(data);
-}
+  }
 
   removePerguntaResposta(id: number) {
     this.perguntaRespostas.removeAt(id);
@@ -129,26 +132,64 @@ export class ConsultaEditComponent implements OnInit {
   }
 
   uploadImagem() {
-      if(!this.file)
-        return;
+    if (!this.file)
+      return;
 
-      this.consultaService.postUpload(this.file, this.fileNameToUpdate).
+    this.consultaService.postUpload(this.file, this.fileNameToUpdate).
       subscribe(
         () => {
           this.dataAtual = new Date().getMilliseconds().toString();
         }
       );
+  }
+
+  onFileChange(event: any, index: any) {
+    let reader = new FileReader();
+
+    if (event.target.files && event.target.files.length > 0) {
+      this.file = event.target.files;
+      this.exames.at(index).patchValue({
+        imgExame: event.target.files[0].name
+      });
     }
+  }
 
-    onFileChange(event: any, index: any) {
-      let reader = new FileReader();
-
-      if(event.target.files && event.target.files.length > 0) {
-          this.file = event.target.files;
-          this.exames.at(index).patchValue({
-            imgExame: event.target.files[0].name
-          });
+  liberarSimulacao() {    
+    this.consultaService.liberarSimulacao(this.consulta.id).subscribe(
+      (consulta: Consulta) => {
+        this.consulta.hashLib = consulta.hashLib;
+        this.toastr.success('Liberada consulta para simulação com sucesso');
+      }, error => {
+        this.toastr.error(`Erro ao liberar consulta: ${error}`);
       }
+    );
+  }
+
+  bloaquearSimulacao() {
+    this.consultaService.bloquearSimulacao(this.consulta.id).subscribe(
+      (consulta: Consulta) => {
+        this.consulta.hashLib = consulta.hashLib;
+        this.toastr.success('Bloqueio da consulta para simulação efetuado com sucesso');
+      }, error => {
+        this.toastr.error(`Erro ao bloquear consulta: ${error}`);
+      }
+    );
+  }
+
+  copiarCodigo() {
+    let selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = this.consulta.hashLib;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+
+    this.toastr.success('Copiado código da consulta com sucesso');
   }
 
 }

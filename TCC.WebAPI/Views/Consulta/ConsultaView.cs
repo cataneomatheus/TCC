@@ -11,6 +11,9 @@ namespace TCC.WebAPI.Views.Consulta
         public string TipoAtendimento { get; set; }
         public string QueixaPrincipal { get; set; }
         public string InicioSintomas { get; set; }
+        public int QtdMaxPergunta { get; set; }
+        public int QtdMaxExame { get; set; }
+        public string HashLib { get; set; }
 
         public List<ExameView> Exames {get; set;}
         public List<PerguntaRespostaView> PerguntaRespostas {get; set;}
