@@ -17,6 +17,7 @@ export class ConsultaEditComponent implements OnInit {
   consulta: Consulta = new Consulta();
   registerForm: FormGroup;
   file: File;
+  file2: Array<{ Arquivo: File }> = [];
   fileNameToUpdate: string;
   dataAtual: string;
 
@@ -135,6 +136,10 @@ export class ConsultaEditComponent implements OnInit {
     if (!this.file)
       return;
 
+    // this.file2.forEach(function () {
+
+    // })
+
     this.consultaService.postUpload(this.file, this.fileNameToUpdate).
       subscribe(
         () => {
@@ -145,16 +150,17 @@ export class ConsultaEditComponent implements OnInit {
 
   onFileChange(event: any, index: any) {
     let reader = new FileReader();
-
+    debugger;
     if (event.target.files && event.target.files.length > 0) {
       this.file = event.target.files;
+      this.file2.push({Arquivo: event.target.files});
       this.exames.at(index).patchValue({
         imgExame: event.target.files[0].name
       });
     }
   }
 
-  liberarSimulacao() {    
+  liberarSimulacao() {
     this.consultaService.liberarSimulacao(this.consulta.id).subscribe(
       (consulta: Consulta) => {
         this.consulta.hashLib = consulta.hashLib;
