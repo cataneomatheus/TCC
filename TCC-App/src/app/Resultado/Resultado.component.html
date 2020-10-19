@@ -1,0 +1,49 @@
+<div class="listagem">
+  <app-titulo [titulo]="titulo"></app-titulo>
+  <div>
+    <div class="d-flex">
+      <div class="form-inline mr-auto">
+        <div class="form-group mb-2">
+          <input type="text" class="form-control mr-2" placeholder="Buscar" [(ngModel)]="filtroLista">
+        </div>
+      </div>
+    </div>
+
+    <h3>Filtro: {{filtroLista}}</h3>
+    <div style="overflow-x:auto">
+      <table class="table table-striped">
+        <thead style="background-color: #00afef;">
+          <tr>
+            <th style="color: white;">Código</th>
+            <th style="color: white;">Aluno</th>
+            <th style="color: white;">Acert. perguntas</th>
+            <th style="color: white;">Acert. exames</th>
+            <th style="color: white;">Detalhes</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="resultados && resultados.length">
+          <tr *ngFor="let resultado of resultadosFiltrados">
+            <td>{{resultado.hashLib}}</td>
+            <td>{{resultado.nomeAluno}}</td>
+            <td>{{resultado.percAcertPergunta}}%</td>
+            <td>{{resultado.percAcertExame}}%</td>
+            <td>
+              <a [routerLink]="['/resultado', resultado.id, 'edit']" tooltip="Detalhes da simulação" class="btn btn-sm btn-warning">
+                <i class="fa fa-edit"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot *ngIf="!resultados">
+          <tr>
+            <td colspan="3" class="text-center">
+              <h4>
+                Nenhum resultado encontrado!
+              </h4>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>

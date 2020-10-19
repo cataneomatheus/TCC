@@ -4,7 +4,11 @@ import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { ConsultaService } from '../services/Consulta/consulta.service';
 import { BsLocaleService } from 'ngx-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Resultado } from '../models/Resultado/Resultado';
+import { ResultadoService } from '../services/Resultado/resultado.service';
+import { PerguntaRespostaResultado } from '../models/Resultado/PerguntaRespostaResultado';
+import { ExameResultado } from '../models/Resultado/ExameResultado';
 
 @Component({
   selector: 'app-Simulacao',
@@ -14,20 +18,15 @@ import { ActivatedRoute } from '@angular/router';
 export class SimulacaoComponent implements OnInit {
 
   titulo = 'Simulação';
-  consulta: Consulta = new Consulta();
+  resultado: Resultado = new Resultado();
   registerForm: FormGroup;
   textoNaTela: string;
   dialogos: Array<{ texto: string }> = [];
   indiceDialogoAtual: number;
-  imagemLargura = '770';
-  imagemMargem = '100%';
   imgExameEscolhido: string;
-  qtdePerguntasFeitas: number;
   qtdeMaxPerguntas: number;
   qtdeMaxExames: number;
-  qtdeExamesVistos: number;
-  idsExamesVistos: Array<{ id: number }> = [];
-  idsPerguntasFeitas: Array<{ id: number }> = [];
+  bodyConfirmarFinalizacao: string;
 
   get perguntaRespostas(): FormArray {
     return <FormArray>this.registerForm.get('perguntaRespostas');
@@ -38,11 +37,12 @@ export class SimulacaoComponent implements OnInit {
   }
 
   constructor(
-    private consultaService: ConsultaService,
+    private resultadoService: ResultadoService,
     private fb: FormBuilder,
     private localeService: BsLocaleService,
     private toastr: ToastrService,
-    private router: ActivatedRoute
+    private router: ActivatedRoute,
+    private rota: Router
   ) {
     this.localeService.use('pt-br')
   }
@@ -88,31 +88,37 @@ export class SimulacaoComponent implements OnInit {
   }
 
   carregarConsulta() {
-    this.consultaService.getConsultaAlunoById(this.router.snapshot.params.id)
+    var me = this,
+      dto = {
+        AlunoId: parseInt(sessionStorage.id),
+        hashSimulacao: this.router.snapshot.params.id
+      };
+
+    me.resultadoService.iniciaResultado(dto)
       .subscribe(
-        (consulta: Consulta) => {
-          this.consulta = Object.assign({}, consulta);
-          this.registerForm.patchValue(this.consulta);
-          this.qtdePerguntasFeitas = 0;
-          this.qtdeExamesVistos = 0;
-          this.indiceDialogoAtual = 0;
-          this.qtdeMaxPerguntas = consulta.qtdMaxPergunta;
-          this.qtdeMaxExames = consulta.qtdMaxExame;
+        (resultado: Resultado) => {
+          me.resultado = Object.assign({}, resultado);
+          me.registerForm.patchValue(me.resultado);
+          me.indiceDialogoAtual = 0;
 
-          this.consulta.perguntaRespostas.forEach(perguntaResposta => {
-            this.perguntaRespostas.push(this.criaPerguntaResposta(perguntaResposta));
+
+          me.resultado.perguntaRespostasResultados.forEach(perguntaResposta => {
+            me.perguntaRespostas.push(me.criaPerguntaResposta(perguntaResposta));
           });
 
-          this.consulta.exames.forEach(exame => {
-            this.exames.push(this.criaExame(exame));
+          me.resultado.exameResultados.forEach(exame => {
+            me.exames.push(me.criaExame(exame));
           });
 
-          this.textoNaTela = "Olá, meu nome é " + this.consulta.nomePaciente;
-          this.dialogos.push(
-            { texto: "Olá, meu nome é " + this.consulta.nomePaciente },
-            { texto: "Eu vim aqui hoje pois estou com " + this.consulta.queixaPrincipal },
-            { texto: "E começou " + this.consulta.inicioSintomas }
+          me.textoNaTela = "Olá, meu nome é " + me.resultado.nomePaciente;
+          me.dialogos.push(
+            { texto: "Olá, meu nome é " + me.resultado.nomePaciente },
+            { texto: "Eu vim aqui hoje pois estou com " + me.resultado.queixaPrincipal },
+            { texto: "E começou " + me.resultado.inicioSintomas }
           )
+
+          me.qtdeMaxPerguntas = resultado.qtdMaxPergunta - me.resultado.perguntaRespostasResultados.filter(p => p.selecionada).length;
+          me.qtdeMaxExames = resultado.qtdMaxExame - me.resultado.exameResultados.filter(p => p.selecionada).length;
         }
 
       );
@@ -140,38 +146,74 @@ export class SimulacaoComponent implements OnInit {
 
   mostraResposta(idPergunta: number) {
     var me = this,
-      qtdMaxPergunta = me.consulta.qtdMaxPergunta,
-      qtdPertuntasFeitas = (me.qtdePerguntasFeitas = me.qtdePerguntasFeitas + 1);
+      qtdMaxPergunta = me.resultado.qtdMaxPergunta,
+      qtdPertuntasFeitas = me.resultado.perguntaRespostasResultados.filter(p => p.selecionada),
+      dto = {
+        AlunoId: parseInt(sessionStorage.id),
+        hashSimulacao: this.router.snapshot.params.id,
+        PerguntaId: idPergunta
+      };
 
-    let encontrado = me.idsPerguntasFeitas.find(p => p.id == idPergunta);
-    if (encontrado)
-      return me.toastr.error("Essa pergunta já foi solicitada anteriormente.");
-
-    if (qtdMaxPergunta >= qtdPertuntasFeitas) {
-      var pergunteSelecionada = me.consulta.perguntaRespostas.find(p => p.id == idPergunta);
-      me.consulta.perguntaRespostas.filter(p => p.id == idPergunta).map(x => x.isSelected = true);
-      me.idsPerguntasFeitas.push({ id: idPergunta });
+    if (qtdMaxPergunta > qtdPertuntasFeitas.length) {
+      var pergunteSelecionada = me.resultado.perguntaRespostasResultados.find(p => p.id == idPergunta);
+      if (pergunteSelecionada.selecionada)
+        return me.toastr.error("Pergunta já foi selecionada anteriormente");
 
       me.qtdeMaxPerguntas = me.qtdeMaxPerguntas - 1;
-      me.textoNaTela = pergunteSelecionada.resposta;
+
+      me.resultadoService.setaPerguntaFeita(dto).subscribe(
+        (pergunta: PerguntaRespostaResultado) => {
+          me.registerForm.patchValue(me.resultado.perguntaRespostasResultados);
+          me.textoNaTela = pergunta.resposta;
+          me.resultado.perguntaRespostasResultados.find(p => p.id == pergunta.id).selecionada = true;
+        }
+      );
     }
   }
 
   mostrarExame(template: any, idExame: number) {
-    var qtdMaxExame = this.consulta.qtdMaxExame;
-    var qtdExamesVistos = (this.qtdeExamesVistos = this.qtdeExamesVistos + 1);
+    var me = this,
+      qtdMaxExame = me.resultado.qtdMaxExame,
+      qtdExamesVistos = me.resultado.exameResultados.filter(p => p.selecionada),
+      dto = {
+        AlunoId: parseInt(sessionStorage.id),
+        hashSimulacao: this.router.snapshot.params.id,
+        ExameId: idExame
+      };
 
-    let encontrado = this.idsExamesVistos.find(p => p.id == idExame);
-    if (encontrado)
-      return this.toastr.error("Esse exame já foi solicitado anteriormente.");
+    if (qtdMaxExame > qtdExamesVistos.length) {
+      var exameSelecionado = me.resultado.exameResultados.find(p => p.id == idExame);
 
-    if (qtdMaxExame >= qtdExamesVistos) {
-      var exameSelecionado = this.consulta.exames.find(p => p.id == idExame);
-      this.consulta.exames.filter(p => p.id == idExame).map(x => x.isSelected = true);
-      this.idsExamesVistos.push({ id: idExame });
-      this.qtdeMaxExames = this.qtdeMaxExames - 1;
-      this.openModal(template);
-      this.imgExameEscolhido = `http://localhost:5000/resources/images/${exameSelecionado.imgExame}`;
+      if (exameSelecionado.selecionada)
+        return me.toastr.error("Exame já foi solicitado anteriormente");
+
+      me.qtdeMaxExames = me.qtdeMaxExames - 1;
+
+      me.resultadoService.setaExameVisto(dto).subscribe(
+        (exame: ExameResultado) => {
+          me.registerForm.patchValue(me.resultado.exameResultados);
+          me.resultado.exameResultados.find(p => p.id == exame.id).selecionada = true;
+          me.openModal(template);
+          me.imgExameEscolhido = `http://localhost:5000/resources/images/${exame.imgExame}`;
+        }
+      );
     }
+  }
+
+  finalizar(template: any) {
+    this.openModal(template);
+    this.bodyConfirmarFinalizacao = `Tem certeza que deseja FINALIZAR a simulação, ao confirmar você não conseguirá alterar essa simulação.`;
+  }
+
+  confirmFinalizar(template: any) {
+    this.resultadoService.finalizar(this.resultado.id).subscribe(
+      () => {
+        template.hide();
+        this.toastr.success('Finalizado simulação com sucesso');
+        this.rota.navigate([`/resultado/${ this.resultado.id}/edit`]);
+      }, error => {
+        this.toastr.error('Erro ao finalizar.', error);
+      }
+    );
   }
 }

@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>8.0</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TCC.Domain\TCC.Domain.csproj" />
+    <ProjectReference Include="..\TCC.Repository\TCC.Repository.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -5,5 +5,6 @@ namespace TCC.WebAPI.Views.Consulta
         public int Id { get; set; }
         public string Pergunta { get; set; }
         public string Resposta { get; set; }
+        public bool Certa { get; set; }
     }
 }

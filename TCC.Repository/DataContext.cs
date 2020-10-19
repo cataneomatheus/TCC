@@ -2,8 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TCC.Domain.consultas;
-using TCC.Domain.curso;
 using TCC.Domain.Identity;
+using TCC.Domain.resultados;
 
 namespace TCC.Repository
 {
@@ -17,14 +17,8 @@ namespace TCC.Repository
         //consulta
         public DbSet<Consulta> Consultas {get; set;}
         public DbSet<PerguntaResposta> PerguntaRespostas {get; set;}
-        public DbSet<Exame> Exames {get; set;}
-
-        //treinamento
-        public DbSet<Evento> Eventos { get; set; }
-        public DbSet<Palestrante> Palestrantes { get; set; }
-        public DbSet<PalestranteEvento> PalestranteEventos { get; set; }
-        public DbSet<Lote> Lotes { get; set; }
-        public DbSet<RedeSocial> RedeSociais { get; set; }        
+        public DbSet<Exame> Exames {get; set;}        
+        public DbSet<Resultado> Resultados { get; set; }        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -43,12 +37,6 @@ namespace TCC.Repository
                     .WithMany(r => r.UserRoles)
                     .HasForeignKey(ur => ur.UserId)
                     .IsRequired();
-            });
-
-            modelBuilder.Entity<PalestranteEvento>()
-            .HasKey(PE => new {
-                PE.EventoId,
-                PE.PalestranteId
             });
         }
     }

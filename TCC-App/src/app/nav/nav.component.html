@@ -1,12 +1,15 @@
 
 <nav class="navbar navbar-expand-md" style="background-color: #00afef;" *ngIf="showMenu()">
   <div class="container" style="max-width: 100%!important;">
-    <a class="navbar-brand" style="color: white;" routerLink="consultas">Simulador de consulta</a>
+    <a class="navbar-brand" style="color: white;" routerLink="consultas">Simulate Quiz</a>
 
     <div *ngIf="loggedIn()" class="collapse navbar-collapse">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" style="color: white;" routerLink="consultas">Consultas</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" style="color: white;" routerLink="resultados">Resultados</a>
         </li>
       </ul>
     </div>

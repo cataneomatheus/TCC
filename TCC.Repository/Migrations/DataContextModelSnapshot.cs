@@ -210,6 +210,8 @@ namespace TCC.Repository.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<bool>("Certa");
+
                     b.Property<int>("ConsultaId");
 
                     b.Property<string>("ImgExame");
@@ -228,6 +230,8 @@ namespace TCC.Repository.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<bool>("Certa");
+
                     b.Property<int>("ConsultaId");
 
                     b.Property<string>("Pergunta");
@@ -241,107 +245,92 @@ namespace TCC.Repository.Migrations
                     b.ToTable("PerguntaRespostas");
                 });
 
-            modelBuilder.Entity("TCC.Domain.curso.Evento", b =>
+            modelBuilder.Entity("TCC.Domain.resultados.ExameResultado", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("DataEvento");
+                    b.Property<bool>("Certa");
 
-                    b.Property<string>("Email");
-
-                    b.Property<string>("ImagemURL");
-
-                    b.Property<string>("Local");
-
-                    b.Property<int>("QtdPessoas");
-
-                    b.Property<string>("Telefone");
-
-                    b.Property<string>("Tema");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Eventos");
-                });
-
-            modelBuilder.Entity("TCC.Domain.curso.Lote", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime?>("DataFim");
-
-                    b.Property<DateTime?>("DataInicio");
-
-                    b.Property<int>("EventoId");
+                    b.Property<string>("ImgExame");
 
                     b.Property<string>("Nome");
 
-                    b.Property<decimal>("Preco");
+                    b.Property<int>("ResultadoId");
 
-                    b.Property<int>("Quantidade");
+                    b.Property<bool>("Selecionada");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EventoId");
+                    b.HasIndex("ResultadoId");
 
-                    b.ToTable("Lotes");
+                    b.ToTable("ExameResultado");
                 });
 
-            modelBuilder.Entity("TCC.Domain.curso.Palestrante", b =>
+            modelBuilder.Entity("TCC.Domain.resultados.PerguntaRespostaResultado", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Email");
+                    b.Property<bool>("Certa");
 
-                    b.Property<string>("ImagemURL");
+                    b.Property<string>("Pergunta");
 
-                    b.Property<string>("MiniCurriculo");
+                    b.Property<string>("Resposta");
 
-                    b.Property<string>("Nome");
+                    b.Property<int>("ResultadoId");
 
-                    b.Property<string>("Telefone");
+                    b.Property<bool>("Selecionada");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Palestrantes");
+                    b.HasIndex("ResultadoId");
+
+                    b.ToTable("PerguntaRespostaResultado");
                 });
 
-            modelBuilder.Entity("TCC.Domain.curso.PalestranteEvento", b =>
-                {
-                    b.Property<int>("EventoId");
-
-                    b.Property<int>("PalestranteId");
-
-                    b.HasKey("EventoId", "PalestranteId");
-
-                    b.HasIndex("PalestranteId");
-
-                    b.ToTable("PalestranteEventos");
-                });
-
-            modelBuilder.Entity("TCC.Domain.curso.RedeSocial", b =>
+            modelBuilder.Entity("TCC.Domain.resultados.Resultado", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("EventoId");
+                    b.Property<int>("AlunoId");
 
-                    b.Property<string>("Nome");
+                    b.Property<DateTime>("DataHora");
 
-                    b.Property<int?>("PalestranteId");
+                    b.Property<DateTime>("DataNascimento");
 
-                    b.Property<string>("URL");
+                    b.Property<bool>("Finalizado");
+
+                    b.Property<string>("HashLib");
+
+                    b.Property<string>("InicioSintomas");
+
+                    b.Property<string>("NomeAluno");
+
+                    b.Property<string>("NomePaciente");
+
+                    b.Property<string>("NomeProfessor");
+
+                    b.Property<decimal>("PercAcertExame");
+
+                    b.Property<decimal>("PercAcertPergunta");
+
+                    b.Property<int>("ProfessorId");
+
+                    b.Property<int?>("QtdMaxExame");
+
+                    b.Property<int?>("QtdMaxPergunta");
+
+                    b.Property<string>("QueixaPrincipal");
+
+                    b.Property<string>("Sexo");
+
+                    b.Property<string>("TipoAtendimento");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EventoId");
-
-                    b.HasIndex("PalestranteId");
-
-                    b.ToTable("RedeSociais");
+                    b.ToTable("Resultados");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -405,36 +394,20 @@ namespace TCC.Repository.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TCC.Domain.curso.Lote", b =>
+            modelBuilder.Entity("TCC.Domain.resultados.ExameResultado", b =>
                 {
-                    b.HasOne("TCC.Domain.curso.Evento")
-                        .WithMany("Lotes")
-                        .HasForeignKey("EventoId")
+                    b.HasOne("TCC.Domain.resultados.Resultado")
+                        .WithMany("ExameResultados")
+                        .HasForeignKey("ResultadoId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TCC.Domain.curso.PalestranteEvento", b =>
+            modelBuilder.Entity("TCC.Domain.resultados.PerguntaRespostaResultado", b =>
                 {
-                    b.HasOne("TCC.Domain.curso.Evento", "Evento")
-                        .WithMany("PalestranteEventos")
-                        .HasForeignKey("EventoId")
+                    b.HasOne("TCC.Domain.resultados.Resultado")
+                        .WithMany("PerguntaRespostasResultados")
+                        .HasForeignKey("ResultadoId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("TCC.Domain.curso.Palestrante", "Palestrante")
-                        .WithMany("PalestranteEventos")
-                        .HasForeignKey("PalestranteId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("TCC.Domain.curso.RedeSocial", b =>
-                {
-                    b.HasOne("TCC.Domain.curso.Evento")
-                        .WithMany("RedesSociais")
-                        .HasForeignKey("EventoId");
-
-                    b.HasOne("TCC.Domain.curso.Palestrante")
-                        .WithMany("RedesSociais")
-                        .HasForeignKey("PalestranteId");
                 });
 #pragma warning restore 612, 618
         }

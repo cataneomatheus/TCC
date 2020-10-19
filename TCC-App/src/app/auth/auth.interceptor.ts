@@ -5,16 +5,16 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/internal/operators/tap'
 import { JwtHelperService } from '@auth0/angular-jwt';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class AuthInterceptor implements HttpInterceptor {
 
     jwtHelper = new JwtHelperService();
     decodeToken: any;
 
-    constructor(private router: Router) {}
+    constructor(private router: Router) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if (localStorage.getItem('token') !== null){
+        if (localStorage.getItem('token') !== null) {
             this.decodeToken = this.jwtHelper.decodeToken(localStorage.getItem('token'));
 
             const cloneReq = req.clone({
@@ -22,17 +22,16 @@ export class AuthInterceptor implements HttpInterceptor {
             });
             return next.handle(cloneReq).pipe(
                 tap(
-                    succ => {},
+                    succ => { },
                     err => {
-                        if (err.status === 401){
+                        if (err.status === 401) {
                             this.router.navigateByUrl('user/login')
                         }
                     }
                 )
             )
-          } else {
-            this.router.navigate(['/user/login']);
+        } else {
             return next.handle(req.clone());
-          }
+        }
     }
 }

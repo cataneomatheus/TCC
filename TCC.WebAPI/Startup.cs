@@ -14,9 +14,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
+using TCC.Aplication.resultados;
 using TCC.Domain.Identity;
 using TCC.Repository;
 using TCC.Repository.consultas;
+using TCC.Repository.resultados;
+using TCC.Repository.user;
 
 namespace TCC.WebAPI
 {
@@ -37,8 +40,8 @@ namespace TCC.WebAPI
             IdentityBuilder builder = services.AddIdentityCore<User>(
                 options => {
                     options.Password.RequireDigit = true;
-                    options.Password.RequireNonAlphanumeric = false;
-                    options.Password.RequireLowercase = false;
+                    options.Password.RequireNonAlphanumeric = true;
+                    options.Password.RequireLowercase = true;
                     options.Password.RequireUppercase = true;
                     options.Password.RequiredLength = 6;
                     
@@ -78,6 +81,9 @@ namespace TCC.WebAPI
             
             services.AddScoped<ITCCRepository, TCCRepository>();
             services.AddScoped<IRepConsulta, RepConsulta>();
+            services.AddScoped<IAplicResultado, AplicResultado>();
+            services.AddScoped<IRepResultado, RepResultado>();
+            services.AddScoped<IRepUser, RepUser>();
             services.AddAutoMapper();
             services.AddCors();
             services.AddSwaggerGen();

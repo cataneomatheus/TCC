@@ -63,7 +63,8 @@ export class ConsultaEditComponent implements OnInit {
     return this.fb.group({
       id: [exame.id],
       nome: [exame.nome, Validators.required],
-      imgExame: [exame.imgExame, Validators.required]
+      imgExame: [exame.imgExame, Validators.required],
+      certa: [exame.certa]
     });
   }
 
@@ -71,7 +72,8 @@ export class ConsultaEditComponent implements OnInit {
     return this.fb.group({
       id: [perguntaResposta.id],
       pergunta: [perguntaResposta.pergunta, Validators.required],
-      resposta: [perguntaResposta.resposta, Validators.required]
+      resposta: [perguntaResposta.resposta, Validators.required],
+      certa: [perguntaResposta.certa]
     });
   }
 

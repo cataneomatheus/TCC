@@ -1,10 +1,7 @@
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
-import { EventoComponent } from './Evento/Evento.component';
-import { PalestranteComponent } from './Palestrante/Palestrante.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { ContatoComponent } from './Contato/Contato.component';
 import { DateTimeFormatPipePipe } from './helps/DateTimeFormatPipe.pipe';
 import { TituloComponent } from './_shared/titulo/titulo.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -20,28 +17,27 @@ import { from } from 'rxjs';
 import { UserComponent } from './user/user.component';
 import { LoginComponent } from './user/login/login.component';
 import { RegistrationComponent } from './user/registration/registration.component';
-import { EventoService } from './services/evento.service';
 import { ConsultaService } from './services/Consulta/consulta.service';
 import { AuthInterceptor } from './auth/auth.interceptor';
-import { EventoEditComponent } from './Evento/eventoEdit/eventoEdit.component';
 import { ConsultaComponent } from './Consulta/Consulta.component';
 import { ConsultaEditComponent } from './Consulta/consultaEdit/consultaEdit.component';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 import { SimulacaoComponent } from './Simulacao/Simulacao.component';
 import { AlunoComponent } from './Aluno/Aluno.component';
+import { defineLocale, ptBrLocale } from 'ngx-bootstrap';
+import { ResultadoComponent } from './Resultado/Resultado.component';
+import { ResultadoEditComponent } from './Resultado/resultadoEdit/resultadoEdit.component';
+
+defineLocale('pt-br', ptBrLocale);
 
 registerLocaleData(localePt);
 
 @NgModule({
-   declarations: [
+   declarations: [	
       AppComponent,
       NavComponent,
-      EventoComponent,
-      EventoEditComponent,
-      PalestranteComponent,
       DashboardComponent,
-      ContatoComponent,
       TituloComponent,
       DateTimeFormatPipePipe,
       UserComponent,
@@ -50,7 +46,9 @@ registerLocaleData(localePt);
       ConsultaComponent,
       ConsultaEditComponent,
       SimulacaoComponent,
-      AlunoComponent
+      AlunoComponent,
+      ResultadoComponent,
+      ResultadoEditComponent
    ],
    imports: [
       BrowserModule,
@@ -73,12 +71,6 @@ registerLocaleData(localePt);
       ReactiveFormsModule
    ],
    providers: [
-      EventoService,
-      {
-         provide: HTTP_INTERCEPTORS,
-         useClass: AuthInterceptor,
-         multi: true
-      },
       ConsultaService,
       {
          provide: HTTP_INTERCEPTORS,

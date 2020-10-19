@@ -20,7 +20,7 @@ export class RegistrationComponent implements OnInit {
     public router: Router,
     private toastr: ToastrService,
     private authService: AuthService
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.validation()
@@ -53,29 +53,45 @@ export class RegistrationComponent implements OnInit {
   }
 
   cadastrarUsuario() {
-    if(this.registerForm.valid) {
+    if (this.registerForm.valid) {
       this.user = Object.assign({
-        password: this.registerForm.get('passwords.password').value },
-        this.registerForm.value);
-        this.authService.register(this.user).subscribe(
-          () => {
-            this.router.navigate(['/user/login']);
-            this.toastr.success('Cadastro realizado');
-          }, error => {
-            const erro = error.error;
-            erro.forEach(element => {
-              switch (element.code) {
-                case 'DuplicateUserName':
-                    this.toastr.error('Cadastro já existente');
-                  break;
-                default:
-                  this.toastr.error(`Erro no cadastro! CODE: ${element.code}`);
-                  break;
-              }
-            });
-          }
-        )
-      }
+        password: this.registerForm.get('passwords.password').value
+      }, this.registerForm.value);
+      
+      this.authService.register(this.user).subscribe(
+        () => {          
+          this.router.navigate(['/user/login']);
+          this.toastr.success('Cadastro realizado');
+        }, error => {
+          const erro = error.error;
+          erro.forEach(element => {
+            switch (element.code) {
+              case 'DuplicateUserName':
+                this.toastr.error('Cadastro já existente');                
+                break;
+              case 'PasswordTooShort':
+                this.toastr.error('Senha muito curta, use no mínimo 6 dígitos');                
+                break;
+              case 'PasswordRequiresNonAlphanumeric':
+                this.toastr.error('A senha não contém letras.');                
+                break;
+              case 'PasswordRequiresDigit':
+                this.toastr.error('A senha não contém dígitos números.');                
+                break;
+              case 'PasswordRequiresLower':
+                this.toastr.error('A senha não contém letra minúscula.');                
+                break;
+              case 'PasswordRequiresUpper':
+                this.toastr.error('A senha não contém letra maíuscula.');                
+                break;
+              default:
+                this.toastr.error(`Erro no cadastro! CODE: ${element.code}`);                
+                break;
+            }
+          });
+        }
+      )
+    }
   }
 
 }

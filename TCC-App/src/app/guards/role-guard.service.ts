@@ -21,6 +21,8 @@ export class RoleGuardService implements CanActivate {
     const token = localStorage.getItem('token');
 
     this.decodeToken = this.jwtHelper.decodeToken(token);
+    if(this.decodeToken == null)
+      this.router.navigate(['/login']);
 
     if (this.decodeToken.actort == "True" && expectedRole == "Admin") {
       return true;
@@ -29,17 +31,5 @@ export class RoleGuardService implements CanActivate {
       this.router.navigate(['/aluno']);
       return false;
     }
-
-    // if (localStorage.getItem('token') !== null) {
-    //   this.decodeToken = this.jwtHelper.decodeToken(localStorage.getItem('token'));
-
-    //   if (this.decodeToken.actort == "False") {
-    //     return true;
-    //   }
-
-    // } else {
-    //   this.router.navigate(['/user/login']);
-    //   return false;
-    // }
   }
 }

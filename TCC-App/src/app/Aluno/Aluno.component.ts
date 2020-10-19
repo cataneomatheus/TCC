@@ -4,6 +4,8 @@ import { ToastrService } from 'ngx-toastr';
 import { ConsultaService } from '../services/Consulta/consulta.service';
 import { Consulta } from '../models/Consulta/Consulta';
 import { Router } from '@angular/router';
+import { ResultadoService } from '../services/Resultado/resultado.service';
+import { Resultado } from '../models/Resultado/Resultado';
 
 @Component({
   selector: 'app-Aluno',
@@ -18,6 +20,7 @@ export class AlunoComponent implements OnInit {
 
   constructor(
     private consultaService: ConsultaService,
+    private resultadoService: ResultadoService,
     public router: Router,
     private fb: FormBuilder,
     private toastr: ToastrService
@@ -43,13 +46,18 @@ export class AlunoComponent implements OnInit {
   }
 
   getConsulta(idConsulta) {
-    this.consultaService.getConsultaAlunoById(idConsulta).subscribe(
-      (consulta: Consulta) => {
-        this.consulta = Object.assign({}, consulta);    
+    var me = this,
+      dto = {
+        AlunoId: parseInt(sessionStorage.id),
+        hashSimulacao: idConsulta
+      };
+
+    this.resultadoService.iniciaResultado(dto).subscribe(
+      () => {        
         this.toastr.success('Simulação carregada com sucesso.');
         this.router.navigate(['/simulacao', idConsulta, 'edit']);
-      }, error => {
-        this.toastr.error(`Erro ao tentar carregar a simulação: ${error.error.Message}`);
+      }, error => {        
+        this.toastr.error(`Erro ao tentar carregar a simulação: ${error.error.InnerException.Message}`);
       }
 
     )

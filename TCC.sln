@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30406.217
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCC.WebAPI", "TCC.WebAPI\TCC.WebAPI.csproj", "{658EE60F-D9F8-48A6-8EAA-6CCED976E07E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TCC.WebAPI", "TCC.WebAPI\TCC.WebAPI.csproj", "{658EE60F-D9F8-48A6-8EAA-6CCED976E07E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCC.Repository", "TCC.Repository\TCC.Repository.csproj", "{61A44B46-9840-4E1D-8E94-FEC9F5A2AA7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TCC.Repository", "TCC.Repository\TCC.Repository.csproj", "{61A44B46-9840-4E1D-8E94-FEC9F5A2AA7C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCC.Domain", "TCC.Domain\TCC.Domain.csproj", "{1002B704-1F3A-4068-B410-F4F6D1C11A92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TCC.Domain", "TCC.Domain\TCC.Domain.csproj", "{1002B704-1F3A-4068-B410-F4F6D1C11A92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCC.Aplication", "TCC.Aplication\TCC.Aplication.csproj", "{F6187291-4C3C-4A0A-8A87-B758B708FF58}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,9 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{658EE60F-D9F8-48A6-8EAA-6CCED976E07E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -58,5 +57,23 @@ Global
 		{1002B704-1F3A-4068-B410-F4F6D1C11A92}.Release|x64.Build.0 = Release|Any CPU
 		{1002B704-1F3A-4068-B410-F4F6D1C11A92}.Release|x86.ActiveCfg = Release|Any CPU
 		{1002B704-1F3A-4068-B410-F4F6D1C11A92}.Release|x86.Build.0 = Release|Any CPU
+		{F6187291-4C3C-4A0A-8A87-B758B708FF58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6187291-4C3C-4A0A-8A87-B758B708FF58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6187291-4C3C-4A0A-8A87-B758B708FF58}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F6187291-4C3C-4A0A-8A87-B758B708FF58}.Debug|x64.Build.0 = Debug|Any CPU
+		{F6187291-4C3C-4A0A-8A87-B758B708FF58}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F6187291-4C3C-4A0A-8A87-B758B708FF58}.Debug|x86.Build.0 = Debug|Any CPU
+		{F6187291-4C3C-4A0A-8A87-B758B708FF58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6187291-4C3C-4A0A-8A87-B758B708FF58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6187291-4C3C-4A0A-8A87-B758B708FF58}.Release|x64.ActiveCfg = Release|Any CPU
+		{F6187291-4C3C-4A0A-8A87-B758B708FF58}.Release|x64.Build.0 = Release|Any CPU
+		{F6187291-4C3C-4A0A-8A87-B758B708FF58}.Release|x86.ActiveCfg = Release|Any CPU
+		{F6187291-4C3C-4A0A-8A87-B758B708FF58}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4C1B90FB-2393-4E02-8869-32C656763AAE}
 	EndGlobalSection
 EndGlobal
