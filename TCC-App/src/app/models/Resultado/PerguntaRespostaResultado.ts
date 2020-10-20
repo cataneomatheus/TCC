@@ -4,4 +4,8 @@ export class PerguntaRespostaResultado {
     resposta: string; 
     certa: boolean;
     selecionada: boolean;
+
+    constructor(){
+        this.certa = false;
+    }
 }

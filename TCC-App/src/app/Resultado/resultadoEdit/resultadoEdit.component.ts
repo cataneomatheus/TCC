@@ -88,18 +88,18 @@ export class ResultadoEditComponent implements OnInit {
       id: [exame.id],
       nome: [exame.nome, Validators.required],
       imgExame: [exame.imgExame, Validators.required],
-      certa: [exame.certa],
+      certa: [exame.certa, Validators.required],
       selecionada: [exame.selecionada]
     });
   }
 
-  criaPerguntaRespostaResultado(PerguntaRespostaResultado: any): FormGroup {
+  criaPerguntaRespostaResultado(perguntaRespostasResultados: any): FormGroup {
     return this.fb.group({
-      id: [PerguntaRespostaResultado.id],
-      pergunta: [PerguntaRespostaResultado.pergunta],
-      resposta: [PerguntaRespostaResultado.resposta],
-      certa: [PerguntaRespostaResultado.certa],
-      selecionada: [PerguntaRespostaResultado.selecionada]
+      id: [perguntaRespostasResultados.id],
+      pergunta: [perguntaRespostasResultados.pergunta, Validators.required],
+      resposta: [perguntaRespostasResultados.resposta, Validators.required],
+      certa: [perguntaRespostasResultados.certa, Validators.required],
+      selecionada: [perguntaRespostasResultados.selecionada]
     });
   }
 

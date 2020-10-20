@@ -111,9 +111,9 @@
           <p class="card-text">            
             <b>Data da simulação:</b> {{resultado.dataHora | DateTimeFormatPipe}}
             <br>
-            <b>Acertos de perguntas:</b> {{resultado.percAcertPergunta}} <b>%</b>
+            <b>Acertos de perguntas:</b> {{resultado.percAcertPergunta | number : '.2-2'}} <b>%</b>
             <br>
-            <b>Acertos de exames:</b> {{resultado.percAcertExame}} <b>%</b>
+            <b>Acertos de exames:</b> {{resultado.percAcertExame | number : '.2-2'}} <b>%</b>
             <br>
             <b>Código da consulta:</b> {{resultado.hashLib}}
           </p>

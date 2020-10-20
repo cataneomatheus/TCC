@@ -64,7 +64,7 @@ export class ConsultaEditComponent implements OnInit {
       id: [exame.id],
       nome: [exame.nome, Validators.required],
       imgExame: [exame.imgExame, Validators.required],
-      certa: [exame.certa]
+      certa: [exame.certa == null ? false : exame.certa]
     });
   }
 
@@ -73,7 +73,7 @@ export class ConsultaEditComponent implements OnInit {
       id: [perguntaResposta.id],
       pergunta: [perguntaResposta.pergunta, Validators.required],
       resposta: [perguntaResposta.resposta, Validators.required],
-      certa: [perguntaResposta.certa]
+      certa: [perguntaResposta.certa == null ? false : perguntaResposta.certa]
     });
   }
 
