@@ -21,8 +21,6 @@ export class ResultadoComponent implements OnInit {
 
   constructor(
     private resultadoService: ResultadoService,
-    private fb: FormBuilder,
-    private localeService: BsLocaleService,
     private toastr: ToastrService
   ) { }
 

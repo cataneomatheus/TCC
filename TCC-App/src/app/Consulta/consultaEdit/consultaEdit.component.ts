@@ -16,7 +16,8 @@ export class ConsultaEditComponent implements OnInit {
   titulo = 'Edição detalhada de consulta';
   consulta: Consulta = new Consulta();
   registerForm: FormGroup;
-  file: File;
+  file: File;  
+  files: Array<{ arquivo: File }> = [];
   fileNameToUpdate: string;
   dataAtual: string;
 
@@ -33,7 +34,7 @@ export class ConsultaEditComponent implements OnInit {
     private fb: FormBuilder,
     private localeService: BsLocaleService,
     private toastr: ToastrService,
-    private router: ActivatedRoute
+    private router: ActivatedRoute    
   ) {
     this.localeService.use('pt-br')
   }
@@ -47,7 +48,7 @@ export class ConsultaEditComponent implements OnInit {
     this.registerForm = this.fb.group({
       nomePaciente: ['', [Validators.required, Validators.maxLength(50)]],
       sexo: ['', [Validators.required, Validators.maxLength(20)]],
-      dataNascimento: ['', Validators.required],
+      dataNascimento: [Date, Validators.required],
       tipoAtendimento: ['', [Validators.required, Validators.maxLength(50)]],
       queixaPrincipal: ['', [Validators.required, Validators.maxLength(500)]],
       inicioSintomas: ['', [Validators.required, Validators.maxLength(500)]],
@@ -82,8 +83,8 @@ export class ConsultaEditComponent implements OnInit {
     this.consultaService.getConsultaById(idConsulta)
       .subscribe(
         (consulta: Consulta) => {
-          this.consulta = Object.assign({}, consulta);
-
+          this.consulta = Object.assign({}, consulta);          
+          
           this.registerForm.patchValue(this.consulta);
 
           this.consulta.perguntaRespostas.forEach(perguntaResposta => {
@@ -115,11 +116,11 @@ export class ConsultaEditComponent implements OnInit {
     this.perguntaRespostas.removeAt(id);
   }
 
-  removeExame(id: number) {
+  removeExame(id: number) {  
     this.exames.removeAt(id);
   }
 
-  salvarConsulta() {
+  salvarConsulta() {                
     this.consulta = Object.assign({ id: this.consulta.id }, this.registerForm.value);
 
     this.uploadImagem();
@@ -134,22 +135,23 @@ export class ConsultaEditComponent implements OnInit {
   }
 
   uploadImagem() {
-    if (!this.file)
+    if (!this.files.length)
       return;
 
-    this.consultaService.postUpload(this.file, this.fileNameToUpdate).
+    this.files.forEach(imagem => {            
+      this.consultaService.postUpload(imagem.arquivo, this.fileNameToUpdate).
       subscribe(
         () => {
           this.dataAtual = new Date().getMilliseconds().toString();
         }
       );
+    });    
   }
 
-  onFileChange(event: any, index: any) {
-    let reader = new FileReader();
-
+  onFileChange(event: any, index: any) {    
     if (event.target.files && event.target.files.length > 0) {
       this.file = event.target.files;
+      this.files.push({arquivo: this.file});
       this.exames.at(index).patchValue({
         imgExame: event.target.files[0].name
       });

@@ -1,5 +1,5 @@
 <app-titulo [titulo]="titulo"></app-titulo>
-<form [formGroup]="registerForm">
+<form [formGroup]="registerForm" (keydown.enter)="$event.preventDefault()" (keydown.shift.enter)="$event.preventDefault()">
   <div class="row">
     <div class="col-md-8">
       <tabset>
@@ -23,7 +23,7 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label>Data de nascimento</label>
-              <input type="text" class="form-control" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY'}"
+              <input type="text" class="form-control" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY'}" 
                 [ngClass]="{'is-invalid': registerForm.get('dataNascimento').errors
           && registerForm.get('dataNascimento').touched}" formControlName="dataNascimento">
               <div
