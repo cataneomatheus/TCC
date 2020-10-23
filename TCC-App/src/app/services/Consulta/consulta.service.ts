@@ -2,14 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Consulta } from 'src/app/models/Consulta/Consulta';
-import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConsultaService {
 
-  baseUrl = 'http://localhost:5000/api/consulta';
+  baseUrl = 'http://52.249.194.7/apiconsulta/api/consulta';
 
   constructor(private http: HttpClient) { }
 

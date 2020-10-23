@@ -194,7 +194,7 @@ export class SimulacaoComponent implements OnInit {
           me.registerForm.patchValue(me.resultado.exameResultados);
           me.resultado.exameResultados.find(p => p.id == exame.id).selecionada = true;
           me.openModal(template);
-          me.imgExameEscolhido = `http://localhost:5000/resources/images/${exame.imgExame}`;
+          me.imgExameEscolhido = `http://52.249.194.7/apiconsulta/resources/images/${exame.imgExame}`;
         }
       );
     }

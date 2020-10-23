@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 })
 export class AuthService {
 
-  baseUrl = 'http://localhost:5000/api/user/';
+  baseUrl = 'http://52.249.194.7/apiconsulta/api/user/';
   jwtHelper = new JwtHelperService();
   decodeToken: any;
 

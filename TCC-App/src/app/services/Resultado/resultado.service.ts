@@ -8,7 +8,7 @@ import { Resultado } from 'src/app/models/Resultado/Resultado';
 })
 export class ResultadoService {
 
-  baseUrl = 'http://localhost:5000/api/resultado';
+  baseUrl = 'http://52.249.194.7/apiconsulta/api/resultado';
 
   constructor(private http: HttpClient) { }
 

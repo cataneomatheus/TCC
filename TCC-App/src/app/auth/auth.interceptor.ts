@@ -14,7 +14,7 @@ export class AuthInterceptor implements HttpInterceptor {
     constructor(private router: Router) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if (localStorage.getItem('token') !== null) {
+        if (localStorage.getItem('token') !== null) {            
             this.decodeToken = this.jwtHelper.decodeToken(localStorage.getItem('token'));
 
             const cloneReq = req.clone({
@@ -25,7 +25,8 @@ export class AuthInterceptor implements HttpInterceptor {
                     succ => { },
                     err => {
                         if (err.status === 401) {
-                            this.router.navigateByUrl('user/login')
+                            localStorage.setItem('token', '');
+                            this.router.navigateByUrl('user/login');
                         }
                     }
                 )

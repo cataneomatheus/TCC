@@ -21,8 +21,10 @@ export class RoleGuardService implements CanActivate {
     const token = localStorage.getItem('token');
 
     this.decodeToken = this.jwtHelper.decodeToken(token);
-    if(this.decodeToken == null)
-      this.router.navigate(['/login']);
+    if(this.decodeToken == null){
+      this.router.navigate(['user/login']);
+      return true;
+    }
 
     if (this.decodeToken.actort == "True" && expectedRole == "Admin") {
       return true;
